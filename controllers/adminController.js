@@ -1,4 +1,5 @@
 const cloudinary = require('../database/cloudinary')
+const User = require("../models/usermodel");
 
 //admin login
 const credentials = {
@@ -45,6 +46,33 @@ exports.adminLogout = async (req, res) => {
         res.redirect("/admin");
     } catch (error) {
         console.log(error.message);
+    }
+};
+
+
+//user management
+//user load
+exports.loadUsers = async (req, res) => {
+    try {
+        const userData = await User.find();
+        res.render("users", { users: userData, user: req.session.admin });
+    } catch (error) {
+        console.log("error is:",error.message);
+    }
+};
+//user block
+
+exports.blockUser = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const blockUser = await User.findById(id);
+
+        await User.findByIdAndUpdate(id, { $set: { is_blocked: !blockUser.is_blocked } }, { new: true });
+
+        res.redirect("/admin/users");
+    } catch (error) {
+        console.log(error);
     }
 };
 exports.dashbaord = (req,res) =>{

@@ -101,5 +101,62 @@
           </div>
       </div>
   </section>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+  <script>
+    
+        const handleSubmit = async (event) => {
+            event.preventDefault();
+           
+            const formData = new FormData(event.target);
+            
+           
+            try {
+                const response = await axios.post('/login',formData, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                
+
+                if (response.status === 200) {
+                    window.location.href = '/userhome'
+                }
+            } catch (error) {
+                console.log(error);
+
+                if (error.response.status == 400) {
+                    const errors = error.response.data.error;
+                    Object.keys(errors).forEach((key) => {
+                        let element = document.getElementById(key).textContent = errors[key];
+                    });
+                } else if (error.response.status == 401) {
+                    document.getElementById('emailError').textContent = error.response.data.error;
+                }
+                else if (error.response.status == 409) {
+                    document.getElementById('passwordError').textContent = error.response.data.error;
+                }else if(error.response.status==402){
+                    document.getElementById('accountBlock').textContent = error.response.data.error;
+
+                }
+                else {
+                    alert("something went wrong");
+                }
+
+            }
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', handleSubmit);
+
+                              function togglePasswordVisibility() {
+                                const passwordField = document.getElementById("password");
+                                if (passwordField.type === "password") {
+                                  passwordField.type = "text";
+                                } else {
+                                  passwordField.type = "password";
+                                }
+                              }
+                         
+</script>
  
 <%-include('footer')%>

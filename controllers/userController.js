@@ -2,10 +2,7 @@ const User=require('../models/usermodel')
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 
-//Main home
-exports.homeload = (req, res) => {
-  res.render("mainhome")
-}
+
 
 //password encryption
 const securePassword = async (password) => {
@@ -17,14 +14,112 @@ const securePassword = async (password) => {
   }
 };
 
+//Main home
+exports.homeload = (req, res) => {
+    res.render("mainhome")
+  }
+  exports.userhomeload = (req, res) => {
+    res.render("userhome")
+  }
+  exports.aboutus = (req, res) => {
+    res.render("aboutus")
+  }
+//render login page
+exports.loginload = async(req, res) =>{
+    
+    // const categoryData = await Category.find({ is_blocked: false });
+        try {
+            if (req.session.passwordUpdated) {
+                res.render("login");
+                req.session.passwordUpdated = false;
+            } else {
+                res.render("login");
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+}
+exports. err_404=(req,res)=>{
+    res.render('404')
+}  
+
+function validateLogin(data) {
+    const {email, password} = data;
+    const errors = {}
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
 
 
+    // email validation //
+    if (!email) {
+        errors.emailError = "please enter your email address";
+    } else if (email.length < 1 || email.trim() === "" || !emailPattern.test(email)) {
+        errors.emailError = "please Enter a Valid email";
+    }
+    // Password Validation //
+  
+    return {
+        isValid: Object.keys(errors).length === 0,
+        errors
+    }
+}
+
+var profilename
+exports.verifyLogin = async (req, res) => {
+        try {
+            const { email, password } = req.body;
+            console.log("user login data:",req.body);
+          
+            const valid = validateLogin(req.body);
+            console.log("validate login data:",valid);
+          
+            const userData = await User.findOne({ email: email });
+            console.log("fetch user from mongo:",userData);
+          profilename=userData.firstName
+          console.log(`...............${profilename}`)
+
+          if (!valid.isValid) {
+            return res.status(400).json({ error: valid.errors });
+          }
+           else if (!userData) {
+              return res.status(401).json({ error: "Invalid Email address" });
+             
+            } else if (userData.is_blocked === true) {
+              return res.status(402).json({ error: "Your Account is blocked" });
+            } else {
+              const passwordMatch = await bcrypt.compare(password, userData.password);
+          
+              if (passwordMatch) {
+                console.log("Verified password");
+                req.session.user = userData;
+                req.session.logged = true;
+                return res.status(200).end();
+              } else {
+                return res.status(409).json({ error: "Invalid Password" });
+              }
+            }
+          
+          
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+//user logout
+exports. doLogout = async (req, res) => {
+    try {
+      req.session.destroy()
+        
+        res.redirect("/");
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
 //render register page
 exports.registerload = (req, res) => {
     try 
     {
-    //   res.render("register");
       if (req.session.user) {
         res.redirect("mainhome");
       } else {
@@ -228,13 +323,8 @@ exports.verifyOtp = async (req, res) => {
   }
 };
 
-//render login page
-exports.loginload = (req, res) => {
-    res.render("login")
-}
-exports.otpload = (req, res) => {
-  res.render("otp")
-}
+
+
 exports.forgototpload = (req, res) => {
     res.render("forgotOtpEnter")
   }

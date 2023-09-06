@@ -7,6 +7,14 @@ const { isLogout, isLogin, blockCheck } = auth
 
 //home page
 user_route.get('/',userController.homeload)
+user_route.get('/userhome',userController.userhomeload)
+user_route.get('/aboutus',userController.aboutus)
+
+//login
+user_route.get("/login", userController.loginload)
+user_route.post('/login',  userController.verifyLogin);
+user_route.get('/logout',  userController.doLogout)
+
 
 //register+OTP send+OTP verification
 user_route.get('/register',userController.registerload)
@@ -19,13 +27,9 @@ user_route.post('/otpEnter' ,userController.verifyOtp); //otp postverfication
 
 
 
-user_route.get('/otp',userController.otpload)//for testing
 
 
 
-
-// login
-user_route.get('/login',userController.loginload)
 
 
 

@@ -5,11 +5,15 @@ const adminController = require("../controllers/adminController");
 // admin_route.set("views", "./views/adminView");
 const nocache=require('nocache')
 
-
+//login
 admin_route.get('/',adminController.loadLogin)
 admin_route.post('/loginpost',adminController.verifyLogin)
 admin_route.get('/logout',adminController.adminLogout)
-admin_route.get('/dash',adminController.dashbaord)
+// admin_route.get('/dash',adminController.dashbaord)
+
+//user management
+admin_route.get("/users",  adminController.loadUsers)
+admin_route.get("/blockUser/:id",  adminController.blockUser);
 
 
 
