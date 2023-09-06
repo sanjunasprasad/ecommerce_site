@@ -7,8 +7,11 @@ const nocache=require('nocache')
 
 
 admin_route.get('/',adminController.loadLogin)
-// admin_route.post('/login',adminController.verifyLogin)
-// admin_route.get('/logout',adminController.adminLogout)
+admin_route.post('/loginpost',adminController.verifyLogin)
+admin_route.get('/logout',adminController.adminLogout)
+admin_route.get('/admindash',adminController.loadDashboard)
+
+
 
 
 

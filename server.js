@@ -34,6 +34,12 @@ app.set('views', [
 app.use('/static',express.static(path.join(__dirname,'public')))
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 app.use('/assetu', express.static(path.join(__dirname, 'public/assetu')));
+app.use('/css', express.static(path.join(__dirname, 'public/css')));
+app.use('/fonts', express.static(path.join(__dirname, 'public/fonts')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
+
+
 
 
 

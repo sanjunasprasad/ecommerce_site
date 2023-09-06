@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 	
@@ -8,8 +7,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Ekka - Admin Dashboard HTML Template.">
-<!-- 
-		<title>Ekka - Admin Dashboard HTML Template.</title> -->
+
+		<title>Ekka - Admin Dashboard HTML Template.</title>
 		
 		<!-- GOOGLE FONTS -->
 		<link rel="preconnect" href="https://fonts.googleapis.com/">
@@ -33,14 +32,15 @@
 						<div class="card-header bg-primary">
 							<div class="ec-brand">
 								<a href="index.html" title="Ekka">
-									<img class="ec-brand-icon" src="/images/logo/logo.png" alt="" />
+									<a class="navbar-brand" href="index.html"><img src="../assetu/images/logo.png" class="logo" alt=""></a>
+									<!-- <img class="ec-brand-icon" src="/images/logo/logo.png" alt="" /> -->
 								</a>
 							</div>
 						</div>
 						<div class="card-body p-5">
 							<h4 class="text-dark mb-5">Sign In</h4>
 							
-							<form action="/admin/login" method="post">
+							<form action="/admin/loginpost" method="post">
 								<div class="row">
 									<div class="form-group col-md-12 mb-4">
 										<input type="email" class="form-control" name="email" id="email" placeholder="Admin email address">

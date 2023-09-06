@@ -1,0 +1,125 @@
+<%- include('adminhead') %>
+
+<style>
+    select{
+        background-color: transparent;
+        border: none;
+    }
+    select:hover{
+        cursor: pointer;
+    }
+
+    
+    .nav-4 h2 a{
+        color: black;
+    }
+
+</style>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div id="user_search">
+            <div class="col-lg-6">
+                <div id="catMsg">
+                    <h5 style="color: #4CAF50;"><%= productUpdated %></h5>
+                    <h5 id="noResultsFound">no results found!!</h5>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="search">
+                    <input type="search" placeholder="Search Orders" aria-label="Search" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 m-auto">
+        <div class="table-container">
+            <table class="table table-hover mt-4">
+                <thead>
+                    <tr>
+                        <th scope="col">NO</th>
+                        <th scope="col">DATE</th>
+                        <th scope="col">ORDER-ID</th>
+                        <th scope="col">PAYMENT METHOD</th>
+                        <th scope="col">ORDER STATUS</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orderData.forEach((order, adjindex) => { %>
+                        <% var index = adjindex + 1; %>
+                    <tr>
+                        <td><%= index %></td>
+                        <td scope="row"><%= order.date %></td>
+                        <td><%= order.orderId %></td>
+                        <td><%= order.paymentMethod %></td>
+                        <% if (order.status === "Pending") { %>
+                            <td>
+                                <select name="orderUpdate" id="orderUpdate-<%= order._id %>">
+                                    <option value="" disabled selected><%= order.status %></option>
+                                    <option value="Shipped">Shipped</option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </td>
+                        <% } else if (order.status === "Shipped") { %>
+                            <td>
+                                <select name="orderUpdate" id="orderUpdate-<%= order._id %>">
+                                    <option value="" disabled selected><%= order.status %></option>
+                                    <option value="Delivered">Delivered</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </td>
+                        <% } else if (order.status === "Cancelled") { %>
+                            <td style="color: red; font-weight: 600;">Cancelled</td>
+                        <% } else if (order.status === "Returned") { %>
+                            <td style="color: rgb(246, 136, 1); font-weight: 600;">Returned</td>
+                        <% } else { %>
+                            <td>
+                                <select name="orderUpdate" id="orderUpdate-<%= order._id %>">
+                                    <option value="" disabled selected><%= order.status %></option>
+                                    <option value="Returned">Returned</option>
+                                </select>
+                            </td>
+                        <% } %>
+                        <td scope="row">
+                            <a class="btn btn-sm btn-primary" href="/admin/orderDetails?orderId=<%= order._id %>">
+                                order details
+                            </a>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="pagination justify-content-center mt-2">
+    <nav aria-label="...">
+        <ul class="pagination pagination-sm">
+            <% if (totalPages > 1) { %>
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <% if (i === currentPage) { %>
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link"><%= i %></span>
+                        </li>
+                    <% } else { %>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                        </li>
+                    <% } %>
+                <% } %>
+            <% } %>
+        </ul>
+    </nav>
+</div>
+
+</div>
+
+<%- include('adminfoot') %>

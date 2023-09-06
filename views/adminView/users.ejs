@@ -1,0 +1,63 @@
+<%- include('adminhead') %>
+
+<style>
+    .nav-2 h2 a{
+        color: black;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div id="user_search">
+          
+            <div class="col-lg-6">
+                <div id="search">
+                    <input type="search" placeholder="Search Users" aria-label="Search" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 m-auto">
+        <div class="table-container">
+            <table class="table table-hover mt-4">
+                <thead>
+                    <tr>
+                        <th scope="col">NO</th>
+                        <th scope="col">FIRST NAME</th>
+                        <th scope="col">LAST NAME</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">MOBILE NUMBER</th>
+                        <th scope="col">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach((user, adjindex) => { %>
+                        <% var index = adjindex + 1; %>
+                    <tr>
+                        <td scope="row"><%= index %></td>
+                        <td><%= user.firstName %></td>
+                        <td><%=user.lastName%></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.phoneNumber %></td>
+                        <td>
+                            <% if (user.is_blocked) { %>
+                            <a href="/admin/blockUser/<%= user.id %>"><button class="btn btn-sm btn-success">Unblock</button></a>
+                            <% } else { %>
+                            <a href="/admin/blockUser/<%= user.id %>"><button class="btn btn-sm btn-danger">Block</button></a>
+                            <% } %>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+
+<%- include('adminfoot') %>
