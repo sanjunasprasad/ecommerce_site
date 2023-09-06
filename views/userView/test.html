@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .ec-register-wrap.ec-register-half {
+    width: 100%; /* Make sure it spans the full width of the parent container */
+}
+
+.ec-register-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline; /* Align the labels at the top */
+    margin-bottom: 5px; 
+}
+
+.ec-register-field {
+    flex: 1; /* Equal width for both fields in the row */
+    margin-right:0 4px; /* Add some spacing between fields */
+}
+
+/* Adjust these styles as needed for spacing, alignment, etc. */
+
+</style>
+<body>
+    <div class="ec-register-wrap ec-register-half">
+        <h2 class="ec-bg-title text-center">Register Here</h2>
+        <div class="ec-register-row">
+            <div class="ec-register-field">
+                <label>First Name*</label>
+                <input type="text" name="firstname" placeholder="Enter your first name" />
+                <p id="firstnameError" class="p-1 text-danger"></p>
+            </div>
+            <div class="ec-register-field">
+                <label>Last Name*</label>
+                <input type="text" name="lastname" placeholder="Enter your last name" />
+                <p id="lastnameError" class="p-1 text-danger"></p>
+            </div>
+        </div>
+        <div class="ec-register-row">
+            <div class="ec-register-field">
+                <label>Email*</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email add..." />
+                <p id="emailError" class="p-1 text-danger"></p>
+            </div>
+            <div class="ec-register-field">
+                <label>Phone Number*</label>
+                <input type="text" name="phonenumber" id="phonenumber" placeholder="Enter your phone number" />
+                <p id="phoneError" class="p-1 text-danger"></p>
+            </div>
+        </div>
+        <div class="ec-register-row">
+            <div class="ec-register-field">
+                <label>Password*</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" />
+                <p id="passwordError" class="p-1 text-danger"></p>
+            </div>
+            <div class="ec-register-field">
+                <label>Re-Type Password*</label>
+                <input type="password" name="repassword" id="password2" placeholder="Re-Type your password" />
+                <p id="repasswordError" class="p-1 pb-0 text-danger"></p>
+            </div>
+        </div>
+        <div style="display: flex;">
+            <input type="checkbox" style="width: 15px; margin-left: 10px; " id="showPassword" onchange="togglePasswordVisibility()" />
+            <label for="showPassword">Show Password</label>
+        </div>
+        <span class="ec-register-wrap ec-register-btn">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </span>
+        <br>
+        <div class="member mb-4">
+            Already a member? <a class="btn btn-primary" href="/login">Login here</a>
+        </div>
+    </div>
+    
+</body>
+</html>

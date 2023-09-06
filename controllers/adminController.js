@@ -29,7 +29,7 @@ exports.verifyLogin = async (req, res) => {
             req.session.admin = req.body.email;
             email=req.body.email
           
-            res.redirect("/admindash");
+            res.render("dashboard",{user:"Admin"});
         } else {
             req.session.wrongAdmin = true;
             res.redirect("/admin");
@@ -47,6 +47,6 @@ exports.adminLogout = async (req, res) => {
         console.log(error.message);
     }
 };
-exports.loadDashboard=(req,res)=>{
-    res.render("admindash")
+exports.dashbaord = (req,res) =>{
+    res.render("dashbaord")
 }
