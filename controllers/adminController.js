@@ -50,7 +50,7 @@ exports.adminLogout = async (req, res) => {
 };
 
 
-//user management
+//***********USER MANAGEMENT******************//
 //user load
 exports.loadUsers = async (req, res) => {
     try {
@@ -60,8 +60,8 @@ exports.loadUsers = async (req, res) => {
         console.log("error is:",error.message);
     }
 };
-//user block
 
+//user block
 exports.blockUser = async (req, res) => {
     try {
         const id = req.params.id;

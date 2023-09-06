@@ -14,7 +14,7 @@ const securePassword = async (password) => {
   }
 };
 
-//Main home
+//Main home+aboutus+userhome
 exports.homeload = (req, res) => {
     res.render("mainhome")
   }
