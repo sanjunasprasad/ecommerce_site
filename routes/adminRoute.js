@@ -25,6 +25,14 @@ admin_route.get('/unlistCategory/:id', adminAuth.isLogin, adminController.unlist
 admin_route.get('/deleteCategory/:id',  adminController.deleteCategory)
 
 //product management
+admin_route.get("/products",  adminController.loadProducts)
+// admin_route.get('/addProduct', adminAuth.isLogin, adminController.addProduct)
+// admin_route.post('/addProduct', adminAuth.isLogin, store.array('image', 4), adminController.addNewProduct)
+// admin_route.delete('/product_img_delete', adminController.deleteProductImage)
+// admin_route.get('/updateProduct/:id', store.array('image', 4) , adminAuth.isLogin, adminController.updateProduct)
+// admin_route.post('/updateProduct/:id', store.array('image', 5) , adminAuth.isLogin, adminController.updateNewProduct)
+// admin_route.get('/deleteProduct/:id', adminAuth.isLogin, adminController.deleteProduct)
+
 
 
 
