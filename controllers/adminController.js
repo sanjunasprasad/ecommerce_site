@@ -1,6 +1,6 @@
 const cloudinary = require('../database/cloudinary')
 const User = require("../models/usermodel");
-
+const Category = require("../models/categoryModel");
 //admin login
 const credentials = {
    
@@ -9,7 +9,7 @@ const credentials = {
 };
 
 exports.loadLogin = async (req, res) => {
-    // res.render('adminlogin')
+    
     try {
         if (req.session.wrongAdmin) {
             res.render("adminlogin", { invalid: "invalid details" });
@@ -51,7 +51,7 @@ exports.adminLogout = async (req, res) => {
 
 
 //***********USER MANAGEMENT******************//
-//user load
+//all user listing
 exports.loadUsers = async (req, res) => {
     try {
         const userData = await User.find();
@@ -75,6 +75,83 @@ exports.blockUser = async (req, res) => {
         console.log(error);
     }
 };
-exports.dashbaord = (req,res) =>{
-    res.render("dashbaord")
-}
+
+
+//*************CATEGORY MANAGEMENT********************//
+exports.addCategory = async (req, res) => {
+    try {
+        res.render("addCategory");
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+exports. addNewCategory = async (req, res) => {
+    const categoryName = req.body.name;
+    const categoryDescription = req.body.categoryDescription;
+    const image = req.file;
+    const lowerCategoryName = categoryName.toLowerCase();
+
+    try {
+
+        const result = await cloudinary.uploader.upload(image.path,{
+            folder: "Categories"
+        })
+
+        const categoryExist = await Category.findOne({ category: lowerCategoryName });
+        if (!categoryExist) {
+            const category = new Category({
+                category: lowerCategoryName,
+                imageUrl: {
+                    public_id: result.public_id,
+                    url: result.secure_url
+                },
+                description: categoryDescription,
+            });
+
+            await category.save();
+            req.session.categorySave = true;
+            res.redirect("/admin/categories");
+        } else {
+            req.session.categoryExist = true;
+            res.redirect("/admin/categories");
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports.loadCategories = async (req, res) => {
+   
+    try {
+        const categoryData = await Category.find();
+        if (req.session.categoryUpdate) {
+            res.render("categories", {
+                categoryData,
+                catNoUpdation: "",
+                catUpdated: "Category updated successfully",
+                user: req.session.admin,
+            });
+            req.session.categoryUpdate = false;
+        } else if (req.session.categorySave) {
+            res.render("categories", {
+                categoryData,
+                catNoUpdation: "",
+                catUpdated: "Category Added successfully",
+                user: req.session.admin,
+            });
+            req.session.categorySave = false;
+        } else if (req.session.categoryExist) {
+            res.render("categories", {
+                categoryData,
+                catUpdated: "",
+                catNoUpdation: "Category Already Exists!!",
+                user: req.session.admin,
+            });
+            req.session.categoryExist = false;
+        } else {
+            res.render("categories", { categoryData, user: req.session.admin,catUpdated:"",catNoUpdation: ""});
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
