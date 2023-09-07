@@ -19,11 +19,12 @@ admin_route.get("/blockUser/:id",  adminController.blockUser);
 admin_route.get("/categories",  adminController.loadCategories)
 admin_route.get('/addCategory',adminController.addCategory)
 admin_route.post('/addCategory', store.single('image') , adminController.addNewCategory)
-// admin_route.get('/editCategory/:id', adminController.editCategory)
-// admin_route.post('/updateCategory/:id', adminAuth.isLogin, store.single('image') , adminController.updateCategory)
-// admin_route.get('/unlistCategory/:id', adminAuth.isLogin, adminController.unlistCategory)
+admin_route.get('/editCategory/:id', adminController.editCategory)
+admin_route.post('/updateCategory/:id', adminAuth.isLogin, store.single('image') , adminController.updateCategory)
+admin_route.get('/unlistCategory/:id', adminAuth.isLogin, adminController.unlistCategory)
+admin_route.get('/deleteCategory/:id',  adminController.deleteCategory)
 
-
+//product management
 
 
 

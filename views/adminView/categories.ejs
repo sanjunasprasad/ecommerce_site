@@ -5,6 +5,7 @@
     }
 </style>
 
+
 <div class="container-fluid">
     <div class="row">
         <div id="user_search">
@@ -38,9 +39,9 @@
     <li class="nav-item">
         <a class="nav-link active" style="color: #505050; font-weight: 600;" aria-current="page" href="">Categories</a>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" style="color: rgb(162, 162, 162); font-weight: 600;" href="/admin/subCategories">Sub-Categories</a>
-    </li>
+    </li> -->
 </ul>
 
 <div class="row">
@@ -67,12 +68,15 @@
                             <td style="width: 40%;" class="description-Cell" data-bs-toggle="tooltip"
                                 data-bs-placement="bottom" title="<%= category.description %>"><%= category.description %></td>
                             <td style="width: 200px;">
+                                <div class="btn-group" role="group">
                                 <a href="/admin/editCategory/<%= category.id %>" class="btn btn-sm btn-primary">Update</a>
+                                <a href="/admin/deleteCategory/<%= category.id %>" class="btn btn-sm btn-primary btn-danger">Delete</a>
                                 <% if (category.is_blocked) { %>
                                     <button value="<%= category._id %>" class="categoryUnlistBtn btn btn-sm btn-success">List</button>
                                 <% } else { %>
-                                    <button value="<%= category._id %>" class="categoryUnlistBtn btn btn-sm btn-danger">Unlist</button>
+                                    <button value="<%= category._id %>" class="categoryUnlistBtn btn btn-sm btn-warning">Unlist</button>
                                 <% } %>
+                                </div>
                             </td>
                         </tr>
                     <% }); %>
