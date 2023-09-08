@@ -25,8 +25,8 @@ user_route.post('/otpEnter' ,isLogout,userController.verifyOtp); //otp postverfi
 
 //forgot 
 user_route.get('/forgotPassword',isLogout,userController.loadForgotPassword)
-user_route.post('/verifyEmail',isLogout,userController.verifyForgotEmail)
-user_route.get('/forgotOtpEnter',isLogout,userController.showForgotOtp)
+user_route.post('/verifyEmail',isLogout,userController.verifyForgotpasswordEmail)
+user_route.get('/forgotOtpEnter',isLogout,userController.showForgotpasswordOtp)
 user_route.post('/verifyForgotOtp',isLogout,userController.verifyForgotOtp)
 user_route.get('/resendForgotPasswordotp', isLogout ,userController.resendForgotOtp)
 user_route.post('/newPassword',isLogout, userController.updatePassword)

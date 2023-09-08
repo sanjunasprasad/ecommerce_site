@@ -341,7 +341,7 @@ exports. loadForgotPassword = async (req, res) => {
     }
 };
 
-exports. verifyForgotEmail = async (req, res) => {
+exports. verifyForgotpasswordEmail = async (req, res) => {
     try {
         const verifyEmail = req.body.email;
         const ExistingEmail = await User.findOne({ email: verifyEmail });
@@ -349,7 +349,7 @@ exports. verifyForgotEmail = async (req, res) => {
         if (ExistingEmail) {
             if (!forgotPasswordOtp) {
                 forgotPasswordOtp = generateOTP();
-                console.log("FORGOT OTP IS:",forgotPasswordOtp);
+                console.log("FORGOT password's OTP IS:",forgotPasswordOtp);
                 email = verifyEmail;
                 sendForgotPasswordOtp(email, forgotPasswordOtp);
                 res.redirect("/forgotOtpEnter");
@@ -392,7 +392,7 @@ async function sendForgotPasswordOtp(email, otp) {
     }
 }
 
-exports. showForgotOtp = async (req, res) => {
+exports. showForgotpasswordOtp = async (req, res) => {
     try {
         // const categoryData = await Category.find({ is_blocked: false });
         if (req.session.wrongOtp) {
@@ -443,7 +443,7 @@ exports. resendForgotOtp = async (req, res) => {
 
 exports. updatePassword = async (req, res) => {
     try {
-        const categoryData = await Category.find({ is_blocked: false });
+        // const categoryData = await Category.find({ is_blocked: false });
         const newPassword = req.body.password;
         const securedPassword = await securePassword(newPassword);
 
