@@ -323,8 +323,138 @@ exports.verifyOtp = async (req, res) => {
   }
 };
 
+//********FORGOT SECTION **********//
 
+exports. loadForgotPassword = async (req, res) => {
+    try {
+        // const categoryData = await Category.find({ is_blocked: false });
+    
+        if (req.session.forgotEmailNotExist) {
+           
+            res.render("verifyEmail", { emailNotExist: "Sorry, email does not exist! Please register now!" ,});
+            req.session.forgotEmailNotExist = false;
+        } else {
+            res.render("verifyEmail",{loggedIn:false,});
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
-exports.forgototpload = (req, res) => {
-    res.render("forgotOtpEnter")
-  }
+exports. verifyForgotEmail = async (req, res) => {
+    try {
+        const verifyEmail = req.body.email;
+        const ExistingEmail = await User.findOne({ email: verifyEmail });
+
+        if (ExistingEmail) {
+            if (!forgotPasswordOtp) {
+                forgotPasswordOtp = generateOTP();
+                console.log("FORGOT OTP IS:",forgotPasswordOtp);
+                email = verifyEmail;
+                sendForgotPasswordOtp(email, forgotPasswordOtp);
+                res.redirect("/forgotOtpEnter");
+                setTimeout(() => {
+                    forgotPasswordOtp = null;
+                }, 60 * 1000);
+            } else {
+                res.redirect("/forgotOtpEnter");
+            }
+        } else {
+            req.session.forgotEmailNotExist = true;
+            res.redirect("/forgotPassword");
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+async function sendForgotPasswordOtp(email, otp) {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: "sanjunasprasad@gmail.com",
+                pass: "hgbexrtifxmyakpd",
+            },
+        });
+
+        const mailOptions = {
+            from: "sanjunasprasad@gmail.com",
+            to: email,
+            subject: "Your OTP for password resetting",
+            text: `Your OTP is ${otp}. Please enter this code to reset your password.`,
+        };
+
+        const result = await transporter.sendMail(mailOptions);
+        console.log(result);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+exports. showForgotOtp = async (req, res) => {
+    try {
+        // const categoryData = await Category.find({ is_blocked: false });
+        if (req.session.wrongOtp) {
+            res.render("forgotOtpEnter", { invalidOtp: "Otp does not match"});
+            req.session.wrongOtp = false;
+        } else {
+            res.render("forgotOtpEnter", { countdown: true ,loggedIn:false, invalidOtp:""});
+        }
+    } catch (error) {
+        console.log("error is:",error.message);
+    }
+};
+
+exports. verifyForgotOtp = async (req, res) => {
+    try {
+        // const categoryData = await Category.find({ is_blocked: false });
+        var txt1=req.body.txt1;
+        var txt2 =req.body.txt2
+        var txt3=req.body.txt3
+        var txt4=req.body.txt4
+        const userEnteredOtp=txt1+txt2+txt3+txt4
+     
+        if (userEnteredOtp === forgotPasswordOtp) {
+            res.render("passwordReset",{loggedIn:false,invalidOtp:""});
+        } else {
+            req.session.wrongOtp = true;
+            res.redirect("/forgotOtpEnter");
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports. resendForgotOtp = async (req, res) => {
+    try {
+        const generatedOtp = generateOTP();
+        forgotPasswordOtp = generatedOtp;
+
+        sendForgotPasswordOtp(email, generatedOtp);
+        res.redirect("/forgotOtpEnter");
+        setTimeout(() => {
+            forgotPasswordOtp = null;
+        }, 60 * 1000);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports. updatePassword = async (req, res) => {
+    try {
+        const categoryData = await Category.find({ is_blocked: false });
+        const newPassword = req.body.password;
+        const securedPassword = await securePassword(newPassword);
+
+        const userData = await User.findOneAndUpdate({ email: email }, { $set: { password: securedPassword } });
+        if (userData) {
+            req.session.passwordUpdated = true;
+            res.render("login",{blocked:false,loggedIn:false,categoryData,walletBalance,subTotal:0,cart:{}});
+        } else {
+            console.log("Something error happened");
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};

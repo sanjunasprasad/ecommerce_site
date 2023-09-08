@@ -237,12 +237,13 @@ exports. unlistCategory = async (req, res) => {
 };
 
 exports.deleteCategory = async (req, res) => {
-    const categoryId = req.params._id;
+    const categorydeleteId = req.params.id;
 
     try 
     {
-        await Category.findByIdAndRemove(categoryId);
+        await Category.findByIdAndRemove(categorydeleteId);
         res.redirect("/admin/categories");
+        res.status(200).send();
     } 
     catch (error) 
     {
@@ -252,64 +253,226 @@ exports.deleteCategory = async (req, res) => {
 };
 
 
+
+
 //**************PRODUCT MANAGEMENT************//
-exports. addProduct = async (req, res) => {
-  try {
-    const data = await Category.find();
-    res.render("add_product", { data });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
+
+exports. loadProducts = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const productsPerPage = 4;
+
+        const totalCount = await Product.countDocuments();
+        const totalPages = Math.ceil(totalCount / productsPerPage);
+        const skip = (page - 1) * productsPerPage;
+
+        const productData = await Product.aggregate([
+            {
+                $lookup: {
+                    from: "categories",
+                    localField: "category",
+                    foreignField: "_id",
+                    as: "category",
+                },
+            },
+            {
+                $unwind: "$category",
+            },
+        ])
+            .skip(skip)
+            .limit(productsPerPage);
+
+        if (req.session.productSave) {
+            res.render("products", {
+                productData,
+                totalPages,
+                currentPage: page,
+                productUpdated: "Product added successfully!!",
+                user: req.session.admin,
+            });
+            req.session.productSave = false;
+        }
+        if (req.session.productUpdate) {
+            res.render("products", {
+                productData,
+                totalPages,
+                currentPage: page,
+                productUpdated: "Product Updated successfully!!",
+                user: req.session.admin,
+            });
+            req.session.productUpdate = false;
+        } else {
+            res.render("products", {
+                productData,
+                user: req.session.admin,
+                totalPages,
+                currentPage: page,
+                productUpdated:"",
+            });
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
 };
 
-exports. addProductPost = async (req, res) => {
-    const { product_name } = req.body;
-   
-  
+exports. addProduct = async (req, res) => {
     try {
-      const files = req.files;
-      const productImages = [];
-      for (const file of files) {
-        const result = await cloudinary.uploader.upload(file.path, {
-          folder: "Products",
+        const categoryData = await Category.find();
+        res.render("addProduct", { 
+            categoryData, 
+            user: req.session.admin 
         });
-  
-        const image = {
-          public_id: result.public_id,
-          url: result.secure_url
-        };
-        productImages.push(image)
-  
-      }
-      const exist = await productData.findOne({ product_name: product_name });
-      if (exist) {
-        res.render("add_product", { message: "The product already exists" });
-      } else {
-        const product = new productData({
-          product_name: req.body.product_name,
-          product_details: req.body.product_details,
-          category: req.body.category,
-          price: req.body.price,
-          imageUrl:productImages
-        });
-  
-        await product.save();
-        console.log("******Data stored in the database******")
-  
-        res.redirect("/view_products");
-      }
     } catch (error) {
-      res.status(500).send(error.message);
+        console.log(error.message);
     }
-  };
+};
 
-  exports.loadProducts = async (req, res) => {
+exports. addNewProduct = async (req, res) => {
     try {
-      const data = await Product.find();
-      res.render("products", { data });
+        const files = req.files;
+        const productImages = []
+
+        for (const file of files) {
+            const result = await cloudinary.uploader.upload(file.path, {
+                folder: "Products"
+            });
+
+            const image = {
+                public_id: result.public_id,
+                url: result.secure_url
+            };
+
+            productImages.push(image);
+        }
+
+        const { name, price, quantity, description, category ,offerPrice} = req.body;
+
+        let updatedPrice
+        let oldPrice
+        if(offerPrice){
+            updatedPrice = offerPrice
+            oldPrice = price
+        }else{
+            updatedPrice = price
+        }
+        const product = new Product({
+            name: name,
+            price: updatedPrice,
+            stock: quantity,
+            description: description,
+            category: category,
+            imageUrl: productImages,
+        });
+        await product.save();
+        req.session.productSave = true;
+        res.redirect("/admin/products");
     } catch (error) {
-      console.error(error);
-      res.status(500).send("Internal Server Error");
+        console.log(error.message);
     }
-  };
+};
+
+exports. deleteProductImage = async (req, res) => {
+    try {
+        const { id, image } = req.query;
+        console.log(id, image);
+        const product = await Product.findById(id);
+        const imageUrl = product.imageUrl[image];
+
+        await cloudinary.uploader.destroy(imageUrl.public_id);
+
+        product.imageUrl.splice(image, 1);
+
+        await product.save();
+        res.status(200).send({ message: "Image deleted successfully" });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports.updateProduct = async (req, res) => {
+    try {
+        const proId = req.params.id;
+
+        const productData = await Product.findById({ _id: proId });
+        const categories = await Category.find();
+       
+
+        res.render("editProduct", { productData, categories,  user: req.session.admin });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports. updateNewProduct = async (req, res) => {
+    try {
+        const proId = req.params.id;
+        const product = await Product.findById(proId);
+        const exImage = product.imageUrl;
+        const files = req.files;
+
+        let updImages = [];
+
+        if (files && files.length > 0) {
+            for (const file of files) {
+                const result = await cloudinary.uploader.upload(file.path, {
+                    folder: "Products"
+                });
+
+                const image = {
+                    public_id: result.public_id,
+                    url: result.secure_url
+                };
+
+                updImages.push(image);
+            }
+
+            updImages = [...exImage, ...updImages];
+            product.imageUrl = updImages;
+        } else {
+            updImages = exImage;
+        }
+
+        const { name, price, quantity, description, category,  offerPrice } = req.body;
+
+        let updatedPrice
+        let oldPrice
+        if(offerPrice){
+            updatedPrice = offerPrice
+            oldPrice = price
+        }else{
+            updatedPrice = price
+        }
+
+        
+
+        await Product.findByIdAndUpdate(
+            proId,
+            {
+                name: name,
+                price: updatedPrice,
+                stock: quantity,
+                description: description,
+                category: category,
+                imageUrl: updImages,
+                // offerlabel: offerLabel && offerLabel.length > 0 ? offerLabel : [],
+                oldPrice: oldPrice
+            },
+            { new: true }
+        );
+        req.session.productUpdate = true;
+        res.redirect("/admin/products");
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports. deleteProduct = async (req, res) => {
+    try {
+        const deleteId = req.params.id;
+
+        await Product.findByIdAndDelete(deleteId);
+        res.status(200).send();
+    } catch (error) {
+        console.log(error.message);
+    }
+};

@@ -6,32 +6,32 @@ const nocache=require('nocache')
 const store = require("../middleware/multer");
 
 //adminlogin
-admin_route.get('/',adminController.loadLogin)
+admin_route.get('/',adminAuth.isLogout,adminController.loadLogin)
 admin_route.post('/loginpost',adminController.verifyLogin)
 admin_route.get('/logout',adminController.adminLogout)
 // admin_route.get('/dash',adminController.dashbaord)
 
 //user management
-admin_route.get("/users",  adminController.loadUsers)
-admin_route.get("/blockUser/:id",  adminController.blockUser);
+admin_route.get("/users",adminAuth.isLogin,  adminController.loadUsers)
+admin_route.get("/blockUser/:id", adminAuth.isLogin,  adminController.blockUser);
 
 //category management
-admin_route.get("/categories",  adminController.loadCategories)
-admin_route.get('/addCategory',adminController.addCategory)
-admin_route.post('/addCategory', store.single('image') , adminController.addNewCategory)
-admin_route.get('/editCategory/:id', adminController.editCategory)
+admin_route.get("/categories",adminAuth.isLogin,  adminController.loadCategories)
+admin_route.get('/addCategory',adminAuth.isLogin,adminController.addCategory)
+admin_route.post('/addCategory',adminAuth.isLogin, store.single('image') , adminController.addNewCategory)
+admin_route.get('/editCategory/:id', adminAuth.isLogin,adminController.editCategory)
 admin_route.post('/updateCategory/:id', adminAuth.isLogin, store.single('image') , adminController.updateCategory)
 admin_route.get('/unlistCategory/:id', adminAuth.isLogin, adminController.unlistCategory)
-admin_route.get('/deleteCategory/:id',  adminController.deleteCategory)
+admin_route.get('/deleteCategory/:id', adminAuth.isLogin, adminController.deleteCategory)
 
 //product management
-admin_route.get("/products",  adminController.loadProducts)
-// admin_route.get('/addProduct', adminAuth.isLogin, adminController.addProduct)
-// admin_route.post('/addProduct', adminAuth.isLogin, store.array('image', 4), adminController.addNewProduct)
-// admin_route.delete('/product_img_delete', adminController.deleteProductImage)
-// admin_route.get('/updateProduct/:id', store.array('image', 4) , adminAuth.isLogin, adminController.updateProduct)
-// admin_route.post('/updateProduct/:id', store.array('image', 5) , adminAuth.isLogin, adminController.updateNewProduct)
-// admin_route.get('/deleteProduct/:id', adminAuth.isLogin, adminController.deleteProduct)
+admin_route.get("/products", adminAuth.isLogin, adminController.loadProducts)
+admin_route.get('/addProduct', adminAuth.isLogin, adminController.addProduct)
+admin_route.post('/addProduct', adminAuth.isLogin,  store.array('image', 4), adminController.addNewProduct)
+admin_route.delete('/product_img_delete', adminController.deleteProductImage)
+admin_route.get('/updateProduct/:id', store.array('image', 4) , adminAuth.isLogin, adminController.updateProduct)
+admin_route.post('/updateProduct/:id', store.array('image', 5) , adminAuth.isLogin, adminController.updateNewProduct)
+admin_route.get('/deleteProduct/:id',  adminController.deleteProduct)
 
 
 
