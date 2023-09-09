@@ -450,7 +450,7 @@ exports. updatePassword = async (req, res) => {
         const userData = await User.findOneAndUpdate({ email: email }, { $set: { password: securedPassword } });
         if (userData) {
             req.session.passwordUpdated = true;
-            res.render("login",{blocked:false,loggedIn:false,categoryData,walletBalance,subTotal:0,cart:{}});
+            res.render("login",{blocked:false,loggedIn:false});
         } else {
             console.log("Something error happened");
         }
