@@ -6,6 +6,16 @@ const Product = require("../models/productModel");
 
 
 exports. shop = async (req, res) => {
-    res.render("shop")
+   
+    try {
+      
+        const  productData = await Product.find();
+        res.render('shop', {  productData });
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+      }
 };
+
+   
 

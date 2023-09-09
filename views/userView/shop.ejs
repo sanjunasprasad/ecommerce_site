@@ -1,0 +1,134 @@
+<%-include('header') -%>
+
+
+    <div class="off_canvars_overlay">
+
+    </div>
+  
+
+    <!--offcanvas menu area end-->
+    <%-include('headsection') -%>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+    
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    
+        /* Product Card Styles */
+        .product-card {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            margin: 10px;
+            padding: 10px; /* Adjusted padding */
+            text-align: center;
+            width: 30%; /* Adjusted width for smaller cards */
+            display: inline-block;
+            vertical-align: top;
+        }
+    
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+        }
+    
+        .product-title {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    
+        .product-description {
+            margin-top: 10px;
+        }
+    
+        .product-price {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    
+        /* Pagination Styles */
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .pagination a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            margin: 5px;
+        }
+    
+        /* Sorting Styles */
+        .sorting {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+        .sorting select {
+            padding: 5px;
+        }
+    </style>
+    
+        
+    </head>
+    <body>
+        <div class="container">
+            <h1>Shop here</h1>
+    
+            <!-- Sorting Dropdown -->
+             <div class="sorting">
+                <label for="sort">Sort by:</label>
+                <select id="sort">
+                    <option value="relevance">Relevance</option>
+                    <option value="price_high">Price: High to Low</option>
+                    <option value="price_low">Price: Low to High</option>
+                </select>
+            </div> 
+            <div class="filter-icon">Filter &#x25BC;</div>
+            
+    
+            <!-- Product Cards -->
+            <% productData.forEach(async(product)  =>{ %>
+            <div class="product-card">
+                <a href="/productView?id=<%= product._id %>"><img src="<%= product.imageUrl[0].url %>" alt=""></a>
+                <h5 class="ec-pro-title"> <a href="/productView?id=<%= product._id %>"><%= product.name %></a></h5>
+                <div class="product-price">₹<%= product.price %></div>
+                <div class="product-description"><%= product.description %></div>
+                <button>Add to Cart</button>
+                <button>Add to Wishlist</button>  
+            </div>
+            <% }); %>
+           
+    
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#">Previous</a>
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">Next</a>
+            </div>
+        </div>
+   
+    
+   
+    
+    
+    <!--footer area start-->
+    <%-include('footer') -%>
+
+    

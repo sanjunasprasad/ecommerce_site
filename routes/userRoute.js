@@ -32,8 +32,6 @@ user_route.get('/resendForgotPasswordotp', isLogout ,userController.resendForgot
 user_route.post('/newPassword',isLogout, userController.updatePassword)
 
 //user side productview
-// user_route.get('/allProducts', blockCheck, productController.loadAllProducts)
-// user_route.get("/products", blockCheck, productController.loadProducts)
 user_route.get("/shop", productController.shop)
 
 
