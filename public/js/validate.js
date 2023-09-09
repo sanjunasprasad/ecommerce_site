@@ -335,11 +335,11 @@ $(document).ready(function () {
 
 
     $.validator.addMethod("nameCheck", function (value) {
-        return /^[a-zA-Z]{3,13}$/.test(value);
+        return /^[a-zA-Z ]{3,100}$/.test(value);
     });
 
     $.validator.addMethod("CatDescCheck", function (value) {
-        return /^[a-zA-Z ]{3,100}$/.test(value);
+        return /^[a-zA-Z, ]{2,1000}$/.test(value);
     });
 
 
