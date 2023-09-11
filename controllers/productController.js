@@ -17,5 +17,21 @@ exports. shop = async (req, res) => {
       }
 };
 
-   
+  exports.prodetail= async(req,res)=>{
+
+      const productId = req.query.id;
+      try 
+      {
+        // const userData = req.session.user
+        const productData = await Product.findById(productId);
+        console.log("product is",productData)
+        const image = productData.imageUrl
+        res.render("productdetail", { productData, image, message: "" });
+      } 
+      catch (error) 
+      {
+        res.status(500).send(error.message);
+      }
+  };
+  
 

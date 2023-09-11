@@ -1,101 +1,96 @@
 <%-include('header')%>
-<body>
-    <style>
-        
-     
-.ec-register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 90vh;
-}
+<%-include('headsection')%>
+<style>
+    /* Add styles for the container */
+    .ec-register-container {
+        width: 100%;
+        max-width: 400px; /* Adjust the maximum width as needed */
+        margin: 50px auto; /* Center the container horizontally and add margin */
+        padding: 20px; /* Add some padding for spacing */
+        border: 1px solid #ccc; /* Add a border */
+        border-radius: 5px; /* Add border-radius for rounded corners */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a box shadow for depth */
+    }
 
-.ec-register-form {
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-}
+    .ec-register-wrap.ec-register-half {
+        width: 100%;
+    }
+
+    .ec-register-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 5px;
+    }
+
+    .ec-register-field {
+        flex: 1;
+        margin-right: 0 4px;
+    }
+    /* .ec-bg-title.text-center {
+    border-bottom: 1px solid #b1a9a9; 
+} */
+
+   
+
 </style>
-    <%-include('headsection')%>
-
-<!-- Start Register -->
-<section class="ec-page-content section-space-p">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <div class="section-title">
-                    
-                    
+<body>
+    <div class="ec-register-wrap ec-register-half">
+        <div class="ec-register-container">
+            <form id="signupForm">
+            <h2 class="ec-bg-title text-center">Register</h2>
+            <div class="ec-register-row">
+                <div class="ec-register-field">
+                    <label>First Name*</label>
+                    <input type="text" name="firstname" placeholder="Enter your first name" />
+                    <p id="firstnameError" class="p-1 text-danger"></p>
+                </div>
+                <div class="ec-register-field">
+                    <label>Last Name*</label>
+                    <input type="text" name="lastname" placeholder="Enter your last name" />
+                    <p id="lastnameError" class="p-1 text-danger"></p>
                 </div>
             </div>
-            <div class="ec-register-wrapper">
-                <div class="ec-register-container">
-                    
-                    <div class="ec-register-form">
-                        <form id="signupForm">
-                            <h2 class="ec-bg-title text-center">Register Here</h2>
-                            <span class="ec-register-wrap ec-register-half">
-                                <label>First Name*</label>
-                                <input type="text" name="firstname" placeholder="Enter your first name" />
-                                <p id="firstnameError" class="p-1 text-danger"></p>
-                            </span>
-                            <span class="ec-register-wrap ec-register-half">
-                                <label>Last Name*</label>
-                                <input type="text" name="lastname" placeholder="Enter your last name" />
-                                <p id="lastnameError" class="p-1 text-danger"></p>
-                            </span>
-                            <span class="ec-register-wrap ec-register-half">
-                                <label>Email*</label>
-                                <input type="email" name="email" id="email" placeholder="Enter your email add..." />
-                                <p id="emailError" class="p-1 text-danger"></p>
-                            </span>
-                     
-                            <span class="ec-register-wrap ec-register-half">
-                                <label>Phone Number*</label>
-                                <input type="text" name="phonenumber" id="phonenumber" placeholder="Enter your phone number"
-                                    />
-                                    <p id="phoneError" class="p-1 text-danger"></p>
-                            </span>
-                            <span class="ec-register-wrap ec-register-half">
-                                <label>Password*</label>
-                                <input type="password" name="password" id="password" placeholder="Enter your password"
-                                    />
-                                    <p id="passwordError" class="p-1 text-danger"></p>
-                            </span>
-                           
-                            <span class="ec-register-wrap ec-register-half">
-                                <label>Re-Type Password*</label>
-                                <input type="password" name="repassword" id="password2" placeholder="Re-Type your password"
-                                    />
-                                    <p id="repasswordError" class="p-1 pb-0 text-danger"></p>
-                            </span>
-                            
-                           <div style="display: flex;">
-                            <input type="checkbox" style="width: 15px; margin-left: 10px; " id="showPassword" onchange="togglePasswordVisibility()" />
-                            <label for="showPassword">Show Password</label>
-                           </div>
-                             
-                            <span class="ec-register-wrap ec-register-btn">
-                                <button class="btn btn-primary" type="submit" >Submit</button>
-                            </span>
-                            <br>
-                            <div class="member mb-4">
-                              Already a member? <a class="btn btn-primary" href="/login">Login here</a>
-                          </div>
-                        </form>
-                    </div>
+            <div class="ec-register-row">
+                <div class="ec-register-field">
+                    <label>Email*</label>
+                    <input type="email" name="email" id="email" placeholder="Enter your email add..." />
+                    <p id="emailError" class="p-1 text-danger"></p>
+                </div>
+                <div class="ec-register-field">
+                    <label>Phone Number*</label>
+                    <input type="text" name="phonenumber" id="phonenumber" placeholder="Enter your phone number" />
+                    <p id="phoneError" class="p-1 text-danger"></p>
                 </div>
             </div>
+            <div class="ec-register-row">
+                <div class="ec-register-field">
+                    <label>Password*</label>
+                    <input type="password" name="password" id="password" placeholder="Enter your password" />
+                    <p id="passwordError" class="p-1 text-danger"></p>
+                </div>
+                <div class="ec-register-field">
+                    <label>Re-Type Password*</label>
+                    <input type="password" name="repassword" id="password2" placeholder="Re-Type your password" />
+                    <p id="repasswordError" class="p-1 pb-0 text-danger"></p>
+                </div>
+            </div>
+            <div style="display: flex;">
+                <input type="checkbox" style="width: 15px; margin-left: 10px; " id="showPassword" onchange="togglePasswordVisibility()" />
+                <label for="showPassword">Show Password</label>
+            </div>
+            <span class="ec-register-wrap ec-register-btn">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </span>
+            <br>
+            <div class="member mb-4">
+                Already a member? <a class="btn btn-primary" href="/login">Login here</a>
+            </div>
+            </form>
         </div>
     </div>
-</section>
-<!-- End Register -->
-
-
+</body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     
@@ -154,3 +149,4 @@ console.log(error);
                          
 </script>
 <%-include('footer')%>
+

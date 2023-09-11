@@ -1,13 +1,11 @@
 <%-include('header') -%>
 
 
-    <div class="off_canvars_overlay">
-
-    </div>
-  
-
+    <div class="off_canvars_overlay"></div>
     <!--offcanvas menu area end-->
+    <body>
     <%-include('headsection') -%>
+     
     <style>
         /* Add your CSS styles here */
         body {
@@ -81,14 +79,33 @@
         .sorting select {
             padding: 5px;
         }
+
+        .rounded-button {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 20px; /* Adjust the radius for desired roundness */
+    padding: 10px 20px; /* Adjust padding as needed */
+    cursor: pointer;
+}
     </style>
-    
-        
-    </head>
-    <body>
+    <!-- Start All Title Box -->
+ <div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>SHOP</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">SHOP</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
         <div class="container">
-            <h1>Shop here</h1>
-    
+           
             <!-- Sorting Dropdown -->
              <div class="sorting">
                 <label for="sort">Sort by:</label>
@@ -104,12 +121,14 @@
             <!-- Product Cards -->
             <% productData.forEach(async(product)  =>{ %>
             <div class="product-card">
-                <a href="/productView?id=<%= product._id %>"><img src="<%= product.imageUrl[0].url %>" alt=""></a>
-                <h5 class="ec-pro-title"> <a href="/productView?id=<%= product._id %>"><%= product.name %></a></h5>
+                <a href="/prodetail?id=<%= product._id %>"><img src="<%= product.imageUrl[0].url %>" alt=""></a>
+                <h3 class="ec-pro-title"> <a href="/prodetail?id=<%= product._id %>"><%= product.name %></a></h5>
                 <div class="product-price">₹<%= product.price %></div>
                 <div class="product-description"><%= product.description %></div>
-                <button>Add to Cart</button>
-                <button>Add to Wishlist</button>  
+                <a href="#" class="rounded-button">Add to Cart</a>
+                <a href="#" class="rounded-button">Add to Wishlist</a>
+             
+
             </div>
             <% }); %>
            
@@ -126,7 +145,7 @@
    
     
    
-    
+   </body> 
     
     <!--footer area start-->
     <%-include('footer') -%>
