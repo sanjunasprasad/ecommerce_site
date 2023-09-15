@@ -4,6 +4,7 @@ const nodemailer = require("nodemailer");
 
 
 
+
 //password encryption
 const securePassword = async (password) => {
   try {
@@ -16,24 +17,43 @@ const securePassword = async (password) => {
 
 //Main home+aboutus+userhome
 exports.homeload = (req, res) => {
-    res.render("mainhome")
+    const logged = req.session.user
+    if(req.session.user)
+    {
+        res.render("mainhome",{logged})
+    }
+    else
+    {
+        res.render("mainhome",{logged:null})
+    }
+    
   }
+  
   exports.userhomeload = (req, res) => {
     res.render("userhome")
   }
   exports.aboutus = (req, res) => {
-    res.render("aboutus")
+    const logged = req.session.user
+    if(req.session.user)
+    {
+        res.render("aboutus",{logged})
+    }
+    else
+    {
+        res.render("aboutus",{logged:null})
+    }
   }
 //render login page
 exports.loginload = async(req, res) =>{
     
     // const categoryData = await Category.find({ is_blocked: false });
+        const logged = req.session.user
         try {
-            if (req.session.passwordUpdated) {
-                res.render("login");
-                req.session.passwordUpdated = false;
+            if (req.session.user) {
+                res.redirect("/login",{logged,success:"Login successful!!!"});
+                // req.session.passwordUpdated = false;
             } else {
-                res.render("login");
+                res.render("login",{logged:null});
             }
         } catch (error) {
             console.log(error.message);
@@ -120,8 +140,9 @@ exports. doLogout = async (req, res) => {
 exports.registerload = (req, res) => {
     try 
     {
+        const logged = req.session.user
       if (req.session.user) {
-        res.redirect("mainhome");
+        res.redirect("mainhome",{logged});
       } else {
         res.render("register");
       }

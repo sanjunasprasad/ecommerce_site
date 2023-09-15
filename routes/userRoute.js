@@ -1,5 +1,6 @@
 const userController = require("../controllers/userController");
 const productController = require('../controllers/productController')
+const cartController = require('../controllers/cartController')
 const express = require("express");
 const user_route = express.Router();
 const auth = require("../middleware/userAuth")
@@ -35,9 +36,10 @@ user_route.post('/newPassword',isLogout, userController.updatePassword)
 user_route.get("/shop", productController.shop)    
 user_route.get("/prodetail",productController.prodetail)
 
-
-
-
+//cart
+user_route.get('/cart', isLogin, blockCheck, cartController.loadcart)
+user_route.get("/addToCart",cartController.addToCart)
+user_route.get("/myaccount",productController.myaccount)
 
 
 

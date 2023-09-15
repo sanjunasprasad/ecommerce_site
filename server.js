@@ -4,6 +4,7 @@ require('dotenv').config();
 const mongoose = require('mongoose')
 const session = require('express-session')
 const nocache = require("nocache")
+const flash = require('express-flash');
 const path = require('path')
 const { v4: uuid } = require("uuid")
 const axios = require('axios');
@@ -41,6 +42,7 @@ app.use('/js', express.static(path.join(__dirname, 'public/js')));
 
 
 
+
 //mount session
 app.use(
     session({
@@ -55,7 +57,7 @@ app.use((req,res,next) =>{
     delete req.session.message
     next()
 })
-
+app.use(flash());
 
 
 //routes

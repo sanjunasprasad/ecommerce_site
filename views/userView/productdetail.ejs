@@ -65,11 +65,21 @@
                                         <label class="control-label">Quantity</label>
                                         <input class="" value="0" min="0" max="20" type="number">
                                     </div>
-                               
-
                                 <div class="price-box-bar">
                                     <div class="cart-and-bay-btn">
-                                        <a class="btn hvr-hover" data-fancybox-close="" href="#">Add to cart</a>
+                                        <% if (productData.stock) { %>
+                                            <% if (userData) { %>
+                                                <% if (productData.isOnCart) { %>
+                                        <a class="btn hvr-hover" data-fancybox-close="" href="/cart?id=<%= userData._id %>">Go to cart</a>
+                                        <% } else { %>
+                                        <a class="btn hvr-hover" data-fancybox-close=""  onclick="addToCart('<%= productData._id %>')" id="addToCartBtn">Add to cart</a>
+                                        <% } %>
+                                        <% } else { %>
+                                            <a class="btn hvr-hover" data-fancybox-close="" href="/login">Add to cart</a>
+                                            <% } %>
+                                            <% } else { %>
+                                            <a class="btn " data-fancybox-close="" href="">Out Of Stock</a>
+                                            <% } %>
                                         <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
                                     </div>
                                 </div>      
@@ -82,3 +92,67 @@
     </div>
     <!-- End Cart -->
 <%-include('footer')%>
+
+<!-- Main Js -->
+<script src="/js/vendor/index.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/users.js"></script>
+<script src="/js/userOrder.js"></script>
+<!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- Include SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+</body>
+
+
+<script>
+    const productQuantity = async (id, act) => {
+        const elem = document.getElementById(id);
+        if (act == "inc") elem.value ? (elem.value = Number(elem.value) + 1) : "";
+        else if (act == "dec") elem.value > 1 ? (elem.value = Number(elem.value) - 1) : "";
+
+        elem.setAttribute("value", elem.value);
+    };
+
+    const addToCart = async (productId) => {
+        const addToCartButton = document.getElementById("addToCartBtn");
+        const productName = document.getElementsByName("productName")[0].value;
+        const quantity = document.getElementById(productId).value;
+
+        const response = await fetch(`/addToCart?id=${productId}&quantity=${quantity}`, {
+            method: "GET",
+            headers: {
+                "content-Type": "application/json",
+            },
+        });
+
+        let data = await response.json();
+
+        if (data.message === "Item already in cart!!") {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Product is already in cart.\n So quantity increased",
+                showConfirmButton: true,
+                confirmButtonColor: "#00A300",
+            });
+        } else {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Product successfully added to cart",
+                showConfirmButton: true,
+                confirmButtonColor: "#00A300",
+            });
+        }
+    };
+</script>
+
+
+
+
+

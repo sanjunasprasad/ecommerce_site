@@ -63,19 +63,38 @@ exports.loadUsers = async (req, res) => {
 };
 
 //user block
+// exports.blockUser = async (req, res) => {
+//     try {
+//         const id = req.params.id;
+
+//         const blockUser = await User.findById(id);
+
+//         await User.findByIdAndUpdate(id, { $set: { is_blocked: !blockUser.is_blocked } }, { new: true });
+
+//         res.redirect("/admin/users");
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
 exports.blockUser = async (req, res) => {
     try {
         const id = req.params.id;
 
         const blockUser = await User.findById(id);
+        blockUser.is_blocked = !blockUser.is_blocked;
+        await blockUser.save();
 
-        await User.findByIdAndUpdate(id, { $set: { is_blocked: !blockUser.is_blocked } }, { new: true });
+        const successMessage = blockUser.is_blocked
+            ? 'User blocked successfully!!!'
+            : 'User unblocked successfully!!!';
+        req.flash('success', successMessage);
 
         res.redirect("/admin/users");
     } catch (error) {
         console.log(error);
     }
 };
+
 
 
 //*************CATEGORY MANAGEMENT********************//

@@ -4,6 +4,13 @@
     .nav-2 h2 a{
         color: black;
     }
+
+    .custom-alert {
+        background-color: transparent; /* Transparent background */
+        border: none; /* No border */
+        padding: 10px; /* Add padding for spacing */
+        color: green; /* Text color for success message */
+    }
 </style>
 
 <div class="container-fluid">
@@ -22,6 +29,12 @@
 <div class="row">
     <div class="col-lg-10 m-auto">
         <div class="table-container">
+            <% if (messages.success) { %>
+                <div class="custom-alert">
+                    <%= messages.success %>
+                </div>
+            <% } %>
+            
             <table class="table table-hover mt-4">
                 <thead>
                     <tr>
@@ -44,10 +57,17 @@
                         <td><%= user.phoneNumber %></td>
                         <td>
                             <% if (user.is_blocked) { %>
-                            <a href="/admin/blockUser/<%= user.id %>"><button class="btn btn-sm btn-success">Unblock</button></a>
-                            <% } else { %>
-                            <a href="/admin/blockUser/<%= user.id %>"><button class="btn btn-sm btn-danger">Block</button></a>
-                            <% } %>
+                                <a href="/admin/blockUser/<%= user.id %>"
+                                   onclick="return confirm('Are you sure you want to unblock this person?')">
+                                  <button class="btn btn-sm btn-success">Unblock</button>
+                                </a>
+                              <% } else { %>
+                                <a href="/admin/blockUser/<%= user.id %>"
+                                   onclick="return confirm('Are you sure you want to block this person?')">
+                                  <button class="btn btn-sm btn-danger">Block</button>
+                                </a>
+                              <% } %>
+                              
                         </td>
                     </tr>
                     <% }); %>
