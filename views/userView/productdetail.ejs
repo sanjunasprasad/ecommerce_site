@@ -50,6 +50,7 @@
                 </div>
                 <div class="col-xl-7 col-lg-7 col-md-6">
                     <div class="single-product-details">
+                        <input name="productName" value="<%= productData.name %>" type="hidden">
                         <h2><%= productData.name %></h2>
                         <h5>₹ <%= productData.price %></h5>
                         <!-- <p class="available-stock"><span> More than 20 available / <a href="#">8 sold </a></span></p> -->
@@ -63,7 +64,20 @@
                                 <p><%= productData.description %></p>
                                     <div class="form-group ">
                                         <label class="control-label">Quantity</label>
-                                        <input class="" value="0" min="0" max="20" type="number">
+                                        <!-- <input class="" value="0" min="0" max="20" type="number"> -->
+                                        <div class="input-group  input-spinner">          
+                                            <div class="input-group-prepend">
+                                                <button onclick="productQuantity('<%= productData._id %>','dec')" style="min-width: 26px" class="btn btn-decrement btn-spinner" type="button">
+                                                    <i  class="icon-minus">-</i>
+                                                </button>
+                                            </div>
+                                            <input  disabled type="number" id="<%= productData._id %>" class="form-control"  name="num-product" value="1">
+                                            <div class="input-group-append">
+                                                <button onclick="productQuantity('<%= productData._id %>','inc')" style="min-width: 26px" class="btn btn-increment btn-spinner" type="button">
+                                                    <i class="icon-plus">+</i>
+                                                </button>
+                                            </div>
+                                        </div>                                  
                                     </div>
                                 <div class="price-box-bar">
                                     <div class="cart-and-bay-btn">

@@ -37,7 +37,7 @@ user_route.get("/shop", productController.shop)
 user_route.get("/prodetail",productController.prodetail)
 
 //cart
-user_route.get('/cart', isLogin, blockCheck, cartController.loadcart)
+user_route.get('/cart',  cartController.loadCart)
 user_route.get("/addToCart",cartController.addToCart)
 user_route.get("/myaccount",productController.myaccount)
 

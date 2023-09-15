@@ -5,51 +5,45 @@ const Product = require("../models/productModel");
 const Address = require("../models/addressmodel");
 
 
-exports.loadcart= async(req,res)=>{
-    const logged=req.session.user
-    if(req.session.user)
-    {
-      res.render("cart",{logged})
+var  walletBalance=0
+exports. loadCart = async (req, res) => {
+    try {
+        // req.session.checkout = true
+        const userData = req.session.user;
+        const userId = userData._id;
+        // const usertest= await User.findById(userId).lean();
+        // console.log("User before population:", usertest);
+
+        // walletBalance=userData.wallet.balance
+        const categoryData = await Category.find({ is_blocked: false });
+
+        const user = await User.findById(userId).populate("cart.product").lean();
+
+        // await User.populate(user, { path: "cart.product" });
+        // console.log("User after population:", user);
+        const cart = user.cart;
+        console.log("cart:",cart);
+        let subTotal = 0;
+
+        cart.forEach((val) => {
+            val.total = val.product.price * val.quantity;
+            subTotal += val.total;
+        });
+     
+        console.log("length of cart:",cart.length);
+        if (cart.length === 0) {
+            res.render("emptyCart", { userData, categoryData ,loggedIn:true,cart:{},subTotal:0});
+        } else {
+            res.render("cart", { userData, cart, subTotal, categoryData,loggedIn:true});
+        }
+    } catch (error) {
+        console.log(error.message);
+        const userData = req.session.user;
+        const categoryData = await Category.find({ is_blocked: false });
+        res.render("404", { userData, categoryData ,loggedIn:true});
     }
-    else
-    {
-      res.render("cart",{logged:null})
-    }
-    
 };
 
-// var  walletBalance=0
-// exports. loadCart = async (req, res) => {
-//     try {
-//         req.session.checkout = true
-//         const userData = req.session.user;
-//         const userId = req.query.id;
-//         walletBalance=userData.wallet.balance
-//         const categoryData = await Category.find({ is_blocked: false });
-
-//         const user = await User.findOne({ userId }).populate("cart.product").lean();
-//        console.log(user);
-//         const cart = user.cart;
-       
-//         let subTotal = 0;
-
-//         cart.forEach((val) => {
-//             val.total = val.product.price * val.quantity;
-//             subTotal += val.total;
-//         });
-      
-//         if (cart.length === 0) {
-//             res.render("emptyCart", { userData, categoryData ,loggedIn:true, walletBalance,cart:{},subTotal:0});
-//         } else {
-//             res.render("cart", { userData, cart, subTotal, categoryData,loggedIn:true ,walletBalance});
-//         }
-//     } catch (error) {
-//         console.log(error.message);
-//         const userData = req.session.user;
-//         const categoryData = await Category.find({ is_blocked: false });
-//         res.render("404", { userData, categoryData ,loggedIn:true,walletBalance});
-//     }
-// };
 
 exports. addToCart = async (req, res) => {
     try {
