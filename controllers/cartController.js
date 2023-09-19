@@ -9,18 +9,19 @@ var  walletBalance=0
 exports. loadCart = async (req, res) => {
     try {
         // req.session.checkout = true
+        logged=req.session.user
         const userData = req.session.user;
         const userId = userData._id;
-        // const usertest= await User.findById(userId).lean();
-        // console.log("User before population:", usertest);
+        console.log("id is:",userId)
+        const usertest= await User.findById(userId).lean();
+        console.log("User before population:", usertest);
 
         // walletBalance=userData.wallet.balance
         const categoryData = await Category.find({ is_blocked: false });
 
         const user = await User.findById(userId).populate("cart.product").lean();
-
-        // await User.populate(user, { path: "cart.product" });
-        // console.log("User after population:", user);
+        await User.populate(user, { path: "cart.product" });
+        console.log("User after population:", user);
         const cart = user.cart;
         console.log("cart:",cart);
         let subTotal = 0;
@@ -32,9 +33,9 @@ exports. loadCart = async (req, res) => {
      
         console.log("length of cart:",cart.length);
         if (cart.length === 0) {
-            res.render("emptyCart", { userData, categoryData ,loggedIn:true,cart:{},subTotal:0});
+            res.render("emptyCart", { userData, categoryData ,cart:{},subTotal:0,logged});
         } else {
-            res.render("cart", { userData, cart, subTotal, categoryData,loggedIn:true});
+            res.render("cart", { userData, cart, subTotal, categoryData,logged});
         }
     } catch (error) {
         console.log(error.message);
@@ -88,5 +89,101 @@ exports. addToCart = async (req, res) => {
         console.log(error.message);
         const userData = req.session.user;
         return res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+exports. updateCart = async (req, res) => {
+    try {
+        console.log(111);
+        const userData = req.session.user;
+        const data = await User.find({ _id: userData._id }, { _id: 0, cart: 1 }).lean();
+
+        data[0].cart.forEach((val, i) => {
+            val.quantity = req.body.datas[i].quantity;
+        });
+
+        await User.updateOne({ _id: userData._id }, { $set: { cart: data[0].cart } });
+        res.status(200).send();
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports. removeCart = async (req, res) => {
+    try {
+        const userData = req.session.user;
+        const userId = userData._id;
+        const productId = req.query.productId;
+        const cartId = req.query.cartId;
+
+        await Product.findOneAndUpdate({ _id: productId }, { $set: { isOnCart: false } }, { new: true });
+
+        await User.updateOne({ _id: userId }, { $pull: { cart: { _id: cartId } } });
+
+        res.status(200).send();
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+// exports.loadCheckout=(req,res)=>{
+//     if(req.session.user)
+//     {
+//         res.render("checkout",{logged})
+//     }
+    
+// }
+
+
+
+exports. loadCheckout = async (req, res) => {
+    try {
+        const userData = req.session.user;
+        const userId = userData._id;
+        const categoryData = await Category.find({ is_blocked: false });
+        const addressData = await Address.find({ userId: userId });
+
+        const userCart = await User.findOne({ _id: userId }).populate("cart.product").lean();
+        const cart = userCart.cart;
+
+        let subTotal = 0;
+        let offerDiscount = 0
+
+        cart.forEach((element) => {
+            element.total = element.product.price * element.quantity;
+            subTotal += element.total;
+        });
+
+        cart.forEach((element) => {
+            if(element.product.oldPrice > 0){
+            element.offerDiscount = (element.product.oldPrice - element.product.price) * element.quantity;
+            offerDiscount += element.offerDiscount;
+            }
+        });
+
+        const now = new Date();
+        // const availableCoupons = await Coupon.find({
+        //     expiryDate: { $gte: now },
+        //     usedBy: { $nin: [userId] },
+        //     status: true,
+        // });
+
+       
+
+        res.render("checkout", { 
+            userData, 
+            categoryData, 
+            addressData, 
+            subTotal, 
+           
+            cart, 
+           
+            loggedIn:true,
+          
+             
+        });
+        
+    } catch (error) {
+        console.log(error.message);
     }
 };

@@ -1,7 +1,31 @@
 
 <%-include('header')%>
-
 <%-include('headsection')%>
+<style>
+
+
+#my-account-section .dashboard-list li {
+    margin-bottom: 10px;
+}
+
+#my-account-section .btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    /* Set your desired background color */
+    text-align: left;
+    text-decoration: none;
+    color:whitesmoke; /* Set your desired text color */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 5px;
+}
+
+#my-account-section .btn:hover {
+    background-color: #e0e0e0; /* Change the background color on hover */
+}
+
+</style>
+
 <!-- Start All Title Box -->
 <div class="all-title-box">
     <div class="container">
@@ -9,7 +33,7 @@
             <div class="col-lg-12">
                 <h2>My Account</h2>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
+                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
                     <li class="breadcrumb-item active">My Account</li>
                 </ul>
             </div>
@@ -17,182 +41,46 @@
     </div>
 </div>
 <!-- End All Title Box -->
-<!-- Start My Account  -->
-<div class="my-account-box-main">
-    <div class="container">
-        <div class="my-account-page">
+<div class="cart-box-main">
+<div id="my-account-section" class="container">
+    <section class="main_content_area">
+        <div class="account_dashboard">
             <div class="row">
-                <div class="col-lg-4 col-md-12">
-                    <div class="account-box">
-                        <div class="service-box">
-                            <div class="service-icon">
-                                <a href="#"> <i class="fa fa-gift"></i> </a>
-                            </div>
-                            <div class="service-desc">
-                                <h4>Your Orders</h4>
-                                <p>Track, return, or buy things again</p>
-                            </div>
-                        </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <!-- Nav tabs -->
+                    <div class="dashboard_tab_button">
+                        <ul role="tablist" class="nav flex-column dashboard-list">
+                            <li><a class="btn hvr-hover" href="#"><i class="fas"></i>Profile</a></li>
+                            <li><a class="btn hvr-hover" href="#"><i class="fas"></i>Address</a></li>
+                            <li><a class="btn hvr-hover" href="#"><i class="fas"></i>Orders</a></li>
+                            <li><a class="btn hvr-hover" href="#"><i class="fas"></i>Cart</a></li>
+                            <li><a class="btn hvr-hover" href="#"><i class="fas"></i>Wallet</a></li>
+                            <li><a class="btn hvr-hover" href="/logout"><i class="fas"></i>Logout</a></li>
+                           
+                            
+                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="account-box">
-                        <div class="service-box">
-                            <div class="service-icon">
-                                <a href="#"><i class="fa fa-lock"></i> </a>
-                            </div>
-                            <div class="service-desc">
-                                <h4>Login &amp; security</h4>
-                                <p>Edit login, name, and mobile number</p>
-                            </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade show active" id="dashboard">
+                            <h3>Dashboard</h3>
+                            <p>From your account dashboard, you can easily check &amp; view your <a href="#">recent
+                                    orders</a>, manage your <a href="#">shipping and billing addresses</a> and
+                                <a href="#">Edit your password and account details.</a>
+                            </p>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="account-box">
-                        <div class="service-box">
-                            <div class="service-icon">
-                                <a href="#"> <i class="fa fa-location-arrow"></i> </a>
-                            </div>
-                            <div class="service-desc">
-                                <h4>Your Addresses</h4>
-                                <p>Edit addresses for orders and gifts</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="account-box">
-                        <div class="service-box">
-                            <div class="service-icon">
-                                <a href="#"> <i class="fa fa-credit-card"></i> </a>
-                            </div>
-                            <div class="service-desc">
-                                <h4>Payment options</h4>
-                                <p>Edit or add payment methods</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="account-box">
-                        <div class="service-box">
-                            <div class="service-icon">
-                                <a href="#"> <i class="fab fa-paypal"></i> </a>
-                            </div>
-                            <div class="service-desc">
-                                <h4>PayPal</h4>
-                                <p>View benefits and payment settings</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="account-box">
-                        <div class="service-box">
-                            <div class="service-icon">
-                                <a href="#"> <i class="fab fa-amazon"></i> </a>
-                            </div>
-                            <div class="service-desc">
-                                <h4>Amazon Pay balance</h4>
-                                <p>Add money to your balance</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bottom-box">
-                <div class="row">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-desc">
-                                    <h4>Gold &amp; Diamond Jewellery</h4>
-                                    <ul>
-                                        <li> <a href="#">Apps and more</a> </li>
-                                        <li> <a href="#">Content and devices</a> </li>
-                                        <li> <a href="#">Music settings</a> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-desc">
-                                    <h4>Handloom &amp; Handicraft Store</h4>
-                                    <ul>
-                                        <li> <a href="#">Advertising preferences </a> </li>
-                                        <li> <a href="#">Communication preferences</a> </li>
-                                        <li> <a href="#">SMS alert preferences</a> </li>
-                                        <li> <a href="#">Message center</a> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-desc">
-                                    <h4>The Designer Boutique</h4>
-                                    <ul>
-                                        <li> <a href="#">Amazon Pay</a> </li>
-                                        <li> <a href="#">Bank accounts for refunds</a> </li>
-                                        <li> <a href="#">Coupons</a> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-desc">
-                                    <h4>Gift Boxes, Gift Tags, Greeting Cards</h4>
-                                    <ul>
-                                        <li> <a href="#">Leave delivery feedback</a> </li>
-                                        <li> <a href="#">Lists</a> </li>
-                                        <li> <a href="#">Photo ID proofs</a> </li>
-                                        <li> <a href="#">Profile</a> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-desc">
-                                    <h4>Other accounts</h4>
-                                    <ul>
-                                        <li> <a href="#">Amazon Business registration</a> </li>
-                                        <li> <a href="#">Seller account</a> </li>
-                                        <li> <a href="#">Amazon Web Services</a> </li>
-                                        <li> <a href="#">Login with Amazon</a> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-desc">
-                                    <h4>Shopping programs and rentals</h4>
-                                    <ul>
-                                        <li> <a href="#">Subscribe &amp; Save</a> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Add other tab content here -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>
-<!-- End My Account -->
+</div>
+<!-- End My Account Section -->
+
+   
 
 <%-include('footer')%>

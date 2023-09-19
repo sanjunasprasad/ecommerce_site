@@ -28,7 +28,6 @@ exports.homeload = (req, res) => {
     }
     
   }
-  
   exports.userhomeload = (req, res) => {
     res.render("userhome")
   }
@@ -45,15 +44,13 @@ exports.homeload = (req, res) => {
   }
 //render login page
 exports.loginload = async(req, res) =>{
-    
-    // const categoryData = await Category.find({ is_blocked: false });
-        const logged = req.session.user
+       
         try {
             if (req.session.user) {
-                res.redirect("/login",{logged,success:"Login successful!!!"});
+                res.redirect("/login",{success:"Login successful!!!"});
                 // req.session.passwordUpdated = false;
             } else {
-                res.render("login",{logged:null});
+                res.render("login");
             }
         } catch (error) {
             console.log(error.message);
@@ -144,7 +141,7 @@ exports.registerload = (req, res) => {
       if (req.session.user) {
         res.redirect("mainhome",{logged});
       } else {
-        res.render("register");
+        res.render("register",{logged:null});
       }
     } 
     catch (error) 
@@ -262,8 +259,17 @@ let repassword
      
     exports.showOtp = async (req, res) => {
       try {
-          // const categoryData = await Category.find({ is_blocked: false });
-          res.render("otp");
+         
+          const logged = req.session.user
+          if(req.session.user)
+          {
+            res.render("otp",{logged});
+          }
+          else
+          {
+            res.render("otp",{logged:null});
+          }
+         
       } catch (error) {
         console.log(error);
       }
@@ -312,7 +318,6 @@ exports.verifyOtp = async (req, res) => {
   const EnteredOtp=txt1+txt2+txt3+txt4
   console.log(`entered otp${EnteredOtp}`);
   console.log(`saveotp${saveOtp}`);
-//   const categoryData = await Category.find({ is_blocked: false });
   if (EnteredOtp === saveOtp) {
 
       const securedPassword = await securePassword(password);        
@@ -415,13 +420,16 @@ async function sendForgotPasswordOtp(email, otp) {
 
 exports. showForgotpasswordOtp = async (req, res) => {
     try {
-        // const categoryData = await Category.find({ is_blocked: false });
+      
+        logged=req.session.user
+        
         if (req.session.wrongOtp) {
-            res.render("forgotOtpEnter", { invalidOtp: "Otp does not match"});
+            res.render("forgotOtpEnter", { invalidOtp: "Otp does not match",logged});
             req.session.wrongOtp = false;
         } else {
-            res.render("forgotOtpEnter", { countdown: true ,loggedIn:false, invalidOtp:""});
+            res.render("forgotOtpEnter", { countdown: true ,loggedIn:false, invalidOtp:"",logged:null});
         }
+       
     } catch (error) {
         console.log("error is:",error.message);
     }
@@ -429,7 +437,7 @@ exports. showForgotpasswordOtp = async (req, res) => {
 
 exports. verifyForgotOtp = async (req, res) => {
     try {
-        // const categoryData = await Category.find({ is_blocked: false });
+       
         var txt1=req.body.txt1;
         var txt2 =req.body.txt2
         var txt3=req.body.txt3
@@ -464,7 +472,7 @@ exports. resendForgotOtp = async (req, res) => {
 
 exports. updatePassword = async (req, res) => {
     try {
-        // const categoryData = await Category.find({ is_blocked: false });
+      
         const newPassword = req.body.password;
         const securedPassword = await securePassword(newPassword);
 

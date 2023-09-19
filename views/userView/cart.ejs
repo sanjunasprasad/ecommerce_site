@@ -1,5 +1,15 @@
 <%-include('header')%> 
 <%-include('headsection')%> 
+<style>
+    .size
+    {
+        width: 130px;
+    }
+    .textstyle
+    {
+        color:white
+    }
+</style>
 
     <!-- Start All Title Box -->
     <div class="all-title-box">
@@ -27,7 +37,7 @@
                             <thead>
                                 <tr>
                                     <th>Images</th>
-                                    <th>Product Name</th>
+                                    <th>Product</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -36,39 +46,52 @@
                             </thead>
                             <tbody>
                                 <% cart.forEach((item) => { %>
-                                <input type="hidden" value="<%= item.product %>" name="cartData">
                                 <tr id="row<%= item.product._id %>" class="table_row">
-                                    <td class="thumbnail-img"><a href="#"><img class="img-fluid" src="<%= item.product.imageUrl[0].url %>" alt="" /></a></td>
-                                    <td class="name-pr"><a href="/productview?id=<%= item.product._id %>"><%= item.product.name %></a></td>
-                                    <td class="price-pr" value="<%= item.product.price %>"><p>₹ <%= item.product.price %></p></td>
-                                    <input type="hidden" name="productprice" value="<%= item.product.price %>">
-                                    <input type="hidden" name="productId" value="<%= item.product._id %>">
+                                    <td class="thumbnail-img">
+                                        <a href="#"><img class="img-fluid" src="<%= item.product.imageUrl[0].url %>" alt="" /></a>
+                                    </td>
+                                    <td class="name-pr">
+                                        <a href="/productview?id=<%= item.product._id %>"><%= item.product.name %></a>
+                                    </td>
+                                    <td class="price-pr" value="<%= item.product.price %>">
+                                        <p>₹ <%= item.product.price %></p>
+                                    </td>
                                     <td class="quantity-box">
-                                        <div class="input-group input-spinner">
+                                        <div class="input-group input-spinner size">
                                             <div class="input-group-prepend">
                                                 <button onclick="totalPrice('<%= item.product._id %>','dec')" style="min-width: 26px" class="btn btn-decrement btn-spinner" type="button">
-                                                    <i class="fi fi-rr-minus"></i>
+                                                    <i class="fi fi-rr-minus">-</i>
                                                 </button>
                                             </div>
                                             <input disabled type="number" id="<%= item.product._id %>" style="text-align: center;" class="form-control" name="num-product" value="<%= item.quantity %>">
                                             <div class="input-group-append">
                                                 <button onclick="totalPrice('<%= item.product._id %>','inc','<%= item.product.stock %>')" style="min-width: 26px" class="btn btn-increment btn-spinner" type="button">
-                                                    <i class="fi fi-rr-add"></i>
+                                                    <i class="fi fi-rr-add">+</i>
                                                 </button>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="total-pr" name="productTotal" id="total-<%= item.product._id %>"><p> <%= item.total %> </p></td>
-                                    <input type="hidden" id="product_id<%= item.product._id %>" value="<%= item.product._id %>">
-                                    <input type="hidden" name="cart_id" value="<%= item._id %>">
-                                    <td class="remove-pr"><a href="#"><button onclick="removeCartalert('<%= item.product._id %>')"><i class="fas fa-times"></i></button></a></td>
+                                    <td class="total-pr" name="productTotal" id="total-<%= item.product._id %>">
+                                        <p><%= item.total %></p>
+                                    </td>
+                                    <td class="remove-pr">
+                                        <button onclick="removeCartalert('<%= item.product._id %>')"><i class="fas fa-times"></i></button>
+                                    </td>
                                 </tr>
+                                <input type="hidden" value="<%= item.product %>" name="cartData">
+                                <input type="hidden" name="productprice" value="<%= item.product.price %>">
+                                <input type="hidden" name="productId" value="<%= item.product._id %>">
+                                <input type="hidden" id="product_id<%= item.product._id %>" value="<%= item.product._id %>">
+                                <input type="hidden" name="cart_id" value="<%= item._id %>">
                                 <% }) %>
                             </tbody>
                         </table>
+                         
                     </div>
                 </div>
             </div>
+            <br><br><a href="/shop">Continue Shopping</a>
+            <!-- <a class="btn hvr-hover" href="/shop"><i class="fas "></i> Continue shopping</a> -->
             <div class="row my-5">
                 <div class="col-lg-8 col-sm-12"></div>
                 <div class="col-lg-4 col-sm-12">
@@ -76,21 +99,25 @@
                         <h3>Order summary</h3>
                         <div class="d-flex">
                             <h4>Sub Total</h4>
-                            <div class="ml-auto font-weight-bold"> $ 130 </div>
+                            <div class="ml-auto font-weight-bold" id="subTotal">₹ <%=subTotal%></div>
                         </div>
                         <div class="d-flex">
-                            <h4>Shipping Cost</h4>
-                            <div class="ml-auto font-weight-bold"> Free </div>
+                            <h4>Delivery Charges</h4>
+                            <div class="ml-auto font-weight-bold">₹ 0.00</div>
                         </div>
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Grand Total</h5>
-                            <div class="ml-auto h5"> $ 388 </div>
+                            <div class="ml-auto h5" id="subTotal2">₹ <%=subTotal%></div>
                         </div>
                         <hr>
                     </div>
                 </div>
-                <div class="col-12 d-flex shopping-box"><a href="checkout.html" class="ml-auto btn hvr-hover">Checkout</a></div>
+                <div class="col-12 d-flex shopping-box">
+                    <div class="col-12 d-flex shopping-box"><a href="/checkout" class="ml-auto btn hvr-hover">Checkout</a> </div>
+                    <!-- <button class="ml-auto btn hvr-hover" style=" color: white" onclick="proceedToCheckout()" >Check Out</button> -->
+
+                </div>
             </div>
         </div>
     </div>
@@ -373,7 +400,7 @@ const proceedToCheckout = async () => {
             "Content-Type": "application/json",
         },
     });
-
+    alert("Checkout button clicked!");
     const data = await response.json();
 
     if (data.message === "In stock") {

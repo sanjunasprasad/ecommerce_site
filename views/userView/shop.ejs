@@ -109,13 +109,15 @@
             <!-- Sorting Dropdown -->
              <div class="sorting">
                 <label for="sort">Sort by:</label>
-                <select id="sort">
-                    <option value="relevance">Relevance</option>
-                    <option value="price_high">Price: High to Low</option>
-                    <option value="price_low">Price: Low to High</option>
+                <select name="sortby" id="sortOptions" onchange="sortProducts()" >
+                    <option value="relevant" selected="selected">Relevance</option>
+                    <option value="desc">Price: High to Low</option>
+                    <option value="asc">Price: Low to High</option>
                 </select>
             </div> 
-            <div class="filter-icon">Filter &#x25BC;</div>
+            <!-- <div class="filter-icon">Filter &#x25BC;</div> -->
+   
+  
             
     
             <!-- Product Cards -->
@@ -160,3 +162,88 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 
 <script src="assets/js/userOrder.js"></script>
+
+<script>
+  const sortProducts = async () => {
+    console.log("inside function");
+    
+    const selectElement = document.getElementById("sortOptions");
+    const selectedValue = selectElement.value;
+
+    if (selectedValue === 'relevant') {
+        location.reload(); // Reload the page for the default sorting
+    } else {
+        try {
+            const response = await fetch('/sortProduct', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    sort: selectedValue,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                // Call a function to render the sorted products
+                renderProducts(data);
+            } else {
+                console.error('Failed to fetch sorted products');
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+}
+
+// Function to render sorted products
+function renderProducts(products) {
+    const productsContainer = document.getElementById("productsContainer");
+
+    // Clear the existing products in the container
+    productsContainer.innerHTML = '';
+
+    // Loop through the sorted products and create HTML elements for each product
+    products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+
+        const productImage = document.createElement('img');
+        productImage.src = product.imageUrl[0].url;
+        productImage.alt = '';
+
+        const productTitle = document.createElement('h3');
+        const productTitleLink = document.createElement('a');
+        productTitleLink.href = `/prodetail?id=${product._id}`;
+        productTitleLink.textContent = product.name;
+        productTitle.appendChild(productTitleLink);
+
+        const productPrice = document.createElement('div');
+        productPrice.classList.add('product-price');
+        productPrice.textContent = `₹${product.price}`;
+
+        const productDescription = document.createElement('div');
+        productDescription.classList.add('product-description');
+        productDescription.textContent = product.description;
+
+        const addToWishlistButton = document.createElement('a');
+        addToWishlistButton.classList.add('rounded-button');
+        addToWishlistButton.href = '#'; // Modify this to the actual wishlist URL
+        addToWishlistButton.textContent = 'Add to Wishlist';
+
+        productCard.appendChild(productImage);
+        productCard.appendChild(productTitle);
+        productCard.appendChild(productPrice);
+        productCard.appendChild(productDescription);
+        productCard.appendChild(addToWishlistButton);
+
+        productsContainer.appendChild(productCard);
+    });
+}
+
+
+
+
+</script>

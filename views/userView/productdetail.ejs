@@ -1,7 +1,14 @@
 <%-include('header')%>
 <%-include('headsection')%>
 
+<style>
+   
+.size
+{
+    width: 130px;
 
+}
+</style>
     <!-- Start All Title Box -->
     <div class="all-title-box">
         <div class="container">
@@ -65,13 +72,13 @@
                                     <div class="form-group ">
                                         <label class="control-label">Quantity</label>
                                         <!-- <input class="" value="0" min="0" max="20" type="number"> -->
-                                        <div class="input-group  input-spinner">          
+                                        <div class="input-group  input-spinner size">          
                                             <div class="input-group-prepend">
                                                 <button onclick="productQuantity('<%= productData._id %>','dec')" style="min-width: 26px" class="btn btn-decrement btn-spinner" type="button">
                                                     <i  class="icon-minus">-</i>
                                                 </button>
                                             </div>
-                                            <input  disabled type="number" id="<%= productData._id %>" class="form-control"  name="num-product" value="1">
+                                            <input  disabled type="number" id="<%= productData._id %>" class="form-control "    style="width: 10px"  name="num-product" value="1">
                                             <div class="input-group-append">
                                                 <button onclick="productQuantity('<%= productData._id %>','inc')" style="min-width: 26px" class="btn btn-increment btn-spinner" type="button">
                                                     <i class="icon-plus">+</i>
@@ -81,19 +88,11 @@
                                     </div>
                                 <div class="price-box-bar">
                                     <div class="cart-and-bay-btn">
-                                        <% if (productData.stock) { %>
-                                            <% if (userData) { %>
-                                                <% if (productData.isOnCart) { %>
-                                        <a class="btn hvr-hover" data-fancybox-close="" href="/cart?id=<%= userData._id %>">Go to cart</a>
-                                        <% } else { %>
+                                        
+                                                    <!-- <a class="btn hvr-hover" data-fancybox-close=""  >Add to cart</a> -->
                                         <a class="btn hvr-hover" data-fancybox-close=""  onclick="addToCart('<%= productData._id %>')" id="addToCartBtn">Add to cart</a>
-                                        <% } %>
-                                        <% } else { %>
-                                            <a class="btn hvr-hover" data-fancybox-close="" href="/login">Add to cart</a>
-                                            <% } %>
-                                            <% } else { %>
-                                            <a class="btn " data-fancybox-close="" href="">Out Of Stock</a>
-                                            <% } %>
+                                       
+                                           
                                         <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
                                     </div>
                                 </div>      

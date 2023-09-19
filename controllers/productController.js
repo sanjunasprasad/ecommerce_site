@@ -39,7 +39,7 @@ exports.shop = async (req, res) => {
       {
         const userData = req.session.user
         const productData = await Product.findById(productId);
-        console.log("product is",productData,)
+        console.log("product is:",productData,)
         const image = productData.imageUrl
         res.render("productdetail", { productData, logged,image, message: "",userData });
       } 
@@ -49,6 +49,28 @@ exports.shop = async (req, res) => {
       }
   };
   
+
+  exports. categoryFilter = async (req, res) => {
+    try {
+        const categoryId = req.query.categoryId;
+        console.log(categoryId);
+        const productData = await Product.find({ category: categoryId });
+        res.json(productData);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports.sortProduct = async (req, res) => {
+  try {
+      const sort = req.body.sort;
+      const productData = await Product.find().sort({ price: sort });
+      res.json(productData);
+      console.log("sort**************:",productData)
+  } catch (error) {
+      console.log(error.message);
+  }
+};
 
  
 exports.myaccount= async(req,res)=>{
