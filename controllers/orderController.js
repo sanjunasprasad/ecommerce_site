@@ -23,19 +23,19 @@ exports. placeOrder = async (req, res) => {
         const userCart = user.cart;
 
         let subTotal = 0;
-        let offerDiscount = 0
+        // let offerDiscount = 0
 
         userCart.forEach((item) => {
             item.total = item.product.price * item.quantity;
             subTotal += item.total;
         });
 
-        userCart.forEach((item) => {
-            if(item.product.oldPrice > 0){
-            item.offerDiscount = (item.product.oldPrice - item.product.price) * item.quantity
-            offerDiscount += item.offerDiscount;
-            }
-        });
+        // userCart.forEach((item) => {
+        //     if(item.product.oldPrice > 0){
+        //     item.offerDiscount = (item.product.oldPrice - item.product.price) * item.quantity
+        //     offerDiscount += item.offerDiscount;
+        //     }
+        // });
 
         let productData = userCart.map((item) => {
             return {
@@ -43,7 +43,7 @@ exports. placeOrder = async (req, res) => {
                 name: item.product.name,
                 category: item.product.category,
                 price: item.product.price,
-                oldPrice: item.product.oldPrice,
+                // oldPrice: item.product.oldPrice,
                 quantity: item.quantity,
                 image: item.product.imageUrl[0].url,
             };
@@ -58,28 +58,7 @@ exports. placeOrder = async (req, res) => {
             const ExpectedDeliveryDate = new Date()
             ExpectedDeliveryDate.setDate(ExpectedDeliveryDate.getDate() + 3 )
 
-            if (couponData) {
-                const order = new Order({
-                    userId: userId,
-                    product: productData,
-                    address: addressId,
-                    orderId: orderId,
-                    total: amount,
-                    ExpectedDeliveryDate: ExpectedDeliveryDate,
-                    offerDiscount: offerDiscount,
-                    paymentMethod: paymentMethod,
-                    discountAmount: couponData.discountAmount,
-                    amountAfterDiscount: couponData.newTotal,
-                    couponName: couponData.couponName,
-                });
-
-                await order.save();
-
-                const couponCode = couponData.couponName
-                await Coupon.updateOne({ code: couponCode }, { $push: { usedBy: userId } })
-
-                
-            } else {
+           
                 const order = new Order({
                     userId: userId,
                     product: productData,
@@ -87,12 +66,12 @@ exports. placeOrder = async (req, res) => {
                     orderId: orderId,
                     total: subTotal,
                     ExpectedDeliveryDate: ExpectedDeliveryDate,
-                    offerDiscount: offerDiscount,
+                    // offerDiscount: offerDiscount,
                     paymentMethod: paymentMethod,
                 });
 
                 const orderSuccess = await order.save();
-            }
+            
 
             let userDetails = await User.findById(userId);
             let userCartDetails = userDetails.cart;
@@ -126,50 +105,8 @@ exports. placeOrder = async (req, res) => {
                     order: "Success",
                 });
                 
-            } else if (paymentMethod === "Razorpay") {
-                var instance = new Razorpay({
-                    key_id: process.env.RAZORPAY_KEY_ID,
-                    key_secret: process.env.RAZORPAY_KEY_SECRET,
-                });
-
-                const order = await instance.orders.create({
-                    amount: amount * 100,
-                    currency: "INR",
-                    receipt: "Gadgetry",
-                });
-
-                saveOrder();
-                req.session.checkout =false
-
-                res.json({
-                    order: "Success",
-                });
-                
-            } else if (paymentMethod === "Wallet") {
-                try {
-                    const walletBalance = req.body.walletBalance;
-
-                    await User.findByIdAndUpdate(userId, { $set: { "wallet.balance": walletBalance } }, { new: true });
-                    
-                    const transaction = {
-                        date: new Date(),
-                        details: `Confirmed Order - ${orderId}`,
-                        amount: subTotal,
-                        status: "Debit",
-                    };
-
-                    await User.findByIdAndUpdate(userId, { $push: { "wallet.transactions": transaction } }, { new: true })
-
-                    saveOrder();
-                    req.session.checkout =false
-
-                    res.json({
-                        order: "Success",
-                    });
-                } catch (error) {
-                    console.log(error.message);
-                }
-            }
+            } 
+       
         }
     } catch (error) {
         console.log(error.message);
@@ -181,6 +118,9 @@ exports. orderSuccess = async (req, res) => {
         const userData = req.session.user;
         const userId=userData._id
         const user = await User.findOne({ _id: userId }).populate("cart.product").lean();
+
+
+
         const cart = user.cart;
        
         let subTotal = 0;
@@ -197,3 +137,4 @@ exports. orderSuccess = async (req, res) => {
         console.log(error.message);
     }
 };
+

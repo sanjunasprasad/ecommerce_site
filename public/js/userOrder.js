@@ -176,32 +176,34 @@ couponDelete = async () => {
 
 /////////// Shipping selection ///////////
 
-window.addEventListener("DOMContentLoaded", () => {
-    const radio = document.getElementById("free-shipping");
-    const checkoutBtn = document.getElementById("checkout-btn");
-    const selectedShipping = localStorage.getItem("selectedShipping");
+// window.addEventListener("DOMContentLoaded", () => {
+//     // const radio = document.getElementById("free-shipping");
+//     const checkoutBtn = document.getElementById("place-order-btn");
+//     const selectedShipping = localStorage.getItem("selectedShipping");
 
-    if (radio) {
-        if (selectedShipping === "free-shipping") {
-            radio.checked = true;
-            checkoutBtn.disabled = false;
-        } else {
-            radio.checked = false;
-            checkoutBtn.disabled = true;
-        }
-    }
-});
+//     if (checkoutBtn) {
+//         if (selectedShipping === "free-shipping") {
+//             // radio.checked = true;
+//             checkoutBtn.disabled = false;
+//         } else {
+//             // radio.checked = false;
+//             checkoutBtn.disabled = true;
+//         }
+//     }
+// });
 
-function handleShippingSelection(radio) {
-    const checkoutBtn = document.getElementById("checkout-btn");
-    if (radio.checked) {
-        checkoutBtn.disabled = false;
-        localStorage.setItem("selectedShipping", "free-shipping");
-    } else {
-        checkoutBtn.disabled = true;
-        localStorage.removeItem("selectedShipping");
-    }
-}
+// function handleShippingSelection(radio) {
+//     console.log("button selection");
+//     const checkoutBtn = document.getElementById("place-order-btn");
+//     if (checkoutBtn) {
+//         console.log(checkoutBtn,"checkk");
+//         checkoutBtn.disabled = false;
+//         // localStorage.setItem("selectedShipping", "free-shipping");
+//     } else {
+//         checkoutBtn.disabled = true;
+//         // localStorage.removeItem("selectedShipping");
+//     }
+// }
 
 /////////// Address selection ///////////
 
@@ -237,11 +239,11 @@ function handleAddressSelection() {
 
 /////////// Order Management ///////////
 
-const placeOrder = async()=>{
+async function placeOrder(){
     try {
-
+console.log(242);
         const selectedPayment = document.querySelector(".payment-radio:checked").value;
-        
+     console.log(244,selectedPayment);   
         if(selectedPayment === "Cash On Delivery"){
             cashOnDelivery(selectedPayment)
         }

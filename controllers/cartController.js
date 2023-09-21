@@ -161,7 +161,6 @@ exports. loadCheckout = async (req, res) => {
 
     try {
        
-        console.log("checkout controller")
         const userData = req.session.user;
         const userId = userData._id;
         const categoryData = await Category.find({ is_blocked: false });
