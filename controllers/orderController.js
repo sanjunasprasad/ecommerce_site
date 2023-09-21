@@ -4,7 +4,8 @@ const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const Address = require("../models/addressmodel");
 const Order = require("../models/orderModel");
-
+const moment = require("moment");
+const path = require('path')
 
 exports. placeOrder = async (req, res) => {
     try {
@@ -138,3 +139,108 @@ exports. orderSuccess = async (req, res) => {
     }
 };
 
+
+
+exports.myOrders = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const ordersPerPage = 6;
+        const skip = (page - 1) * ordersPerPage;
+
+        const userData = req.session.user;
+        const userId = userData._id;
+        walletBalance=userData.wallet.balance
+        const categoryData = await Category.find({ is_blocked: false });
+
+        const orders = await Order.find({ userId }).sort({ date: -1 }).skip(skip).limit(ordersPerPage);
+
+        const totalCount = await Order.countDocuments({ userId });
+        const totalPages = Math.ceil(totalCount / ordersPerPage);
+
+        const formattedOrders = orders.map((order) => {
+            const formattedDate = moment(order.date).format("MMMM D, YYYY");
+            return { ...order.toObject(), date: formattedDate };
+        });
+       
+        const user = await User.findOne({ _id: userId }).populate("cart.product").lean();
+
+
+
+         const cart = user.cart;
+        
+         let subTotal = 0;
+ 
+         cart.forEach((val) => {
+             val.total = val.product.price * val.quantity;
+             subTotal += val.total;
+         });
+
+        res.render("myOrders", {
+            userData,
+            categoryData,
+            myOrders: formattedOrders || [],
+            currentPage: page,
+            totalPages,
+            loggedIn:true,
+            walletBalance,
+            subTotal,
+            cart
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports.orderDetails = async (req, res) => {
+    try {
+        const userData = req.session.user;
+        const userId=userData._id
+        const user = await User.findOne({ _id: userId }).populate("cart.product").lean();
+        const cart = user.cart;
+       
+        let subTotal = 0;
+
+        cart.forEach((val) => {
+            val.total = val.product.price * val.quantity;
+            subTotal += val.total;
+        });
+        const orderId = req.query.orderId;
+        // walletBalance=userData.wallet.balance
+        const categoryData = await Category.find({ is_blocked: false });
+
+        const orderDetails = await Order.findById(orderId).populate({
+            path: "product",
+            populate: [
+                { path: "category", model: "category" },
+            ],
+        });
+        const orderProductData = orderDetails.product;
+        const addressId = orderDetails.address;
+
+        const address = await Address.findById(addressId);
+        const ExpectedDeliveryDate = moment(orderDetails.ExpectedDeliveryDate).format('MMMM D, YYYY');
+        const deliveryDate=moment(orderDetails.deliveredDate).format('MMMM D, YYYY')
+        const returnEndDate=moment(orderDetails.returnEndDate).format('MMMM D, YYYY') 
+        const currentDate=new Date()
+        // const wallet= userData.wallet.balance
+       
+        res.render("orderDetails", {
+          
+            currentDate,
+            userData,
+            categoryData,
+            orderDetails,
+            orderProductData,
+            address,
+            ExpectedDeliveryDate,
+            loggedIn:true,
+            deliveryDate,
+            returnEndDate,
+          
+            cart,
+            subTotal
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
+};

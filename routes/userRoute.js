@@ -51,12 +51,14 @@ user_route.get('/checkStock', cartController.checkStock)
 user_route.get('/checkout',isCheckout, isLogin, blockCheck,cartController.loadCheckout)
 // user_route.post('/validateCoupon', cartController.validateCoupon)
 
-//oder
+//order
 user_route.post('/placeOrder', orderController.placeOrder)
 user_route.get('/orderSuccess', orderController.orderSuccess)
+user_route.get('/myOrders', orderController.myOrders)
+user_route.get('/orderDetails',orderController.orderDetails)
 
 
-//profile
+//user profile
 user_route.get("/myaccount",isLogin, blockCheck,userController.loadProfile)
 user_route.post('/addNewAddress', userController.addNewAddress)
 user_route.get('/addressData', userController.getAddressdata)

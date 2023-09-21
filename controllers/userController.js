@@ -3,6 +3,7 @@ const User = require("../models/usermodel");
 const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const Address = require("../models/addressmodel");
+const Order = require("../models/orderModel");
 
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
@@ -506,19 +507,25 @@ exports.loadProfile = async (req, res) => {
             const userId = userData._id;
             const categoryData = await Category.find({ is_blocked: false });
             const addressData = await Address.find({ userId: userId });
+            const orderData = await Order.find({ userId: userId });
+            const productData = await Product.find();
+
     
             const user = await User.findById(userId);
+
             const usercart = await User.findOne({_id:userId }).populate("cart.product").lean();
            console.log(user);
+
+
             const cart = usercart.cart;
-           
+        
             let subTotal = 0;
     
             cart.forEach((val) => {
                 val.total = val.product.price * val.quantity;
                 subTotal += val.total;
             });
-            res.render("myaccount", { userData, categoryData, addressData,loggedIn:true ,profilename,subTotal,logged,cart});
+            res.render("myaccount", { userData, categoryData, addressData,orderData,productData,loggedIn:true ,profilename,subTotal,logged,cart});
         } catch (error) {
             console.log(error.message);
         }

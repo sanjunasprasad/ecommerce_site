@@ -2,6 +2,9 @@ const cloudinary = require('../database/cloudinary')
 const User = require("../models/usermodel");
 const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
+const Order =require("../models/orderModel")
+const Addres=require("../models/addressmodel")
+
 //admin login
 const credentials = {
    
@@ -480,3 +483,40 @@ exports. deleteProduct = async (req, res) => {
         console.log(error.message);
     }
 };
+
+
+//*************ORDER MANAGEMENT***********//
+// exports. loadOrders = async (req, res) => {
+//     try {
+//         const ordersPerPage = 7;
+//         const page = parseInt(req.query.page) || 1;
+//         const skip = (page - 1) * ordersPerPage;
+
+//         const orders = await Order.find().sort({ date: -1 }).skip(skip).limit(ordersPerPage);
+        
+//         const totalCount = await Order.countDocuments();
+//         const totalPages = Math.ceil(totalCount / ordersPerPage);
+
+//         const orderData = orders.map((order) => {
+//             const formattedDate = moment(order.date).format("MMMM D YYYY");
+
+//             return {
+//                 ...order.toObject(),
+//                 date: formattedDate,
+//             };
+//         });
+
+//          res.render("orders", {
+//             user: req.session.admin,
+//             orderData,
+//             currentPage: page,
+//             totalPages,
+//             productUpdated:""
+//         });
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// };
+exports.loadOrders = async(req,res)=>{
+    res.render("orders")
+}

@@ -34,5 +34,9 @@ admin_route.get('/updateProduct/:id', store.array('image', 4) , isLogin, adminCo
 admin_route.post('/updateProduct/:id', store.array('image', 5) , isLogin, adminController.updateNewProduct)
 admin_route.get('/deleteProduct/:id',  adminController.deleteProduct)
 
+//order management
+admin_route.get("/orders",adminController.loadOrders)
+// admin_route.post('/updateOrder', adminController.updateOrder)
+// admin_route.get('/orderDetails', adminController.orderDetails)
 
 module.exports=admin_route
