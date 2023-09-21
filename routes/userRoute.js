@@ -1,10 +1,11 @@
 const userController = require("../controllers/userController");
 const productController = require('../controllers/productController')
 const cartController = require('../controllers/cartController')
+const orderController = require('../controllers/orderController')
 const express = require("express");
 const user_route = express.Router();
 const auth = require("../middleware/userAuth")
-const { isLogout, isLogin, blockCheck } = auth
+const { isLogout, isLogin,isCheckout, blockCheck } = auth
 
 
 //home page
@@ -33,20 +34,34 @@ user_route.get('/resendForgotPasswordotp', isLogout ,userController.resendForgot
 user_route.post('/newPassword',isLogout, userController.updatePassword)
 
 //user side productview
-user_route.get("/shop", productController.shop)    
-user_route.get("/prodetail",productController.prodetail)
+user_route.get("/shop",blockCheck, productController.shop)    
+user_route.get("/prodetail",blockCheck,productController.prodetail)
+
+
+//user side sort+search+filter
 user_route.get('/categoryFilter', productController.categoryFilter)
 user_route.post('/sortProduct', productController.sortProduct)
 
 //cart
-user_route.get('/cart',  cartController.loadCart)
+user_route.get('/cart',isLogin,blockCheck,cartController.loadCart)
 user_route.get("/addToCart",cartController.addToCart)
-// user_route.post('/cartUpdation',cartController.updateCart)
+user_route.post('/cartUpdation',cartController.updateCart)
 user_route.get('/removeCart',cartController.removeCart)
-// user_route.get('/checkStock', cartController.checkStock)
-user_route.get('/checkout',cartController.loadCheckout)
+user_route.get('/checkStock', cartController.checkStock)
+user_route.get('/checkout',isCheckout, isLogin, blockCheck,cartController.loadCheckout)
 // user_route.post('/validateCoupon', cartController.validateCoupon)
-user_route.get("/myaccount",productController.myaccount)
+
+//oder
+user_route.post('/placeOrder', orderController.placeOrder)
+user_route.get('/orderSuccess', orderController.orderSuccess)
+
+
+//profile
+user_route.get("/myaccount",isLogin, blockCheck,userController.loadProfile)
+user_route.post('/addNewAddress', userController.addNewAddress)
+user_route.get('/addressData', userController.getAddressdata)
+user_route.post('/updateAddress', userController.updateAddress)
+user_route.get('/deleteAddress', userController.deleteAddress)
 
 
 

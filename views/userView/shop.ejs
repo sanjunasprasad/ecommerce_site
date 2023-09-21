@@ -1,13 +1,8 @@
 <%-include('header') -%>
-
-
-    <div class="off_canvars_overlay"></div>
-    <!--offcanvas menu area end-->
-    <body>
-    <%-include('headsection') -%>
+ <%-include('headsection') -%>
      
     <style>
-        /* Add your CSS styles here */
+      
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -25,8 +20,6 @@
             text-align: center;
             margin-bottom: 30px;
         }
-    
-        /* Product Card Styles */
         .product-card {
             border: 1px solid #ccc;
             background-color: #fff;
@@ -56,8 +49,6 @@
             font-size: 18px;
             margin-top: 10px;
         }
-    
-        /* Pagination Styles */
         .pagination {
             text-align: center;
             margin-top: 20px;
@@ -69,8 +60,6 @@
             border: 1px solid #ccc;
             margin: 5px;
         }
-    
-        /* Sorting Styles */
         .sorting {
             text-align: center;
             margin-bottom: 20px;
@@ -81,15 +70,25 @@
         }
 
         .rounded-button {
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 20px; /* Adjust the radius for desired roundness */
-    padding: 10px 20px; /* Adjust padding as needed */
-    cursor: pointer;
-}
+        background-color: black;
+        color: white;
+        border: none;
+         border-radius: 20px; /* Adjust the radius for desired roundness */
+         padding: 10px 20px; /* Adjust padding as needed */
+         cursor: pointer;
+       }
+
+       .custom
+       {
+        width: 42px;
+       height: 38px;
+       }  
+
+       
     </style>
-    <!-- Start All Title Box -->
+
+
+<!-- Start All Title Box -->
  <div class="all-title-box">
     <div class="container">
         <div class="row">
@@ -104,22 +103,58 @@
     </div>
 </div>
 <!-- End All Title Box -->
+
+<!-- product details starts -->
+<div class="cart-box-main">
         <div class="container">
-           
-            <!-- Sorting Dropdown -->
-             <div class="sorting">
-                <label for="sort">Sort by:</label>
-                <select name="sortby" id="sortOptions" onchange="sortProducts()" >
-                    <option value="relevant" selected="selected">Relevance</option>
-                    <option value="desc">Price: High to Low</option>
-                    <option value="asc">Price: Low to High</option>
-                </select>
-            </div> 
-            <!-- <div class="filter-icon">Filter &#x25BC;</div> -->
+            <div class="container">
+                <div class="row">
+                    <!-- Multiple filter
+                    <div class="col-md-4 text-center">
+                        <div class="filter-icon">Filter <i class="fas fa-filter"></i> </div>
+                    </div> -->
+                   
+                    
+       
    
-  
-            
     
+    
+
+    
+
+    
+
+
+
+                    <!-- Sorting Dropdown -->
+                    <div class="col-md-4">
+                        <div class="sorting">
+                            <label for="sort">Sort by:</label>
+                            <select name="sortby" id="sortOptions" onchange="sortProducts()">
+                                <option value="relevant" selected="selected">Relevance</option>
+                                <option value="desc">Price: High to Low</option>
+                                <option value="asc">Price: Low to High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Search Form -->
+                    <div class="col-md-4">
+                        <form action="/shop" method="get">
+                            <div class="input-group">
+                                <div class="form-outline">
+                                    <input type="search" class="form-control" name="search" id="q" placeholder="Search in..." required />
+                                    <label class="form-label" for="form1"></label>
+                                </div>
+                                <button type="button" class="btn custom btn-dark">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Product Cards -->
             <% productData.forEach(async(product)  =>{ %>
             <div class="product-card">
@@ -129,30 +164,34 @@
                 <div class="product-description"><%= product.description %></div>
                 <!-- <a href="#" class="rounded-button" onclick="addTocart('<%=product.id%>')">Add to Cart</a> -->
                 <a href="#" class="rounded-button">Add to Wishlist</a>
-             
-
             </div>
             <% }); %>
            
-    
+            
             <!-- Pagination -->
-            <div class="pagination">
-                <a href="#">Previous</a>
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">Next</a>
-            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item (currentPage === 1) ? 'disabled' : '' %>">
+                        <a class="page-link page-link-prev" href="?allProductsPage=" aria-label="Previous" tabindex="-1" aria-disabled="">
+                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                        </a>
+                        
+                    <li class="page-item-total"> currentPage </li>
+                    <li class="page-item (currentPage === totalPages) ? 'disabled' : '' %>">
+                        
+                        <a class="page-link page-link-next" href="?allProductsPage currentPage + 1 " aria-label="Next" aria-disabled="(currentPage === totalPages)">
+                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
         </div>
+    </div>
+<!-- product details ends -->
+<%-include('footer') -%>
    
-    
-   
-   </body> 
-    
-    <!--footer area start-->
-    <%-include('footer') -%>
-   
-<script src="assets/js/user.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
 <!-- Include jQuery library -->
@@ -161,89 +200,21 @@
 <!-- Include jQuery Validation plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 
-<script src="assets/js/userOrder.js"></script>
-
-<script>
-  const sortProducts = async () => {
-    console.log("inside function");
-    
-    const selectElement = document.getElementById("sortOptions");
-    const selectedValue = selectElement.value;
-
-    if (selectedValue === 'relevant') {
-        location.reload(); // Reload the page for the default sorting
-    } else {
-        try {
-            const response = await fetch('/sortProduct', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    sort: selectedValue,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-
-                // Call a function to render the sorted products
-                renderProducts(data);
-            } else {
-                console.error('Failed to fetch sorted products');
-            }
-        } catch (error) {
-            console.error(error.message);
-        }
-    }
-}
-
-// Function to render sorted products
-function renderProducts(products) {
-    const productsContainer = document.getElementById("productsContainer");
-
-    // Clear the existing products in the container
-    productsContainer.innerHTML = '';
-
-    // Loop through the sorted products and create HTML elements for each product
-    products.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
-
-        const productImage = document.createElement('img');
-        productImage.src = product.imageUrl[0].url;
-        productImage.alt = '';
-
-        const productTitle = document.createElement('h3');
-        const productTitleLink = document.createElement('a');
-        productTitleLink.href = `/prodetail?id=${product._id}`;
-        productTitleLink.textContent = product.name;
-        productTitle.appendChild(productTitleLink);
-
-        const productPrice = document.createElement('div');
-        productPrice.classList.add('product-price');
-        productPrice.textContent = `₹${product.price}`;
-
-        const productDescription = document.createElement('div');
-        productDescription.classList.add('product-description');
-        productDescription.textContent = product.description;
-
-        const addToWishlistButton = document.createElement('a');
-        addToWishlistButton.classList.add('rounded-button');
-        addToWishlistButton.href = '#'; // Modify this to the actual wishlist URL
-        addToWishlistButton.textContent = 'Add to Wishlist';
-
-        productCard.appendChild(productImage);
-        productCard.appendChild(productTitle);
-        productCard.appendChild(productPrice);
-        productCard.appendChild(productDescription);
-        productCard.appendChild(addToWishlistButton);
-
-        productsContainer.appendChild(productCard);
-    });
-}
 
 
 
+<!-- Main Js -->
+<script src="/js/vendor/index.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/users.js"></script>
+<script src="/js/userOrder.js"></script>
+<!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-</script>
+<!-- Include SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+
+

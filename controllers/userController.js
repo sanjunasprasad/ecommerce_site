@@ -1,4 +1,9 @@
-const User=require('../models/usermodel')
+const cloudinary = require('../database/cloudinary')
+const User = require("../models/usermodel");
+const Category = require("../models/categoryModel");
+const Product = require("../models/productModel");
+const Address = require("../models/addressmodel");
+
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 
@@ -482,6 +487,127 @@ exports. updatePassword = async (req, res) => {
             res.render("login",{blocked:false,loggedIn:false});
         } else {
             console.log("Something error happened");
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+
+//*****************profile****************//
+exports.loadProfile = async (req, res) => {
+    logged=req.session.user
+    if(req.session.user)
+    {
+        try {
+            
+           
+            const userData = req.session.user;
+            const userId = userData._id;
+            const categoryData = await Category.find({ is_blocked: false });
+            const addressData = await Address.find({ userId: userId });
+    
+            const user = await User.findById(userId);
+            const usercart = await User.findOne({_id:userId }).populate("cart.product").lean();
+           console.log(user);
+            const cart = usercart.cart;
+           
+            let subTotal = 0;
+    
+            cart.forEach((val) => {
+                val.total = val.product.price * val.quantity;
+                subTotal += val.total;
+            });
+            res.render("myaccount", { userData, categoryData, addressData,loggedIn:true ,profilename,subTotal,logged,cart});
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+   
+};
+
+exports. addNewAddress = async (req, res) => {
+    try {
+        console.log(531);
+        const userData = req.session.user;
+        const userId = userData._id;
+console.log(534,userId);
+        const address = new Address({
+            userId: userId,
+            name: req.body.name,
+            mobile: req.body.mobileNumber,
+            addressLine: req.body.addressLine,
+            city: req.body.city,
+            email: req.body.email,
+            state: req.body.state,
+            pincode: req.body.pincode,
+            is_default: false,
+        });
+        console.log(546,address);
+
+        await address.save();
+        res.status(200).send();
+    } catch (error) {
+        res.status(500).send();
+        console.log(error.message);
+    }
+};
+
+exports. getAddressdata = async (req, res) => {
+    try {
+        const addressId = req.query.addressId;
+        const addressData = await Address.findById(addressId);
+
+        if (addressData) {
+            res.json(addressData); // Return the addressData as JSON response
+        } else {
+            res.json({ message: "Address not found" }); // Handle address not found case
+        }
+    } catch {
+        console.log(error.message);
+    }
+};
+
+exports. updateAddress = async (req, res) => {
+    try {
+        const addressId = req.query.addressId;
+
+        console.log(addressId);
+
+        const updatedAddress = await Address.findByIdAndUpdate(
+            addressId,
+            {
+                name: req.body.name,
+                mobile: req.body.mobile,
+                addressLine: req.body.addressLine,
+                email: req.body.email,
+                city: req.body.city,
+                state: req.body.state,
+                pincode: req.body.pincode,
+            },
+            { new: true }
+        );
+
+        if (updatedAddress) {
+            res.status(200).send();
+        } else {
+            res.status(500).send();
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports. deleteAddress = async (req, res) => {
+    try {
+        const addressId = req.query.addressId;
+
+        const success = await Address.findByIdAndDelete(addressId);
+
+        if (success) {
+            res.status(200).send();
+        } else {
+            res.status(500).send();
         }
     } catch (error) {
         console.log(error.message);

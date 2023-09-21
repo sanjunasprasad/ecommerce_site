@@ -2,6 +2,7 @@ const cloudinary = require('../database/cloudinary')
 const User = require("../models/usermodel");
 const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
+const Address = require("../models/addressmodel");
 
 
 
@@ -10,9 +11,12 @@ exports.shop = async (req, res) => {
    if(req.session.user)
    {
     try {
-      
+         
         const  productData = await Product.find();
-        res.render('shop', {  productData ,logged});
+        res.render('shop', {  
+          productData ,
+          
+          logged});
       } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -23,13 +27,22 @@ exports.shop = async (req, res) => {
     try {
       
       const  productData = await Product.find();
-      res.render('shop', {  productData ,logged:null});
+      res.render('shop', {  
+        productData ,
+     
+        logged:null});
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
     }
    }
 };
+
+
+
+
+
+
 
   exports.prodetail= async(req,res)=>{
     const logged = req.session.user
@@ -73,14 +86,4 @@ exports.sortProduct = async (req, res) => {
 };
 
  
-exports.myaccount= async(req,res)=>{
-  const logged=req.session.user
-  if(req.session.user)
-  {
-    res.render("myaccount",{logged})
-  }
-  
-  
-};
-
 

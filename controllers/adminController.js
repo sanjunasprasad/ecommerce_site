@@ -61,21 +61,6 @@ exports.loadUsers = async (req, res) => {
         console.log("error is:",error.message);
     }
 };
-
-//user block
-// exports.blockUser = async (req, res) => {
-//     try {
-//         const id = req.params.id;
-
-//         const blockUser = await User.findById(id);
-
-//         await User.findByIdAndUpdate(id, { $set: { is_blocked: !blockUser.is_blocked } }, { new: true });
-
-//         res.redirect("/admin/users");
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
 exports.blockUser = async (req, res) => {
     try {
         const id = req.params.id;

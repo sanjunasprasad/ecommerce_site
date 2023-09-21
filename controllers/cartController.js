@@ -8,11 +8,10 @@ const Address = require("../models/addressmodel");
 var  walletBalance=0
 exports. loadCart = async (req, res) => {
     try {
-        // req.session.checkout = true
+        req.session.checkout = true
         logged=req.session.user
         const userData = req.session.user;
         const userId = userData._id;
-        console.log("id is:",userId)
         const usertest= await User.findById(userId).lean();
         console.log("User before population:", usertest);
 
@@ -20,8 +19,10 @@ exports. loadCart = async (req, res) => {
         const categoryData = await Category.find({ is_blocked: false });
 
         const user = await User.findById(userId).populate("cart.product").lean();
+
         await User.populate(user, { path: "cart.product" });
         console.log("User after population:", user);
+
         const cart = user.cart;
         console.log("cart:",cart);
         let subTotal = 0;
@@ -49,6 +50,7 @@ exports. loadCart = async (req, res) => {
 exports. addToCart = async (req, res) => {
     try {
        
+
         const logged=req.session.user
         const userData = req.session.user;
         const productId = req.query.id;
@@ -94,10 +96,9 @@ exports. addToCart = async (req, res) => {
 
 exports. updateCart = async (req, res) => {
     try {
-        console.log(111);
+      
         const userData = req.session.user;
         const data = await User.find({ _id: userData._id }, { _id: 0, cart: 1 }).lean();
-
         data[0].cart.forEach((val, i) => {
             val.quantity = req.body.datas[i].quantity;
         });
@@ -126,32 +127,54 @@ exports. removeCart = async (req, res) => {
     }
 };
 
-// exports.loadCheckout=(req,res)=>{
-//     if(req.session.user)
-//     {
-//         res.render("checkout",{logged})
-//     }
-    
-// }
 
-
-
-exports. loadCheckout = async (req, res) => {
+exports. checkStock = async (req, res) => {
     try {
         const userData = req.session.user;
         const userId = userData._id;
-        const categoryData = await Category.find({ is_blocked: false });
-        const addressData = await Address.find({ userId: userId });
 
         const userCart = await User.findOne({ _id: userId }).populate("cart.product").lean();
         const cart = userCart.cart;
 
+        let stock = [];
+
+        cart.forEach((element) => {
+            if (element.product.stock - element.quantity <= 0) {
+                stock.push(element.product);
+            }
+        });
+
+        if (stock.length > 0) {
+            res.json(stock);
+        } else {
+            res.json({ message: "In stock" });
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+
+
+
+exports. loadCheckout = async (req, res) => {
+
+    try {
+       
+        console.log("checkout controller")
+        const userData = req.session.user;
+        const userId = userData._id;
+        const categoryData = await Category.find({ is_blocked: false });
+        const addressData = await Address.find({ userId: userId })
+
+        const userCart = await User.findOne({ _id: userId }).populate("cart.product").lean();
+        const cart = userCart.cart;
         let subTotal = 0;
         let offerDiscount = 0
 
         cart.forEach((element) => {
             element.total = element.product.price * element.quantity;
-            subTotal += element.total;
+            subTotal += element.total
         });
 
         cart.forEach((element) => {
@@ -175,12 +198,8 @@ exports. loadCheckout = async (req, res) => {
             categoryData, 
             addressData, 
             subTotal, 
-           
             cart, 
-           
-            loggedIn:true,
-          
-             
+            loggedIn:true,  
         });
         
     } catch (error) {

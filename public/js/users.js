@@ -334,15 +334,18 @@ if (addAddress) {
 const addAddressCheckout = document.getElementById("addAddressCheckout");
 
 if (addAddressCheckout) {
+    console.log(337,addAddressCheckout);
     addAddressCheckout.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const form = event.target;
-        console.log(form);
+        console.log(342,form);
         const formData = new FormData(form);
+        console.log(344,formData);
        
-        if ($(form).valid()) {
+        if (form) {
             try {
+                console.log(347);
                 const response = await fetch("/addNewAddress", {
                     method: "POST",
                     body: JSON.stringify(Object.fromEntries(formData)),

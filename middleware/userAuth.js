@@ -29,6 +29,18 @@ exports. isLogout = async(req,res,next)=>{
     }
 }
 
+exports. isCheckout = async(req,res,next)=>{
+    try {
+        if(!req.session.checkout){
+            return res.redirect('/myOrders')
+
+        }
+        next()       
+    } catch (error) {
+        
+    }
+}
+
 
 
 
