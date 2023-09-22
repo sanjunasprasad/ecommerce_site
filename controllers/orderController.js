@@ -142,6 +142,10 @@ exports. orderSuccess = async (req, res) => {
 
 
 exports.myOrders = async (req, res) => {
+    const logged = req.session.user
+    if(req.session.user)
+    {
+
     try {
         const page = parseInt(req.query.page) || 1;
         const ordersPerPage = 6;
@@ -176,6 +180,7 @@ exports.myOrders = async (req, res) => {
          });
 
         res.render("myOrders", {
+            logged,
             userData,
             categoryData,
             myOrders: formattedOrders || [],
@@ -189,9 +194,13 @@ exports.myOrders = async (req, res) => {
     } catch (error) {
         console.log(error.message);
     }
+}
 };
 
 exports.orderDetails = async (req, res) => {
+    const logged = req.session.user
+    if(req.session.user)
+    {
     try {
         const userData = req.session.user;
         const userId=userData._id
@@ -225,7 +234,7 @@ exports.orderDetails = async (req, res) => {
         // const wallet= userData.wallet.balance
        
         res.render("orderDetails", {
-          
+            logged,
             currentDate,
             userData,
             categoryData,
@@ -243,4 +252,5 @@ exports.orderDetails = async (req, res) => {
     } catch (error) {
         console.log(error.message);
     }
+}
 };
