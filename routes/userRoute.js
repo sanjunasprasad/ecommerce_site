@@ -56,6 +56,7 @@ user_route.post('/placeOrder', orderController.placeOrder)
 user_route.get('/orderSuccess', orderController.orderSuccess)
 user_route.get('/myOrders', orderController.myOrders)
 user_route.get('/orderDetails',orderController.orderDetails)
+user_route.post('/updateOrder', orderController.updateOrder)
 
 
 //user profile

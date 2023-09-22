@@ -308,7 +308,7 @@ h3 {
                                     <% } %>
 
                                     
-
+                                    <% if (orderDetails.status === "Cancelled") { %>
                                     <div id="refundMessage" class="col-lg-8 ml-4 mr-4 d-none">
                                         <div class="success-message">
                                             <i class="fa-solid fa-circle-check" style="color: #2fad01;"></i>
@@ -318,6 +318,7 @@ h3 {
                                             <p>wil be refelected in your wallet within <strong>7 business days</strong></p>
                                         </div>
                                     </div>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -400,3 +401,102 @@ h3 {
 <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
 
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Your code here
+    const orderId = /* get orderId */;
+    const orderStatus = /* get orderStatus */;
+    updateOrder(orderId, orderStatus);
+  });
+  
+  const updateOrder = async (orderId, orderStatus) => {
+    try {
+      console.log("orderid from updateorderjs:", orderId);
+      const walletBalance = Number(document.getElementById('userWallet').value);
+      const grandTotal = Number(document.getElementById('grandTotal').value);
+      console.log(`.....${walletBalance}`);
+      console.log("total:", grandTotal);
+  
+      const updatedBalance = walletBalance + grandTotal;
+  
+      const paymentMethod = document.getElementById('paymentMethod').innerHTML;
+      console.log("paymentMethod is:", paymentMethod);
+      const response = await fetch(`/updateOrder?orderId=${orderId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderStatus: orderStatus,
+          paymentMethod: paymentMethod,
+          wallet: updatedBalance,
+          total: grandTotal
+        })
+      });
+  
+      const data = await response.json();
+  
+      const orderStatusBtn = document.getElementById('orderStatusBtn');
+  
+      if (data.message === "Cancelled") {
+        const result = await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your order has been successfully cancelled",
+          text: "Your order has been cancelled.\n Any payment made will be refunded\n in your account within 7 business days.",
+          showConfirmButton: true,
+          confirmButtonColor: "#00A300",
+        });
+  
+        if (result.value) {
+  
+          console.log(data.refund)
+  
+          const expectedDate = document.getElementById('expectedDate')
+          expectedDate.classList.add("d-none")
+  
+          orderStatusBtn.innerHTML = `<p class="disabled btn-product btn-cart icon-info-circle"><span>Order Cancelled</span></p>`
+  
+          if (data.refund === "Refund") {
+            const refundMessage = document.getElementById('refundMessage');
+            refundMessage.classList.remove('d-none');
+          } else {
+            const refundMessage = document.getElementById("refundMessage");
+            refundMessage.classList.add("d-none");
+          }
+        }
+  
+      } else if (data.message === "Returned") {
+        const result = await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Successfully placed return request",
+          text: "Return request received!.\n Our team will review it and\n provide further instructions",
+          showConfirmButton: true,
+          confirmButtonColor: "#00A300",
+        });
+  
+        if (result.value) {
+  
+          const expectedDate = document.getElementById('expectedDate')
+          expectedDate.classList.add("d-none")
+  
+          orderStatusBtn.innerHTML = `<p  class="disabled btn-product btn-cart icon-info-circle"><span>Order Returned</span></p>`
+  
+          if (data.refund === "Refund") {
+            const refundMessage = document.getElementById('refundMessage');
+            refundMessage.classList.remove('d-none');
+          } else {
+            const refundMessage = document.getElementById("refundMessage");
+            refundMessage.classList.add("d-none");
+          }
+        }
+  
+      }
+  
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  
+</script>

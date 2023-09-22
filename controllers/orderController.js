@@ -17,7 +17,7 @@ exports. placeOrder = async (req, res) => {
         console.log(500,addressId)
         const amount = req.body.amount;
         const paymentMethod = req.body.selectedPayment;
-        console.log(500,paymentMethod)
+        console.log(600,paymentMethod)
         // const couponData = req.body.couponData;
 
         const user = await User.findOne({ _id: userId }).populate("cart.product");
@@ -206,7 +206,6 @@ exports.orderDetails = async (req, res) => {
         const userId=userData._id
         const user = await User.findOne({ _id: userId }).populate("cart.product").lean();
         const cart = user.cart;
-       
         let subTotal = 0;
 
         cart.forEach((val) => {
@@ -214,7 +213,7 @@ exports.orderDetails = async (req, res) => {
             subTotal += val.total;
         });
         const orderId = req.query.orderId;
-        // walletBalance=userData.wallet.balance
+        walletBalance=userData.wallet.balance
         const categoryData = await Category.find({ is_blocked: false });
 
         const orderDetails = await Order.findById(orderId).populate({
@@ -223,15 +222,16 @@ exports.orderDetails = async (req, res) => {
                 { path: "category", model: "category" },
             ],
         });
+        console.log("orderdetails:",orderDetails)
         const orderProductData = orderDetails.product;
         const addressId = orderDetails.address;
-
+        const paymentMethod=orderDetails.paymentMethod
         const address = await Address.findById(addressId);
         const ExpectedDeliveryDate = moment(orderDetails.ExpectedDeliveryDate).format('MMMM D, YYYY');
         const deliveryDate=moment(orderDetails.deliveredDate).format('MMMM D, YYYY')
         const returnEndDate=moment(orderDetails.returnEndDate).format('MMMM D, YYYY') 
         const currentDate=new Date()
-        // const wallet= userData.wallet.balance
+        const wallet= userData.wallet.balance
        
         res.render("orderDetails", {
             logged,
@@ -245,12 +245,102 @@ exports.orderDetails = async (req, res) => {
             loggedIn:true,
             deliveryDate,
             returnEndDate,
-          
+            walletBalance,
             cart,
-            subTotal
+            subTotal,
+            paymentMethod
         });
     } catch (error) {
         console.log(error.message);
     }
 }
 };
+
+exports. updateOrder = async (req, res) => {
+    try {
+        console.log("updateorder")
+        const userData = req.session.user;
+        const userId = userData._id;
+
+        const orderId = req.query.orderId;
+        console.log("order id is:",orderId)
+        const status = req.body.orderStatus;
+        const paymentMethod = req.body.paymentMethod;
+        console.log(paymentMethod)
+        const updatedBalance = req.body.wallet;
+        const total = req.body.total
+
+        const order = await Order.findOne({ _id: orderId })
+        const orderIdValue = order.orderId
+
+        if (paymentMethod !== "Cash On Delivery") {
+            await User.findByIdAndUpdate(userId, { $set: { "wallet.balance": updatedBalance } }, { new: true });
+        
+
+            if (status === "Returned") {
+                await Order.findByIdAndUpdate(orderId, { $set: { status: status, }, $unset: { ExpectedDeliveryDate: "" } });
+
+                const transaction = {
+                    date: new Date(),
+                    details: `Returned Order - ${orderIdValue}`,
+                    amount: total,
+                    status: "Credit",
+                };
+                
+                await User.findByIdAndUpdate(userId, { $push: { "wallet.transactions": transaction } }, { new: true })
+
+
+                res.json({
+                    message: "Returned",
+                    refund: "Refund",
+                });
+            }
+            if (status === "Cancelled") {
+                await Order.findByIdAndUpdate(orderId, { $set: { status: status, }, $unset: { ExpectedDeliveryDate: "" } });
+
+                const transaction = {
+                    date: new Date(),
+                    details: `Cancelled Order - ${orderIdValue}`,
+                    amount: total,
+                    status: "Credit",
+                };
+                
+                await User.findByIdAndUpdate(userId, { $push: { "wallet.transactions": transaction } }, { new: true })
+
+
+                res.json({
+                    message: "Cancelled",
+                    refund: "Refund",
+                });
+            }
+        } else if (paymentMethod == "Cash On Delivery" && status === "Returned") {
+            
+            await User.findByIdAndUpdate(userId, { $set: { "wallet.balance": updatedBalance } }, { new: true });
+
+            
+            const transaction = {
+                date: new Date(),
+                details: `Returned Order - ${orderIdValue}`,
+                amount: total,
+                status: "Credit",
+            };
+            
+            await User.findByIdAndUpdate(userId, { $push: { "wallet.transactions": transaction } }, { new: true })
+
+            await Order.findByIdAndUpdate(orderId, { $set: { status: status, }, $unset: { ExpectedDeliveryDate: "" } });
+            res.json({
+                message: "Returned",
+                refund: "Refund",
+            });
+        } else if (paymentMethod == "Cash On Delivery" && status === "Cancelled") {
+            await Order.findByIdAndUpdate(orderId, { $set: { status: status, }, $unset: { ExpectedDeliveryDate: "" } });
+            res.json({
+                message: "Cancelled",
+                refund: "No Refund",
+            });
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+

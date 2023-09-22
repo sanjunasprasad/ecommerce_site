@@ -487,9 +487,9 @@ const returnOrder = async()=>{
 
 
 const cancelOrder = async()=>{
-
+   
     const orderId = document.getElementById('orderId').value
-
+     console.log("order id",orderId)
     const result = await Swal.fire({
         title: `Do you want to cancel this order?`,
         text: "For further assistance,\n contact our customer support team.\n We're here to help!",
@@ -501,6 +501,7 @@ const cancelOrder = async()=>{
         cancelButtonText: 'DISMISS'
         
     });
+    console.log("result value:",result.value)
 
     if(result.value){
         updateOrder(orderId, "Cancelled")
@@ -509,16 +510,17 @@ const cancelOrder = async()=>{
 
 const updateOrder = async (orderId, orderStatus)=>{
     try {
-       
-        const walletBalance = Number(document.getElementById('userWallet').value)
+          
+          console.log("orderid from updateorderjs:",orderId)
+        // const walletBalance = Number(document.getElementById('userWallet').value)
         const grandTotal = Number(document.getElementById('grandTotal').value)
-        console.log(`.....${walletBalance}`);
-        console.log(grandTotal);
+        // console.log(`.....${walletBalance}`);
+        console.log("total:",grandTotal);
 
-        const updatedBalance = walletBalance + grandTotal
-        
+        const updatedBalance = grandTotal
+        console.log(updatedBalance)
         const paymentMethod = document.getElementById('paymentMethod').innerHTML
-
+           console.log("paymentMethod is:",paymentMethod)
         const response = await fetch(`/updateOrder?orderId=${orderId}`,{
             method:'POST',
             headers: {
@@ -531,11 +533,11 @@ const updateOrder = async (orderId, orderStatus)=>{
                 total: grandTotal
             })
         })
-
+       
         const data = await response.json()
 
         const orderStatusBtn = document.getElementById('orderStatusBtn')
-
+        console.log("statusbtn:",orderStatusBtn)
         if(data.message === "Cancelled"){
             const result = await Swal.fire({
                 position: "center",
