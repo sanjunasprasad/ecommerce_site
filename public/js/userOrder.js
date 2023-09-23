@@ -520,7 +520,6 @@ const updateOrder = async (orderId, orderStatus)=>{
         const updatedBalance = grandTotal
         console.log(updatedBalance)
         const paymentMethod = document.getElementById('paymentMethod').innerHTML
-           console.log("paymentMethod is:",paymentMethod)
         const response = await fetch(`/updateOrder?orderId=${orderId}`,{
             method:'POST',
             headers: {

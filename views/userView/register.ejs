@@ -28,18 +28,21 @@
         flex: 1;
         margin-right: 0 4px;
     }
-    /* .ec-bg-title.text-center {
-    border-bottom: 1px solid #b1a9a9; 
-} */
 
-   
+    .txt
+   {
+    color:white;
+    border-radius: 5px;
+ }
 
 </style>
+
 <body>
     <div class="ec-register-wrap ec-register-half">
         <div class="ec-register-container">
             <form id="signupForm">
-            <h2 class="ec-bg-title text-center">Register</h2>
+            <h1 class="ec-bg-title text-center">Register</h1>
+            <br>
             <div class="ec-register-row">
                 <div class="ec-register-field">
                     <label>First Name*</label>
@@ -52,6 +55,7 @@
                     <p id="lastnameError" class="p-1 text-danger"></p>
                 </div>
             </div>
+           
             <div class="ec-register-row">
                 <div class="ec-register-field">
                     <label>Email*</label>
@@ -64,6 +68,7 @@
                     <p id="phoneError" class="p-1 text-danger"></p>
                 </div>
             </div>
+           
             <div class="ec-register-row">
                 <div class="ec-register-field">
                     <label>Password*</label>
@@ -81,11 +86,11 @@
                 <label for="showPassword">Show Password</label>
             </div>
             <span class="ec-register-wrap ec-register-btn">
-                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="ml-auto btn hvr-hover txt" type="submit">Submit</button>
             </span>
             <br>
             <div class="member mb-4">
-                Already a member? <a class="btn btn-primary" href="/login">Login here</a>
+                Already a member? <a class="ml-auto btn hvr-hover txt" href="/login">Login here</a>
             </div>
             </form>
         </div>

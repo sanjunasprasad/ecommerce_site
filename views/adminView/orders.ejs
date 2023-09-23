@@ -23,7 +23,7 @@
         <div id="user_search">
             <div class="col-lg-6">
                 <div id="catMsg">
-                    <h5 style="color: #4CAF50;"></h5>
+                    <h5 style="color: #4CAF50;"><%= productUpdated %></h5>
                     <h5 id="noResultsFound">no results found!!</h5>
                 </div>
             </div>
@@ -91,6 +91,7 @@
                             <a class="btn btn-sm btn-primary" href="/admin/orderDetails?orderId=<%= order._id %>">
                                 order details
                             </a>
+                            
                         </td>
                     </tr>
                     <% }) %>

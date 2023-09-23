@@ -19,6 +19,10 @@
 
   
 <style>
+    .txt
+    {
+        color:white;
+    }
    .product.product-list .product-list-action {
     padding: 0
     
@@ -288,7 +292,7 @@ h3 {
                                             </div>
                                             <% } else if (orderDetails.status === "Pending") { %>
                                             <div id="orderStatusBtn">
-                                                <p onclick="cancelOrder()" class="btn btn-sm btn-primary "><span id="updateOrder" >Cancel Order</span></p>
+                                                <p onclick="cancelOrder()" class=" ml-auto btn hvr-hover txt"><span id="updateOrder" >Cancel Order</span></p>
                                             </div>
                                             <% } %>
                                             <input type="hidden" id="orderId" value="<%= orderDetails._id %>">
@@ -405,7 +409,7 @@ h3 {
 document.addEventListener("DOMContentLoaded", function () {
     // Your code here
     const orderId = /* get orderId */;
-    const orderStatus = /* get orderStatus */;
+    const orderStatus = /* get orderStatus */
     updateOrder(orderId, orderStatus);
   });
   
