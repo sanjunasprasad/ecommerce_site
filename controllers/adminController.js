@@ -5,6 +5,7 @@ const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const Order =require("../models/orderModel")
 const Addres=require("../models/addressmodel")
+const Coupon = require("../models/couponmodel");
 
 //admin login
 const credentials = {
@@ -587,3 +588,88 @@ exports. orderDetails = async (req, res) => {
         console.log(error.message);
     }
 };
+
+
+
+//*************COUPON MANAGEMENT************//
+
+exports. loadCoupons = async (req, res) => {
+    try {
+        const coupon = await Coupon.find();
+
+        const couponData = coupon.map((element) => {
+            const formattedDate = moment(element.expiryDate).format("MMMM D, YYYY");
+
+            return {
+                ...element,
+                expiryDate: formattedDate,
+            };
+        });
+
+    res.render("coupons", { couponData, user: req.session.admin  });
+    } catch (error) {
+        console.log(error.messaage);
+    }
+};
+
+exports.loadAddCoupon = async (req, res) => {
+    try {
+        res.render("addCoupon", { user: req.session.admin });
+    } catch (error) {
+        console.log(error.messaage);
+    }
+};
+
+exports. addCoupon = async (req, res) => {
+    try {
+        const { couponCode, couponDiscount, couponDate, minDiscount, maxDiscount } = req.body;
+
+        const couponCodeUpperCase = couponCode.toUpperCase();
+
+        const couponExist = await Coupon.findOne({ code: couponCodeUpperCase });
+
+        if (!couponExist) {
+            const coupon = new Coupon({
+                code: couponCodeUpperCase,
+                discount: couponDiscount,
+                expiryDate: couponDate,
+                minDiscount: minDiscount,
+                maxDiscount: maxDiscount
+            });
+
+            await coupon.save();
+            res.json({ message: "coupon addedd" });
+        } else {
+            res.json({ messaage: "coupon exists" });
+        }
+    } catch (error) {
+        console.log(error.messaage);
+    }
+};
+
+exports. blockCoupon = async (req, res) => {
+    try {
+        const couponId = req.query.couponId;
+
+        const unlistCoupon = await Coupon.findById(couponId);
+
+        await Coupon.findByIdAndUpdate(couponId, { $set: { status: !unlistCoupon.status } }, { new: true });
+
+        res.json({ message: "success" });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports. deleteCoupon = async (req, res) => {
+    try {
+        const couponId = req.query.couponId;
+
+        await Coupon.findByIdAndDelete(couponId);
+
+        res.json({ message: "success" });
+    } catch (error) {
+        console.log(error.message)
+    }
+};
+

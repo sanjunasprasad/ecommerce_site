@@ -39,4 +39,12 @@ admin_route.get("/orders",adminController.loadOrders)
 admin_route.post('/updateOrder', adminController.updateOrder)
 admin_route.get('/orderDetails', adminController.orderDetails)
 
+//coupon management
+admin_route.get('/coupons', adminAuth.isLogin, adminController.loadCoupons)
+admin_route.get('/loadAddCoupon', adminAuth.isLogin, adminController.loadAddCoupon)
+admin_route.post('/addCoupon', adminController.addCoupon)
+admin_route.post('/blockCoupon', adminController.blockCoupon)
+admin_route.post('/deleteCoupon', adminController.deleteCoupon)
+
+
 module.exports=admin_route

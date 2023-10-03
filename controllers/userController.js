@@ -603,22 +603,6 @@ console.log(534,userId);
     }
 };
 
-// exports. getAddressdata = async (req, res) => {
-//     try {
-//         const addressId = req.query.addressId;
-//         const addressData = await Address.findById(addressId);
-
-//         if (addressData) {
-//             res.json(addressData); // Return the addressData as JSON response
-//         } 
-//         else 
-//         {
-//             res.json({ message: "Address not found"}); // Handle address not found case
-//         }
-//     } catch {
-//         console.log(error.message);
-//     }
-// };
 
 exports. updateAddress = async (req, res) => {
     try {
