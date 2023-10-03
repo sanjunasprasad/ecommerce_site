@@ -86,13 +86,30 @@
                                             </div>
                                         </div>                                  
                                     </div>
+
+                                       
                                 <div class="price-box-bar">
                                     <div class="cart-and-bay-btn">
+                                        <% if (productData.stock) { %>
+                                            <% if (userData) { %>
+                                                <% if (productData.isOnCart) { %>
+                                        <a class="btn hvr-hover" data-fancybox-close="" 
+                                        href="/cart?id=<%= userData._id %>">Go to cart</a>
                                         
-                                                
-                                        <a class="btn hvr-hover" data-fancybox-close=""  onclick="addToCart('<%= productData._id %>')" id="addToCartBtn">Add to cart</a>
-                                       
-                                           
+                                        <% } else { %>
+
+                                        <a class="btn hvr-hover" data-fancybox-close=""  
+                                        onclick="addToCart('<%= productData._id %>')"  href="#" id="addToCartBtn">Add to cart</a>
+                                        
+                                       <% } %>
+                                        <% } else { %>    
+                                            <a class="btn hvr-hover" data-fancybox-close="" href="/login">Add to cart</a>
+
+                                            <% } %>
+                                            <% } else { %>
+                                                <a class="btn hvr-hover" data-fancybox-close="" href="#">Out of stock</a>
+                                            <% } %>
+
                                         <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
                                     </div>
                                 </div>      

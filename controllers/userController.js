@@ -502,7 +502,6 @@ exports.loadProfile = async (req, res) => {
     {
         try {
             
-           
             const userData = req.session.user;
             const userId = userData._id;
             const categoryData = await Category.find({ is_blocked: false });
@@ -533,6 +532,50 @@ exports.loadProfile = async (req, res) => {
    
 };
 
+
+// exports.profileEditPost = async (req, res) => {
+//     try {
+//       const accountDetails = req.body;
+//       const user = await User.findOne({ email: req.session.email });
+//       if (user) {
+//         user.firstName = accountDetails.firstName || user.firstName;
+//         user.lastName = accountDetails.lastName || user.lastName;
+//         user.phoneNo = accountDetails.phoneNo || user.phoneNo;
+//         if (
+//           accountDetails &&
+//           accountDetails.newPassword > 6 &&
+//           accountDetails.newPassword == accountDetails.confirmNewPassword
+//         ) {
+//           user.password = accountDetails.newPassword;
+//         }
+//       }
+//       await user.save();
+//       return res.status(200).end();
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+
+  exports. profileEditPost = async (req, res) => {
+    try {
+      const userId = req.session.user;
+      const updatedProfile = await User.findByIdAndUpdate(
+        userId,
+        {
+          user_fname: req.body.firstName,
+          user_lname: req.body.lastName,
+          phone: req.body.phoneNumber,
+          email: req.body.email
+        },
+        { new: true }
+      );
+  
+    } catch (error) {
+      console.log(error);
+  
+    }
+  };
+  
 exports. addNewAddress = async (req, res) => {
     try {
         console.log(531);
@@ -560,20 +603,22 @@ console.log(534,userId);
     }
 };
 
-exports. getAddressdata = async (req, res) => {
-    try {
-        const addressId = req.query.addressId;
-        const addressData = await Address.findById(addressId);
+// exports. getAddressdata = async (req, res) => {
+//     try {
+//         const addressId = req.query.addressId;
+//         const addressData = await Address.findById(addressId);
 
-        if (addressData) {
-            res.json(addressData); // Return the addressData as JSON response
-        } else {
-            res.json({ message: "Address not found" }); // Handle address not found case
-        }
-    } catch {
-        console.log(error.message);
-    }
-};
+//         if (addressData) {
+//             res.json(addressData); // Return the addressData as JSON response
+//         } 
+//         else 
+//         {
+//             res.json({ message: "Address not found"}); // Handle address not found case
+//         }
+//     } catch {
+//         console.log(error.message);
+//     }
+// };
 
 exports. updateAddress = async (req, res) => {
     try {

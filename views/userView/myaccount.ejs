@@ -15,6 +15,11 @@
   th {
       background-color: #f2f2f2;
   }
+
+  .bttn{
+      height:40px;
+
+  }
 </style>
 
 <!-- Start All Title Box -->
@@ -41,10 +46,10 @@
         <a class="nav-link" data-toggle="tab" href="#profileTab">Profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#addAddressTab">Add Address</a>
+        <a class="nav-link active" data-toggle="tab" href="#addAddressTab">Address</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#displayAddressTab">Account details</a>
+        <a class="nav-link" data-toggle="tab" href="#displayAddressTab">Cart details</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#wishlistTab">Wishlist</a>
@@ -68,34 +73,159 @@
          <p>From your account you can easily view and track orders. You can manage 
         and change your account information like address, contact information 
         and history of orders.</p> 
+        <br><br>
+        
+        <form id="profileForm">
+          <div class="row">
+              <div class="col-sm-6">
+                  <label>First Name </label>
+                  <input type="text" class="form-control" name="firstName"
+                      value="user.firstName %>" disabled>
+              </div>
+
+              <div class="col-sm-6">
+                  <label>Last Name </label>
+                  <input type="text" class="form-control" name="lastName"
+                      value="user.lastName%>" disabled>
+              </div>
+          </div>
+
+          <label>Phone Number </label>
+          <input type="text" class="form-control" name="phoneNumber" value="user.phoneNo%>"
+              disabled>
+
+          <label>Email address </label>
+          <input type="email" class="form-control" name="email" value="user.email%>"
+              disabled>
+
+
+                  <label>Current password</label>
+                  <input type="password" class="form-control" name="currentPassword"
+                      value="=user.password%>" disabled>
+
+                  <div class="d-none" id="newPassword">
+                      <label>New password</label>
+                      <input type="password" class="form-control" name="newPassword">
+
+                      <label>Confirm new password</label>
+                      <input type="password" class="form-control mb-2"
+                          name="confirmNewPassword">
+                  </div>
+                  <button type="submit" class="btn btn-outline-primary-2 mt-2"
+                      id="editButton">
+                      <span>EDIT</span>
+                      <i class="icon-long-arrow-right"></i>
+                  </button>
+
+                  <button type="button" class="btn btn-outline-primary-2 d-none"
+                      id="saveButton">
+                      <span>SAVE</span>
+                      <i class="icon-long-arrow-right"></i>
+                  </button>
+                  <button type="button" class="btn btn-outline-primary-2 d-none"
+                      id="cancelButton">
+                      <span>CANCEL</span>
+                      <i class="icon-long-arrow-right"></i>
+                  </button>
+      </form>
         
       </div>
 
 
       <!-- Add Address Tab -->
       <div id="addAddressTab" class="tab-pane active">
-        <h3>Add Address</h3>
-        <form>
-          <div class="form-group">
-            <label for="addressLine">Address Line:</label>
-            <input type="text" class="form-control" id="addressLine" placeholder="Enter address">
-          </div>
-          <div class="form-group">
-            <label for="city">City:</label>
-            <input type="text" class="form-control" id="city" placeholder="Enter city">
-          </div>
-          <div class="form-group">
-            <label for="state">State:</label>
-            <input type="text" class="form-control" id="state" placeholder="Enter state">
-          </div>
-          <button type="submit" class="btn btn-primary">Add Address</button>
-       
-        </form>
+        <div class="checkout-address">
+          <p><br>You can add new address here.<br></p>
+          
+          <form class="needs-validation"  id="addAddressCheckout">
+              <div class="row">
+                  <div class="col-md-6 mb-3">
+                      <label for="firstName">Full name *</label>
+                      <input type="text" class="form-control" name="name" >
+                      
+                  </div>
+                  <div class="col-md-6 mb-3">
+                      <label for="Mobile number">Mobile Number *</label>
+                      <input type="mobile" class="form-control" name="mobileNumber">
+                   
+                  </div>
+              </div>
+              <div class="mb-3">
+                  <label for="email">Email Address *</label>
+                  <input type="email" class="form-control" name="email" >
+         
+              </div>
+              <div class="mb-3">
+                  <label for="address">Address Line *</label>
+                  <input type="text" class="form-control" name="addressLine">
+                  <div class="invalid-feedback"> Please enter your shipping address. </div>
+              </div>
+              <div class="mb-3">
+                  <label for="address2">Town/City *</label>
+                  <input type="text" class="form-control" name="city" > </div>
+              <div class="row">
+                  <div class="col-md-5 mb-3">
+                      <label for="state">State *</label>
+                      <input type="text" name="state" class="form-control">
+                    
+                  </div>
+                  <div class="col-md-5 mb-3">
+                      <label for="zip">Pincode *</label>
+                      <input type="text" class="form-control" name="pincode">
+                  </div>
+                  <div class="col-md-5 mb-3">
+                    <button type="submit" class="btn btn-outline-primary-2 mt-1 bttn"> <span> Save Address </span> </button>                    
+                  </div>
+               
+
+               
+              </div>
+          </form>
+      </div>
+
+
+
+      <div class="col-md-12 col-lg-12">
+        <div class="odr-box">
+            <br><br>
+            <h3>Billing Address</h3>
+            <p>The following addresses will be used on the checkout page by default.</p>
+            <% addressData.forEach(address => { %>
+            <div class="rounded p-2 bg-light">
+                <div class="media mb-2 ">
+                    <input type="radio" id="address<%= address.id %>" name="selectedAddress" 
+                        value="<%= address.id %>" ">
+                        <div class="small text-muted">
+                            <label for="address<%= address.id %>">
+                                <strong>Name:</strong> <%= address.name %><br>
+                                <strong>Mobile number:</strong> <%= address.mobile %><br>
+                                <strong>Email:</strong> <%= address.email %><br>
+                                <strong>Address:</strong> <%= address.addressLine %><br>
+                                <strong>City:</strong> <%= address.city %><br>
+                                <strong>State:</strong> <%= address.state %><br>
+                                <strong>Pincode:</strong> <%= address.pincode %><br>
+                                <!-- <span style="font-size: 20px; cursor: pointer;">&#9998;</span> -->
+                                <a href="#" style="text-decoration: none;" id="editAddressBtn" data-id="<%= address._id %>"><span style="font-size: 20px; cursor: pointer;">&#9998;</span></a>
+                                <span style="font-size: 20px; cursor: pointer;"onclick="deleteAddress('<%= address._id %>')">&#10006;</span>  
+                                  
+                          
+                              
+
+
+                                    
+                            </label>
+                        </div>
+                </div>
+            </div>
+            <% }); %>   
+        </div>
+    </div>
       </div>
 
       <!-- Display Account details Tab -->
       <div id="displayAddressTab" class="tab-pane">
-        <h3>Account Details</h3>
+        <h4>All your cart items appears here.click below!!!</h4>
+        <a href="/cart" class="ml-auto btn hvr-hover">View Cart</a>
    
       </div>
 
@@ -144,3 +274,18 @@
       });
     });
   </script>
+
+  <!-- Main Js -->
+<script src="/js/vendor/index.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/users.js"></script>
+<script src="/js/userOrder.js"></script>
+<!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- Include SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+

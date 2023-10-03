@@ -59,10 +59,11 @@ user_route.get('/orderDetails',orderController.orderDetails)
 user_route.post('/updateOrder', orderController.updateOrder)
 
 
-//user profile
+//user profile +user address
 user_route.get("/myaccount",isLogin, blockCheck,userController.loadProfile)
+user_route.post("/accountedit", userController.profileEditPost );
 user_route.post('/addNewAddress', userController.addNewAddress)
-user_route.get('/addressData', userController.getAddressdata)
+// user_route.get('/addressData', userController.getAddressdata)//this not needed
 user_route.post('/updateAddress', userController.updateAddress)
 user_route.get('/deleteAddress', userController.deleteAddress)
 

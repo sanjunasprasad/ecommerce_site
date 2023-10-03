@@ -9,12 +9,12 @@ const productQuantity = async (id, act) => {
 };
 
 const addToCart = async (productId) => {
-    
+
     const addToCartButton = document.getElementById("addToCartBtn");
-    
+
     const productName = document.getElementsByName("productName")[0].value;
     const quantity = document.getElementById(productId).value;
-    console.log(quantity,productId)
+    console.log(quantity, productId)
     const response = await fetch(`/addToCart?id=${productId}&quantity=${quantity}`, {
         method: "GET",
         headers: {
@@ -23,7 +23,7 @@ const addToCart = async (productId) => {
     });
 
     let data = await response.json();
-    
+
 
     if (data.message === "Item already in cart!!") {
         Swal.fire({
@@ -47,7 +47,7 @@ const addToCart = async (productId) => {
 const totalPrice = async (id, act, stock) => {
     console.log(11);
     const elem = document.getElementById(id);
-    
+
     if (act == "inc") elem.value ? (elem.value = Number(elem.value) + 1) : "";
     else if (act == "dec") elem.value > 1 ? (elem.value = Number(elem.value) - 1) : "";
 
@@ -55,17 +55,17 @@ const totalPrice = async (id, act, stock) => {
     let datas = [];
     let length = document.getElementsByName("productTotal").length;
     console.log(length);
-    
+
     for (let i = 0; i < length; i++) {
-        
+
         const quantity = parseFloat(document.getElementsByName("num-product")[i].value);
-       
+
         const price = parseFloat(document.getElementsByName("productprice")[i].value);
-    
+
         const productTotal = isNaN(quantity) || isNaN(price) ? 0 : quantity * price;
         document.getElementsByName("productTotal")[i].innerText = "₹ " + productTotal.toFixed();
         subTotal += productTotal;
-      
+
 
         datas.push({
             id: document.getElementsByName("productId")[i].value,
@@ -334,15 +334,15 @@ if (addAddress) {
 const addAddressCheckout = document.getElementById("addAddressCheckout");
 
 if (addAddressCheckout) {
-    console.log(337,addAddressCheckout);
+    console.log(337, addAddressCheckout);
     addAddressCheckout.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const form = event.target;
-        console.log(342,form);
+        console.log(342, form);
         const formData = new FormData(form);
-        console.log(344,formData);
-       
+        console.log(344, formData);
+
         if (form) {
             try {
                 console.log(347);
@@ -400,7 +400,7 @@ const pincodeInput = document.querySelector(".pincode-input");
 editAddressBtns.forEach((btn) => {
     btn.addEventListener("click", async (event) => {
         event.preventDefault();
-      
+
 
         const addressId = btn.dataset.id;
         console.log(11);
@@ -575,7 +575,6 @@ const deleteAddress = async (addressId) => {
 };
 
 
-
 //////////////// FILTER AND SORT MANAGEMENT ////////////////
 const filteredData = (data) => {
     const productList = document.getElementById('productList');
@@ -603,9 +602,9 @@ const filteredData = (data) => {
                 ${product.stock ?
                   `<a href="/productView?id=${product._id}" class="image">
                     <img class="main-image" src="${product.imageUrl[0].url}" alt="Product" />
-                    <img class="hover-image" src="${product.imageUrl[1].url}" alt="Product" />
+
                   </a>
-                  <span class="percentage">20%</span>
+                  <span class="percentage"></span>
                   <span class="flags">
                     ${product.stock === 0 ? `<span class="sale">Sold Out</span>` : ''}
                     ${product.offerlabel && product.offerlabel.length > 0 ? `<span class="sale">Sale</span>` : ''}
@@ -643,7 +642,7 @@ const filteredData = (data) => {
                 <i class="ecicon eci-star fill"></i>
                 <i class="ecicon eci-star"></i>
               </div>
-              <div class="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text.</div>
+              <div class="ec-pro-list-desc"></div>
               
               ${product.oldPrice ?
                 `<span class="ec-price">
@@ -703,75 +702,7 @@ const filteredData = (data) => {
     }
   };
   
-  const subCategoryFilter = async (subCategoryId) => {
-    const response = await fetch(`/subCategoryFilter?subCategoryId=${subCategoryId}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
   
-    const data = await response.json();
-  
-    if (data.length > 0) {
-      filteredData(data);
-    } else {
-      productContainer.innerHTML = `
-        <div class="products mb-3" id="productList">
-          <div class="row justify-content-center">
-            <div class="col-6 col-md-4 col-lg-4">
-              <div class="product product-7 text-center">
-                <div class="error-content text-center">
-                  <div class="container">
-                    <h1 class="error-title">Error 404</h1>
-                    <p>We are sorry, the page you've requested is not available.</p>
-                    <a href="/home" class="btn btn-outline-primary-2 btn-minwidth-lg">
-                      <span>BACK TO HOMEPAGE</span>
-                      <i class="icon-long-arrow-right"></i>
-                    </a>
-                  </div><!-- End .container -->
-                </div><!-- End .error-content text-center -->
-              </div>
-            </div>
-          </div>
-        </div>`;
-    }
-  };
-  
-  const brandFilter = async (brandId) => {
-    const response = await fetch(`/brandFilter?brandId=${brandId}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  
-    const data = await response.json();
-  
-    if (data.length > 0) {
-      filteredData(data);
-    } else {
-      productContainer.innerHTML = `
-        <div class="products mb-3" id="productList">
-          <div class="row justify-content-center">
-            <div class="col-6 col-md-4 col-lg-4">
-              <div class="product product-7 text-center">
-                <div class="error-content text-center">
-                  <div class="container">
-                    <h1 class="error-title">Error 404</h1>
-                    <p>We are sorry, the page you've requested is not available.</p>
-                    <a href="/home" class="btn btn-outline-primary-2 btn-minwidth-lg">
-                      <span>BACK TO HOMEPAGE</span>
-                      <i class="icon-long-arrow-right"></i>
-                    </a>
-                  </div><!-- End .container -->
-                </div><!-- End .error-content text-center -->
-              </div>
-            </div>
-          </div>
-        </div>`;
-    }
-  };
-  
-
 const sortProducts = async()=>{
 
     console.log("inside function");
