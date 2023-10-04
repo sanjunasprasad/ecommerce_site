@@ -1,10 +1,10 @@
-const cloudinary = require('../database/cloudinary')
+const cloudinary = require('../database/cloudinary');
 const User = require("../models/usermodel");
 const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const Address = require("../models/addressmodel");
 const Order = require("../models/orderModel");
-
+const Coupon = require("../models/couponmodel");
 
 var  walletBalance=0
 exports. loadCart = async (req, res) => {
@@ -180,28 +180,88 @@ exports. loadCheckout = async (req, res) => {
         cart.forEach((element) => {
             if(element.product.oldPrice > 0){
             element.offerDiscount = (element.product.oldPrice - element.product.price) * element.quantity;
-            offerDiscount += element.offerDiscount;
+            offerDiscount += element.offerDiscount
             }
         });
 
         const now = new Date();
-        // const availableCoupons = await Coupon.find({
-        //     expiryDate: { $gte: now },
-        //     usedBy: { $nin: [userId] },
-        //     status: true,
-        // });
+        const availableCoupons = await Coupon.find({
+            expiryDate: { $gte: now },
+            usedBy: { $nin: [userId] },
+            status: true,
+        })
 
-       
 
         res.render("checkout", { 
             userData, 
             categoryData, 
             addressData, 
+            offerDiscount, 
             subTotal, 
             cart, 
             loggedIn:true,  
         });
         
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+
+exports.validateCoupon = async (req, res) => {
+    try {
+        const { coupon, subTotal } = req.body;
+        const couponData = await Coupon.findOne({ code: coupon });
+
+        if (!couponData) {
+            res.json("invalid");
+        } else if (couponData.expiryDate < new Date()) {
+            res.json("expired");
+        } else {
+            const couponId = couponData._id;
+            const discount = couponData.discount;
+            const minDiscount = couponData.minDiscount
+            const maxDiscount = couponData.maxDiscount
+            const userId = req.session.user._id;
+
+            const couponUsed = await Coupon.findOne({ _id: couponId, usedBy: { $in: [userId] } });
+
+            if (couponUsed) {
+                res.json("already used");
+            } else {
+
+                let discountAmount
+                let maximum
+
+                const discountValue = Number(discount);
+                const couponDiscount = (subTotal * discountValue) / 100;
+
+                if(couponDiscount < minDiscount){
+
+                    res.json("minimum value not met")
+
+                }else{
+                    if(couponDiscount > maxDiscount){
+                        discountAmount = maxDiscount
+                        maximum = "maximum"
+                    }else{
+                        discountAmount = couponDiscount
+                    }
+                    
+                    const newTotal = subTotal - discountAmount;
+                    const couponName = coupon;
+    
+                    res.json({
+                        couponName,
+                        discountAmount,
+                        newTotal,
+                        maximum
+                    });
+                }
+                
+                
+            }
+        }
     } catch (error) {
         console.log(error.message);
     }

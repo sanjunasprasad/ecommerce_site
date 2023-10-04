@@ -1,5 +1,5 @@
 const userController = require("../controllers/userController");
-const productController = require('../controllers/productController')
+const productController = require('../controllers/productController');
 const cartController = require('../controllers/cartController')
 const orderController = require('../controllers/orderController')
 const express = require("express");
@@ -49,7 +49,7 @@ user_route.post('/cartUpdation',cartController.updateCart)
 user_route.get('/removeCart',cartController.removeCart)
 user_route.get('/checkStock', cartController.checkStock)
 user_route.get('/checkout',isCheckout, isLogin, blockCheck,cartController.loadCheckout)
-// user_route.post('/validateCoupon', cartController.validateCoupon)
+user_route.post('/validateCoupon', cartController.validateCoupon)
 
 //order
 user_route.post('/placeOrder', orderController.placeOrder)

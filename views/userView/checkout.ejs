@@ -128,11 +128,19 @@
                                     <h4>Shipping Cost</h4>
                                     <div class="ml-auto font-weight-bold"> Free </div>
                                 </div>
-                                <div class="d-flex">
-                                    <h4>Coupon Discount</h4>
-                                    <div class="ml-auto font-weight-bold">Apply Coupon </div>
-                                </div>
-                              
+
+
+                               <!-- COUPON AREA -->
+                                <tr id="couponModel" class="summary-total">
+                                    <td><p id="couponMessage"></p></td>
+                                    <td ><p id="couponDiscount"></td>
+                                </tr>
+                                <input id="checkout-discount-input" class="ec-coupan" type="text" required=""
+                                placeholder="Enter Your Coupon Code" name="ec-coupan" value="">
+                            <button onclick="validateCoupon()"  class="btn btn-theme" type="submit"
+                                name="subscribe" value="">Apply</button>
+
+                                <br>
                                 <hr class="my-1">
                                 <input type="hidden" id="subTotalValue" value="<%= subTotal %>">
                                 <div class="d-flex gr-total">
