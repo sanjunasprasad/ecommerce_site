@@ -529,15 +529,61 @@ if (updateAddress) {
 
 ///////////Delete Address///////////
 
+// const deleteAddress = async (addressId) => {
+//     const result = await Swal.fire({
+//         title: "Delete Address",
+//         text: "Do you want to delete this address? \nThis cannot be undo!",
+//         icon: "question",
+//         showCancelButton: true,
+//         confirmButtonColor: "#3085d6",
+//         cancelButtonColor: "#d33",
+//         confirmButtonText: "Yes,Delete",
+//         cancelButtonText: "DISMISS",
+//     });
+
+//     if (result.value) {
+//         try {
+//             const response = await fetch(`/deleteAddress?addressId=${addressId}`, {
+//                 method: "GET",
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                 },
+//             });
+
+//             if (response.ok) {
+//                 Swal.fire({
+//                     icon: "success",
+//                     title: "Address has been deleted successfully",
+//                     showConfirmButton: true,
+//                     confirmButtonText: "OK",
+//                     confirmButtonColor: "#4CAF50",
+//                 });
+//                 document.getElementById("addressCard" + addressId).innerHTML = "";
+               
+//             } else {
+//                 Swal.fire({
+//                     icon: "warning",
+//                     title: "Somthing error!!",
+//                     showConfirmButton: true,
+//                     confirmButtonText: "DISMISS",
+//                     confirmButtonColor: "#D22B2B",
+//                 });
+//             }
+//         } catch (error) {
+//             console.log(error.message);
+//         }
+//     }
+// };
+
 const deleteAddress = async (addressId) => {
     const result = await Swal.fire({
         title: "Delete Address",
-        text: "Do you want to delete this address? \nThis cannot be undo!",
+        text: "Do you want to delete this address? \nThis cannot be undone!",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes,Delete",
+        confirmButtonText: "Yes, Delete",
         cancelButtonText: "DISMISS",
     });
 
@@ -558,11 +604,13 @@ const deleteAddress = async (addressId) => {
                     confirmButtonText: "OK",
                     confirmButtonColor: "#4CAF50",
                 });
-                document.getElementById("addressCard" + addressId).innerHTML = "";
+
+                // Reload the page to reflect the changes
+                window.location.reload(true);
             } else {
                 Swal.fire({
                     icon: "warning",
-                    title: "Somthing error!!",
+                    title: "Something went wrong!",
                     showConfirmButton: true,
                     confirmButtonText: "DISMISS",
                     confirmButtonColor: "#D22B2B",

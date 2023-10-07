@@ -42,22 +42,62 @@
       </li>  
     </ul>
     <h1>edit address</h1>   
+    <div class="col-lg-12 col-md-12">
+        
+            
+        <div class="account_form">
+            
+
+            <form id="userEditAddress">
+                <input type="text" name="addressId" id="userAddressIdEdit" value="<%=address._id %>" hidden>
+                <p>
+                    <label>Name <span>*</span></label>
+                    <input type="text" name="name" value="<%=address.name%>">
+                </p>
+                <p>
+                    <label>Mobile <span>*</span></label>
+                    <input type="text" name="mobile" value="<%=address.mobile%>">
+                </p>
+                <p>
+                    <label>Email <span>*</span></label>
+                    <input type="text" name="email" value="<%=address.email%>">
+                </p>
+                <p>
+                    <label>Address <span>*</span></label>
+                    <textarea name="addressLine" id="" cols="30"
+                        rows="10"><%=address.addressLine%> </textarea>
+                </p>
+                <p>
+                    <label>City <span>*</span></label>
+                    <input type="text" name="city" value="<%=address.city%>">
+                </p>
+                <p>
+                    <label>State <span>*</span></label>
+                    <input type="text" name="state" value="<%=address.state%>">
+                </p>
+                <p>
+                    <label>PIN <span>*</span></label>
+                    <input type="text" name="pincode" value="<%=address.pincode%>">
+                </p>
+                <div class="login_submit">
+
+                    <button type="submit" style="background-color: #79a206;">Update</button>
+
+
+                </div>
+
+            </form>
+        </div>
+    </div>
   </div>
 </div>
 
-  
-
-
-
-
-
-
 
 <%- include('footer') %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
-  <script>
+
+
+
+<script>
     // Activate Bootstrap tabs
     $(document).ready(function(){
       $("# a").click(function(){
@@ -65,18 +105,72 @@
       });
     });
   </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <!-- Main Js -->
+ <script src="/js/vendor/index.js"></script>
+ <script src="/js/main.js"></script>
+ <script src="/js/users.js"></script>
+ <script src="/js/userOrder.js"></script>
+ <!-- Include SweetAlert CSS -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+ <!-- Razorpay SDK -->
+ <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+ 
+ <!-- Include SweetAlert JS -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+ <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+ 
+ 
 
-  <!-- Main Js -->
-<script src="/js/vendor/index.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/users.js"></script>
-<script src="/js/userOrder.js"></script>
-<!-- Include SweetAlert CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
-<!-- Razorpay SDK -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-<!-- Include SweetAlert JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+<script>
 
+document.addEventListener("DOMContentLoaded", function () {
+    const userEditAddress = document.getElementById("userEditAddress");
+    const addressId = document.getElementById("userAddressIdEdit").value;
+
+    if (userEditAddress) {
+        userEditAddress.addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevent form submission to allow asynchronous request
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(`/editAddressPost?addressId=${addressId}`, {
+                    method: "POST",
+                    body: JSON.stringify(Object.fromEntries(formData)),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                if (response.ok) {
+                    await Swal.fire({
+                        icon: "success",
+                        title: "Address updated successfully",
+                        showConfirmButton: "OK",
+                        confirmButtonColor: "#50C878",
+                        timer: 1800 // Set a timer for 1.5 seconds to display the message
+                    });
+
+                    // Redirect to the address section after the SweetAlert message disappears
+                    window.location.href = "/myaccount#addAddressTab"; // Assuming addAddressTab is the anchor for your address section
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Some error occurred",
+                        showConfirmButton: true,
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#D22B2B",
+                    });
+                }
+            } catch (error) {
+                console.log("Error:", error.message);
+            }
+        });
+    }
+});
+</script>
+
+ 
