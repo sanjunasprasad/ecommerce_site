@@ -1,0 +1,82 @@
+<%- include('header') %>
+<%- include('headsection') %>
+
+
+<!-- Start All Title Box -->
+<div class="all-title-box">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2>My Account</h2>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Shop</a></li>
+          <li class="breadcrumb-item active">My Account</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End All Title Box -->
+
+<div class="cart-box-main">
+
+  <div class="container mt-5">
+    <ul class="nav nav-tabs" id="accountTabs">
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#profileTab">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#addAddressTab">Address</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#displayAddressTab">Cart details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#wishlistTab">Wishlist</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#cartTab">My Orders</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#walletTab">Wallet</a>
+      </li>  
+    </ul>
+    <h1>edit address</h1>   
+  </div>
+</div>
+
+  
+
+
+
+
+
+
+
+<%- include('footer') %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+  <script>
+    // Activate Bootstrap tabs
+    $(document).ready(function(){
+      $("# a").click(function(){
+        $(this).tab('show');
+      });
+    });
+  </script>
+
+  <!-- Main Js -->
+<script src="/js/vendor/index.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/users.js"></script>
+<script src="/js/userOrder.js"></script>
+<!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- Include SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+

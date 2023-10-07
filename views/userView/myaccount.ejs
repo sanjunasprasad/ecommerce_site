@@ -201,15 +201,9 @@
                                 <strong>City:</strong> <%= address.city %><br>
                                 <strong>State:</strong> <%= address.state %><br>
                                 <strong>Pincode:</strong> <%= address.pincode %><br>
-                                <!-- <span style="font-size: 20px; cursor: pointer;">&#9998;</span> -->
-                                <a href="#" style="text-decoration: none;" id="editAddressBtn" data-id="<%= address._id %>"><span style="font-size: 20px; cursor: pointer;">&#9998;</span></a>
+                                <a href="/editAddress?addressId=<%=address._id%>" style="text-decoration: none;" id="editAddressBtn" data-id="<%= address._id %>"><span style="font-size: 20px; cursor: pointer;">&#9998;</span></a>
                                 <span style="font-size: 20px; cursor: pointer;"onclick="deleteAddress('<%= address._id %>')">&#10006;</span>  
-                                  
-                          
-                              
-
-
-                                    
+                                 
                             </label>
                         </div>
                 </div>
@@ -221,7 +215,7 @@
 
       <!-- Display Account details Tab -->
       <div id="displayAddressTab" class="tab-pane">
-        <h4>All your cart items appears here.click below!!!</h4>
+        <p>All your cart items appears here.click below!!!<p>
         <a href="/cart" class="ml-auto btn hvr-hover">View Cart</a>
    
       </div>
@@ -234,7 +228,7 @@
 
       <!-- Cart Tab -->
       <div id="cartTab" class="tab-pane">
-           <h4>All your orders appears here.click below!!!</h4>
+           <p>All your orders appears here.click below!!!<p>
            <a href="/myOrders" class="ml-auto btn hvr-hover">View Order History</a>
            
       </div>
@@ -242,8 +236,44 @@
 
       <!-- wallet Tab -->
       <div id="walletTab" class="tab-pane">
-        <h3>wallet</h3>
-        <!-- Cart content -->
+      <p>Your wallet history here</p>
+        <body>
+          <table >
+              <thead>
+                  <tr>
+                      <th>Date</th>
+                      <th>Details</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% if (newTransactions.length) { %>
+                  <% newTransactions.forEach(function(transaction) { %>
+                      <tr>
+                          <td><%= transaction.date %></td>
+                          <td><%= transaction.details %></td>
+                          <td>₹ <%= transaction.amount %></td>
+                          <% if (transaction.status === "Debit") { %>
+                              <td style="color: red; font-weight: 600;"><%= transaction.status %></td>
+                          <% } else if (transaction.status === "Credit") { %>
+                              <td style="color: green; font-weight: 600;"><%= transaction.status %></td>
+                          <% } %>
+                      </tr>
+                  <% }); %>
+              <% } else { %>
+                  <tr>
+                      <td colspan="4">No transactions yet</td>
+                  </tr>
+              <% } %>
+
+              </tbody>
+              
+        </table><!-- End .table table-wishlist -->
+        <a href="/home" class="btn btn-outline-primary-2"><span>Available Balance : ₹ <%= userData.wallet.balance %></span></a>
+        
+         
+      </body>
       </div>
 
      

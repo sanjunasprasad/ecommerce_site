@@ -14,7 +14,7 @@ user_route.get('/userhome',userController.userhomeload)
 user_route.get('/aboutus',userController.aboutus)
 
 //login
-user_route.get("/login",isLogout ,userController.loginload)
+user_route.get("/login",isLogout ,userController.loginload);
 user_route.post('/login',  userController.verifyLogin);
 user_route.get('/logout',  userController.doLogout)
 
@@ -59,12 +59,19 @@ user_route.get('/orderDetails',orderController.orderDetails)
 user_route.post('/updateOrder', orderController.updateOrder)
 
 
-//user profile +user address
+//user profile 
 user_route.get("/myaccount",isLogin, blockCheck,userController.loadProfile)
 user_route.post("/accountedit", userController.profileEditPost );
+user_route.get('/wallet',userController.walletTransaction)
+
+//user profile address
 user_route.post('/addNewAddress', userController.addNewAddress)
-user_route.post('/updateAddress', userController.updateAddress)
+// user_route.get('/addressData', userController.getAddressdata) //to edit address,first get the address
+// user_route.post('/updateAddress', userController.updateAddress)
 user_route.get('/deleteAddress', userController.deleteAddress)
+user_route.get('/editAddress', userController.editAddress)
+user_route.post('/editAddressPost', userController.editAddressPost)
+
 
 
 

@@ -7,6 +7,7 @@ const Order = require("../models/orderModel");
 
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const moment = require('moment');
 
 
 
@@ -511,20 +512,24 @@ exports.loadProfile = async (req, res) => {
 
     
             const user = await User.findById(userId);
-
-            const usercart = await User.findOne({_id:userId }).populate("cart.product").lean();
+            const transactions = user.wallet.transactions.sort((a, b) => b.date - a.date);
+            const newTransactions = transactions.map((transactions) => {
+            const formattedDate = moment(transactions.date).format("MMMM D, YYYY");
+            return { ...transactions.toObject(), date: formattedDate };
+        });
+           walletBalance=user.wallet.balance
+           const usercart = await User.findOne({_id:userId }).populate("cart.product").lean();
            console.log(user);
 
 
             const cart = usercart.cart;
-        
             let subTotal = 0;
     
             cart.forEach((val) => {
                 val.total = val.product.price * val.quantity;
                 subTotal += val.total;
             });
-            res.render("myaccount", { userData, categoryData, addressData,orderData,productData,loggedIn:true ,profilename,subTotal,logged,cart});
+            res.render("myaccount", { userData, categoryData,newTransactions, walletBalance,addressData,orderData,productData,loggedIn:true ,profilename,subTotal,logged,cart});
         } catch (error) {
             console.log(error.message);
         }
@@ -603,36 +608,51 @@ console.log(534,userId);
     }
 };
 
+// exports. getAddressdata = async (req, res) => {
+//     try {
+//         const addressId = req.query.addressId;
+//         const addressData = await Address.findById(addressId);
 
-exports. updateAddress = async (req, res) => {
-    try {
-        const addressId = req.query.addressId;
+//         if (addressData) {
+//             res.json(addressData); // Return the addressData as JSON response
+//         } else {
+//             res.json({ message: "Address not found" }); // Handle address not found case
+//         }
+//     } catch {
+//         console.log("from get address",error.message);
+//     }
+// };
+// exports. updateAddress = async (req, res) => {
+//     try {
+//         const addressId = req.query.addressId;
 
-        console.log(addressId);
+//         console.log(addressId);
 
-        const updatedAddress = await Address.findByIdAndUpdate(
-            addressId,
-            {
-                name: req.body.name,
-                mobile: req.body.mobile,
-                addressLine: req.body.addressLine,
-                email: req.body.email,
-                city: req.body.city,
-                state: req.body.state,
-                pincode: req.body.pincode,
-            },
-            { new: true }
-        );
+//         const updatedAddress = await Address.findByIdAndUpdate(
+//             addressId,
+//             {
+//                 name: req.body.name,
+//                 mobile: req.body.mobile,
+//                 addressLine: req.body.addressLine,
+//                 email: req.body.email,
+//                 city: req.body.city,
+//                 state: req.body.state,
+//                 pincode: req.body.pincode,
+//             },
+//             { new: true }
+//         );
 
-        if (updatedAddress) {
-            res.status(200).send();
-        } else {
-            res.status(500).send();
-        }
-    } catch (error) {
-        console.log(error.message);
-    }
-};
+//         if (updatedAddress) {
+//             res.status(200).send();
+//         } else {
+//             res.status(500).send();
+//         }
+//     } catch (error) {
+//         console.error('Error updating address:', error);
+//         res.status(500).send({ error: 'Internal Server Error' });
+//     }
+    
+// };
 
 exports. deleteAddress = async (req, res) => {
     try {
@@ -649,3 +669,78 @@ exports. deleteAddress = async (req, res) => {
         console.log(error.message);
     }
 };
+
+exports. editAddress = async (req, res) => {
+    // try {
+    //   const addressId = req.query.addressId;
+    //   const address = await Address.findById(addressId);
+    //   res.render("editaddress", { address, message: "" });
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    res.render("editaddress")
+  };
+  
+  exports. editAddressPost = async (req, res) => {
+    try {
+      const addressId = req.query.addressId;
+      const updatedAddress = await Address.findByIdAndUpdate(
+        addressId,
+        {
+          name: req.body.name,
+          mobile: req.body.mobile,
+          addressLine: req.body.addressLine,
+          email: req.body.email,
+          city: req.body.city,
+          state: req.body.state,
+          pincode: req.body.pincode,
+        },
+        { new: true }
+      );
+  
+      if (updatedAddress) {
+        res.status(200).send();
+      } else {
+        res.status(500).send();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+
+exports. walletTransaction= async(req,res)=>{
+
+    try{
+        const userData = req.session.user;
+        const userId = userData._id;
+        const categoryData = await Category.find({ is_blocked: false });
+        
+
+        const user = await User.findById(userId);
+        const transactions = user.wallet.transactions.sort((a, b) => b.date - a.date);
+
+        const newTransactions = transactions.map((transactions) => {
+            const formattedDate = moment(transactions.date).format("MMMM D, YYYY");
+            return { ...transactions.toObject(), date: formattedDate };
+        });
+        console.log(firstName);
+        // var useremail=req.session.user.email
+        walletBalance=user.wallet.balance
+        const usercart = await User.findOne({_id:userId }).populate("cart.product").lean();
+       console.log(user);
+        const cart = usercart.cart;
+       
+        let subTotal = 0;
+
+        cart.forEach((val) => {
+            val.total = val.product.price * val.quantity;
+            subTotal += val.total;
+        });
+
+        res.render("wallet", { userData, categoryData, newTransactions,loggedIn:true,walletBalance,subTotal,cart});
+
+    }catch(error){
+        console.log(error.message)
+    }
+}

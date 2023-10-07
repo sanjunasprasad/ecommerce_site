@@ -307,12 +307,13 @@ const razorpay = async (selectedPayment)=>{
         const subTotal = Number(document.getElementById('subTotalValue').value)
 
         var options = {
-            "key": "rzp_test_omwV1KzHmstnbs", // Enter the Key ID generated from the Dashboard
+            
+            "key": "rzp_test_bzUUiFqFZut9Yf" ,// Enter the Key ID generated from the Dashboard
             "amount": subTotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
-            "name": "Gadgetry",
+            "name": "All Silks",
             "description": "Order payment",
-            "image": "/images/demos/demo-8/logo.png",
+            "image": "../assetu/images/logo.png",
             "order_id": undefined, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response){
                 cashOnDelivery(selectedPayment)
@@ -328,7 +329,7 @@ const razorpay = async (selectedPayment)=>{
         rzp1.open();
         
     } catch (error) {
-        console.log(error.message);
+        console.log(error.message)
     }
 }
 
@@ -512,12 +513,12 @@ const updateOrder = async (orderId, orderStatus)=>{
     try {
           
           console.log("orderid from updateorderjs:",orderId)
-        // const walletBalance = Number(document.getElementById('userWallet').value)
+        const walletBalance = Number(document.getElementById('userWallet').value)
         const grandTotal = Number(document.getElementById('grandTotal').value)
-        // console.log(`.....${walletBalance}`);
+        console.log(`.....${walletBalance}`);
         console.log("total:",grandTotal);
 
-        const updatedBalance = grandTotal
+        const updatedBalance = walletBalance + grandTotal
         console.log(updatedBalance)
         const paymentMethod = document.getElementById('paymentMethod').innerHTML
         const response = await fetch(`/updateOrder?orderId=${orderId}`,{
