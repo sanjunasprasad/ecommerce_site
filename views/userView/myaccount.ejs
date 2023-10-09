@@ -73,66 +73,32 @@
          <p>From your account you can easily view and track orders. You can manage 
         and change your account information like address, contact information 
         and history of orders.</p> 
-        <br><br>
-        
-        <form id="profileForm">
-          <div class="row">
-              <div class="col-sm-6">
-                  <label>First Name </label>
-                  <input type="text" class="form-control" name="firstName"
-                      value="user.firstName %>" disabled>
-              </div>
+       <br>
+        <div class="login">
+          <div class="login_form_container">
+              <div class="account_login_form">
+                  <form id="profileUpdate">
+      
+                      <p><strong>Name:</strong> <%=user.firstName%></p>
+      
+                      <p><strong>Email:</strong> <%=user.email%></p>
+      
+                      <p><strong>Phone:</strong> <%=user.phoneNumber%></p>
 
-              <div class="col-sm-6">
-                  <label>Last Name </label>
-                  <input type="text" class="form-control" name="lastName"
-                      value="user.lastName%>" disabled>
+                      <a href="/editaccount?userid=<%=user._id%>" style="text-decoration: none"  id="editaccountBtn" data-id="<%= user._id %>" ><span style="font-size: 17px; cursor: pointer;">Edit</span></a> 
+                      
+                  </form>
               </div>
           </div>
-
-          <label>Phone Number </label>
-          <input type="text" class="form-control" name="phoneNumber" value="user.phoneNo%>"
-              disabled>
-
-          <label>Email address </label>
-          <input type="email" class="form-control" name="email" value="user.email%>"
-              disabled>
-
-
-                  <label>Current password</label>
-                  <input type="password" class="form-control" name="currentPassword"
-                      value="=user.password%>" disabled>
-
-                  <div class="d-none" id="newPassword">
-                      <label>New password</label>
-                      <input type="password" class="form-control" name="newPassword">
-
-                      <label>Confirm new password</label>
-                      <input type="password" class="form-control mb-2"
-                          name="confirmNewPassword">
-                  </div>
-                  <button type="submit" class="btn btn-outline-primary-2 mt-2"
-                      id="editButton">
-                      <span>EDIT</span>
-                      <i class="icon-long-arrow-right"></i>
-                  </button>
-
-                  <button type="button" class="btn btn-outline-primary-2 d-none"
-                      id="saveButton">
-                      <span>SAVE</span>
-                      <i class="icon-long-arrow-right"></i>
-                  </button>
-                  <button type="button" class="btn btn-outline-primary-2 d-none"
-                      id="cancelButton">
-                      <span>CANCEL</span>
-                      <i class="icon-long-arrow-right"></i>
-                  </button>
-      </form>
-        
       </div>
+      
+        
+       
+       </div>
+        <!-- Profile Tab ends here -->
 
 
-      <!-- Add Address Tab -->
+      <!-- Add Address Tab starts-->
       <div id="addAddressTab" class="tab-pane active">
         <div class="checkout-address">
           <p><br>You can add new address here.<br></p>
@@ -181,7 +147,7 @@
       </div>
 
 
-
+     <!-- added address display here -->
       <div class="col-md-12 col-lg-12">
         <div class="odr-box">
             <br><br>
@@ -211,7 +177,10 @@
             <% }); %>   
         </div>
     </div>
-      </div>
+    </div>
+    <!-- add adress tab ends here -->
+
+
 
       <!-- Display Account details Tab -->
       <div id="displayAddressTab" class="tab-pane">

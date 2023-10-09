@@ -101,7 +101,7 @@ exports.verifyLogin = async (req, res) => {
             const userData = await User.findOne({ email: email });
             console.log("fetch user from mongo:",userData);
           profilename=userData.firstName
-          console.log(`...............${profilename}`)
+          console.log(`...............from login${profilename}`)
 
           if (!valid.isValid) {
             return res.status(400).json({ error: valid.errors });
@@ -529,7 +529,7 @@ exports.loadProfile = async (req, res) => {
                 val.total = val.product.price * val.quantity;
                 subTotal += val.total;
             });
-            res.render("myaccount", { userData, categoryData,newTransactions, walletBalance,addressData,orderData,productData,loggedIn:true ,profilename,subTotal,logged,cart});
+            res.render("myaccount", { userData, user,categoryData,newTransactions, walletBalance,addressData,orderData,productData,loggedIn:true ,profilename,subTotal,logged,cart});
         } catch (error) {
             console.log(error.message);
         }
@@ -537,32 +537,62 @@ exports.loadProfile = async (req, res) => {
    
 };
 
-  exports. profileEditPost = async (req, res) => {
-    try {
-      const userId = req.session.user;
-      const updatedProfile = await User.findByIdAndUpdate(
-        userId,
+
+exports.editaccount= async (req, res) => {
+    logged=req.session.user
+    if(req.session.user)
+    {
+    //    res.render("editprofile",{logged:true})
+    try 
+    {
+        const userid = req.query.userid;
+        console.log("userid:",userid) // Assuming you pass the user ID as a query parameter
+        const user = await User.findById(userid);
+        if (!user) 
         {
-          user_fname: req.body.firstName,
-          user_lname: req.body.lastName,
-          phone: req.body.phoneNumber,
-          email: req.body.email
-        },
-        { new: true }
-      );
-  
-    } catch (error) {
-      console.log(error);
-  
+          return res.status(404).json({ message: 'User not found' });
+        }
+        res.render('editprofile', { user: user,logged:true });
+      } 
+      catch (error) 
+      {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+
     }
-  };
+   
+  }
+
+exports.editaccountpost= async (req, res) => {
+    const { name, phoneNumber, email } = req.body;
+    const userid = req.query.userid; 
+
+    try 
+    {
+
+      const updatedUser = await User.findByIdAndUpdate(userid, {
+        name: name,
+        phoneNumber: phoneNumber,
+        email: email,
+      }, { new: true }); 
+    //   res.redirect(`/user/profile/${updatedUser._id}`);
+    } 
+    catch (error) 
+    {
+    
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
+
   
 exports. addNewAddress = async (req, res) => {
     try {
         console.log(531);
         const userData = req.session.user;
         const userId = userData._id;
-console.log(534,userId);
+        console.log(534,userId);
         const address = new Address({
             userId: userId,
             name: req.body.name,

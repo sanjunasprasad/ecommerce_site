@@ -38,7 +38,7 @@ user_route.get("/shop",blockCheck, productController.shop)
 user_route.get("/prodetail",blockCheck,productController.prodetail)
 
 
-//user side sort+search+filter
+//sort+search+filter
 user_route.get('/categoryFilter', productController.categoryFilter)
 user_route.post('/sortProduct', productController.sortProduct)
 
@@ -61,10 +61,11 @@ user_route.post('/updateOrder', orderController.updateOrder)
 
 //user profile 
 user_route.get("/myaccount",isLogin, blockCheck,userController.loadProfile)
-user_route.post("/accountedit", userController.profileEditPost );
-user_route.get('/wallet',userController.walletTransaction)
+user_route.get('/editaccount', userController.editaccount)
+user_route.post("/editaccountpost", userController.editaccountpost );
+user_route.get('/wallet',userController.walletTransaction);
 
-//user profile address
+//profile address
 user_route.post('/addNewAddress', userController.addNewAddress)
 user_route.get('/deleteAddress', userController.deleteAddress)
 user_route.get('/editAddress', userController.editAddress)

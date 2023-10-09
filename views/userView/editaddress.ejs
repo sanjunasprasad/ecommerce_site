@@ -9,7 +9,7 @@
       <div class="col-lg-12">
         <h2>My Account</h2>
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Shop</a></li>
+          <li class="breadcrumb-item"><a href="#">Address</a></li>
           <li class="breadcrumb-item active">My Account</li>
         </ul>
       </div>
@@ -41,54 +41,52 @@
         <a class="nav-link" data-toggle="tab" href="#walletTab">Wallet</a>
       </li>  
     </ul>
-    <h1>edit address</h1>   
-    <div class="col-lg-12 col-md-12">
-        
+   <br><br><p>You can update address here</p>
+   
+ 
+    <form class="needs-validation"  id="userEditAddress">
+        <input type="text" name="addressId" id="userAddressIdEdit" value="<%=address._id %>" hidden>
+      <div class="row">
+          <div class="col-md-6 mb-3">
+              <label for="firstName">Full name *</label>
+              <input type="text" class="form-control" name="name" value="<%=address.name%>" >
+              
+          </div>
+          <div class="col-md-6 mb-3">
+              <label for="Mobile number">Mobile Number *</label>
+              <input type="mobile" class="form-control" name="mobile" value="<%=address.mobile%>">
+           
+          </div>
+      </div>
+      <div class="mb-3">
+          <label for="email">Email Address *</label>
+          <input type="email" class="form-control" name="email" value="<%=address.email%>">
+ 
+      </div>
+      <div class="mb-3">
+          <label for="address">Address Line *</label>
+          <input type="text" class="form-control" name="addressLine" value="<%=address.addressLine%>">
+         
+      </div>
+      <div class="mb-3">
+          <label for="address2">Town/City *</label>
+          <input type="text" class="form-control" name="city" value="<%=address.city%>" > 
+      </div>
+      <div class="row">
+          <div class="col-md-5 mb-3">
+              <label for="state">State *</label>
+              <input type="text" name="state" class="form-control" value="<%=address.state%>">
             
-        <div class="account_form">
-            
-
-            <form id="userEditAddress">
-                <input type="text" name="addressId" id="userAddressIdEdit" value="<%=address._id %>" hidden>
-                <p>
-                    <label>Name <span>*</span></label>
-                    <input type="text" name="name" value="<%=address.name%>">
-                </p>
-                <p>
-                    <label>Mobile <span>*</span></label>
-                    <input type="text" name="mobile" value="<%=address.mobile%>">
-                </p>
-                <p>
-                    <label>Email <span>*</span></label>
-                    <input type="text" name="email" value="<%=address.email%>">
-                </p>
-                <p>
-                    <label>Address <span>*</span></label>
-                    <textarea name="addressLine" id="" cols="30"
-                        rows="10"><%=address.addressLine%> </textarea>
-                </p>
-                <p>
-                    <label>City <span>*</span></label>
-                    <input type="text" name="city" value="<%=address.city%>">
-                </p>
-                <p>
-                    <label>State <span>*</span></label>
-                    <input type="text" name="state" value="<%=address.state%>">
-                </p>
-                <p>
-                    <label>PIN <span>*</span></label>
-                    <input type="text" name="pincode" value="<%=address.pincode%>">
-                </p>
-                <div class="login_submit">
-
-                    <button type="submit" style="background-color: #79a206;">Update</button>
-
-
-                </div>
-
-            </form>
-        </div>
-    </div>
+          </div>
+          <div class="col-md-5 mb-3">
+              <label for="zip">Pincode *</label>
+              <input type="text" class="form-control" name="pincode" value="<%=address.pincode%>">
+          </div>
+          <div class="col-md-5 mb-3">
+            <button type="submit" class="btn btn-outline-primary-2 mt-1 bttn"> <span> Update </span> </button>                    
+          </div>        
+      </div>
+  </form>
   </div>
 </div>
 
@@ -154,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         timer: 1800 // Set a timer for 1.5 seconds to display the message
                     });
 
-                    // Redirect to the address section after the SweetAlert message disappears
+                    
                     window.location.href = "/myaccount#addAddressTab"; // Assuming addAddressTab is the anchor for your address section
                 } else {
                     Swal.fire({
