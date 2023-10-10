@@ -576,7 +576,7 @@ exports.editaccountpost= async (req, res) => {
         phoneNumber: phoneNumber,
         email: email,
       }, { new: true }); 
-    //   res.redirect(`/user/profile/${updatedUser._id}`);
+      res.redirect(`/user/profile/${updatedUser._id}`);
     } 
     catch (error) 
     {

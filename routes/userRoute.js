@@ -51,7 +51,7 @@ user_route.get('/checkStock', cartController.checkStock)
 user_route.get('/checkout',isCheckout, isLogin, blockCheck,cartController.loadCheckout)
 user_route.post('/validateCoupon', cartController.validateCoupon)
 
-//order
+//orderx
 user_route.post('/placeOrder', orderController.placeOrder)
 user_route.get('/orderSuccess', orderController.orderSuccess)
 user_route.get('/myOrders', orderController.myOrders)

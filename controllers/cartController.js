@@ -16,13 +16,13 @@ exports. loadCart = async (req, res) => {
         const usertest= await User.findById(userId).lean();
         console.log("User before population:", usertest);
 
-        // walletBalance=userData.wallet.balance
+        walletBalance=userData.wallet.balance
         const categoryData = await Category.find({ is_blocked: false });
 
         const user = await User.findById(userId).populate("cart.product").lean();
 
-        await User.populate(user, { path: "cart.product" });
-        console.log("User after population:", user);
+        // await User.populate(user, { path: "cart.product" });
+        // console.log("User after population:", user);
 
         const cart = user.cart;
         console.log("cart:",cart);
@@ -35,80 +35,90 @@ exports. loadCart = async (req, res) => {
      
         console.log("length of cart:",cart.length);
         if (cart.length === 0) {
-            res.render("emptyCart", { userData, categoryData ,cart:{},subTotal:0,logged});
+            res.render("emptyCart", { userData, categoryData ,cart:{},subTotal:0,walletBalance,logged});
         } else {
-            res.render("cart", { userData, cart, subTotal, categoryData,logged});
+            res.render("cart", { userData, cart, subTotal,walletBalance, categoryData,logged});
         }
     } catch (error) {
         console.log(error.message);
         const userData = req.session.user;
         const categoryData = await Category.find({ is_blocked: false });
-        res.render("404", { userData, categoryData ,loggedIn:true});
+        res.render("404", { userData, categoryData ,loggedIn:true,walletBalance});
     }
 };
 
 
 exports. addToCart = async (req, res) => {
-    try {
-       
-
-        const logged=req.session.user
-        const userData = req.session.user;
-        const productId = req.query.id;
-        const quantity = req.query.quantity;
-        const userId = userData._id;
-
-        const product = await Product.findById(productId);
-        const existed = await User.findOne({ _id: userId, "cart.product": productId });
-        const filter={_id:productId}
-        if (existed) {
-            await User.findOneAndUpdate(
-                { _id: userId, "cart.product": productId },
-                { $inc: { "cart.$.quantity": quantity ? quantity : 1 } },
-                { new: true }
-            );
-          
-
-           return res.json({ message: "Item already in cart!!" });
-        } else {
-            await Product.findOneAndUpdate(filter, { isOnCart: true });
-            await User.findByIdAndUpdate(
-                userId,
-                {
-                    $push: {
-                        cart: {
-                            product: product._id,
-                            quantity: quantity ? quantity : 1,
+    const logged=req.session.user
+    if(req.session.user)
+    {
+        try {
+        
+            const userData = req.session.user;
+            const productId = req.query.id;
+            const quantity = req.query.quantity;
+            const userId = userData._id;
+    
+            const product = await Product.findById(productId);
+            const existed = await User.findOne({ _id: userId, "cart.product": productId });
+            const filter={_id:productId}
+            if (existed) {
+                await User.findOneAndUpdate(
+                    { _id: userId, "cart.product": productId },
+                    { $inc: { "cart.$.quantity": quantity ? quantity : 1 } },
+                    { new: true }
+                );
+              
+    
+               return res.json({ message: "Item already in cart!!" });
+            } else {
+                await Product.findOneAndUpdate(filter, { isOnCart: true });
+                await User.findByIdAndUpdate(
+                    userId,
+                    {
+                        $push: {
+                            cart: {
+                                product: product._id,
+                                quantity: quantity ? quantity : 1,
+                            },
                         },
                     },
-                },
-                { new: true }
-            );
-            console.log(User)
-
-          return  res.json({ message: "Item added to cart" });
+                    { new: true }
+                );
+                console.log(User)
+    
+              return  res.json({ message: "Item added to cart" });
+            }
+        } catch (error) {
+            console.log(error.message);
+            const userData = req.session.user;
+            return res.status(500).json({ error: "Internal Server Error" });
         }
-    } catch (error) {
-        console.log(error.message);
-        const userData = req.session.user;
-        return res.status(500).json({ error: "Internal Server Error" });
+
     }
+   
 };
 
 exports. updateCart = async (req, res) => {
-    try {
+    const logged=req.session.user
+    if(req.session.user)
+    {
+        try {
       
-        const userData = req.session.user;
-        const data = await User.find({ _id: userData._id }, { _id: 0, cart: 1 }).lean();
-        data[0].cart.forEach((val, i) => {
-            val.quantity = req.body.datas[i].quantity;
-        });
+            const userData = req.session.user;
+            const data = await User.find({ _id: userData._id }, { _id: 0, cart: 1 }).lean();
+            data[0].cart.forEach((val, i) => {
+                val.quantity = req.body.datas[i].quantity;
+            });
+    
+            await User.updateOne({ _id: userData._id }, { $set: { cart: data[0].cart } });
+            res.status(200).send();
+        } catch (error) {
+            console.log(error.message);
+        }
 
-        await User.updateOne({ _id: userData._id }, { $set: { cart: data[0].cart } });
-        res.status(200).send();
-    } catch (error) {
-        console.log(error.message);
     }
+   
 };
 
 exports. removeCart = async (req, res) => {

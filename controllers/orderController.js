@@ -202,6 +202,8 @@ exports.orderDetails = async (req, res) => {
     if(req.session.user)
     {
     try {
+
+
         const userData = req.session.user;
         const userId=userData._id
         const user = await User.findOne({ _id: userId }).populate("cart.product").lean();
@@ -215,18 +217,23 @@ exports.orderDetails = async (req, res) => {
         const orderId = req.query.orderId;
         walletBalance=userData.wallet.balance
         const categoryData = await Category.find({ is_blocked: false });
-
-        const orderDetails = await Order.findById(orderId).populate({
+        const orderDetails = await Order.findById(orderId).
+        populate({
             path: "product",
             populate: [
                 { path: "category", model: "category" },
             ],
-        });
-        console.log("orderdetails:",orderDetails)
+        })
+        .populate("address");
+        // const orderDetails = await Order.findById(orderId);
+        // console.log("orderdetails*****:",orderDetails)
         const orderProductData = orderDetails.product;
         const addressId = orderDetails.address;
+        console.log("address id from orderdetails:*****",addressId)
+        const addressdata = await Address.findById(addressId);
+        console.log("address from orderdetails:",addressdata)
         const paymentMethod=orderDetails.paymentMethod
-        const address = await Address.findById(addressId);
+        
         const ExpectedDeliveryDate = moment(orderDetails.ExpectedDeliveryDate).format('MMMM D, YYYY');
         const deliveryDate=moment(orderDetails.deliveredDate).format('MMMM D, YYYY')
         const returnEndDate=moment(orderDetails.returnEndDate).format('MMMM D, YYYY') 
@@ -240,7 +247,7 @@ exports.orderDetails = async (req, res) => {
             categoryData,
             orderDetails,
             orderProductData,
-            address,
+            addressdata,
             ExpectedDeliveryDate,
             loggedIn:true,
             deliveryDate,

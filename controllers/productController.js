@@ -47,19 +47,37 @@ exports.shop = async (req, res) => {
   exports.prodetail= async(req,res)=>{
     const logged = req.session.user
       const productId = req.query.id;
-
-      try 
+      if(req.session.user)
       {
-        const userData = req.session.user
-        const productData = await Product.findById(productId);
-        console.log("product is:",productData,)
-        const image = productData.imageUrl
-        res.render("productdetail", { productData, logged,image, message: "",userData });
-      } 
-      catch (error) 
-      {
-        res.status(500).send(error.message);
+        try 
+        {
+          const userData = req.session.user
+          const productData = await Product.findById(productId);
+          console.log("product is:",productData,)
+          const image = productData.imageUrl
+          res.render("productdetail", { productData, logged:true,image, message: "",userData });
+        } 
+        catch (error) 
+        {
+          res.status(500).send(error.message);
+        }
       }
+      else
+      {
+        try 
+        {
+          const userData = req.session.user
+          const productData = await Product.findById(productId);
+          console.log("product is:",productData,)
+          const image = productData.imageUrl
+          res.render("productdetail", { productData, logged:null,image, message: "",userData });
+        } 
+        catch (error) 
+        {
+          res.status(500).send(error.message);
+        }
+      }
+     
   };
   
 

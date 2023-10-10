@@ -358,10 +358,17 @@ h3 {
                                     <h6 class="mt-2" style="color: black;">Delivery Address :</h6>
                                     <div class="address-data">
                                         <tr>
-                                            <td>Name: <br>Mobile: <br>Email: <br> Home: <br>City: <br>State: <br>Pincode: </td>
-                                            <td><%= address.name %><br><%= address.mobile %> <br> <%= address.email %> <br><%= address.addressLine %><br><%= address.city %>
-                                                <br><%= address.state %> <br><%= address.pincode %></td>
+                                            <td>Name: <%= addressdata.name %><br>
+                                                Mobile: <%= addressdata.mobile %><br>
+                                                Email: <%= addressdata.email %><br> 
+                                                Address: <%= addressdata.addressLine %><br>
+                                                City: <%= addressdata.city %><br>
+                                                State: <%= addressdata.state %><br>
+                                                Pincode: <%= addressdata.pincode %></td>
+                                            <td>
+                                                
                                         </tr>
+                                       
                                     </div>
                                 </table>
 
