@@ -282,30 +282,39 @@ exports.validateCoupon = async (req, res) => {
 
 
 exports. loadWishlist = async (req, res) => {
-    try {
-        const userData = req.session.user;
-        const userId = userData._id;
-        const categoryData = await Category.find({ is_blocked: false });
-
-        const user = await User.findById(userId).populate("wishlist");
-        const wishlistItems = user.wishlist;
-
-        const userCart = await User.findOne({ _id: userId }).populate("cart.product").lean();
-        const cart = userCart.cart;
-        walletBalance=userData.wallet.balance
-        let subTotal = 0;
-        cart.forEach((element) => {
-            element.total = element.product.price * element.quantity;
-            subTotal += element.total;
-        });
-        if (wishlistItems.length === 0) {
-            res.render("emptyWishlist", { userData, categoryData,loggedIn:true,walletBalance,cart ,subTotal});
-        } else {
-            res.render("wishlist", { userData, categoryData, cart, wishlistItems,loggedIn:true,  walletBalance ,cart,subTotal});
+    const logged = req.session.user
+    if(req.session.user)
+    {
+        try {
+            const userData = req.session.user;
+            const userId = userData._id;
+            const categoryData = await Category.find({ is_blocked: false });
+    
+            const user = await User.findById(userId).populate("wishlist");
+            const wishlistItems = user.wishlist;
+    
+            const userCart = await User.findOne({ _id: userId }).populate("cart.product").lean();
+            const cart = userCart.cart;
+            walletBalance=userData.wallet.balance
+            let subTotal = 0;
+            cart.forEach((element) => {
+                element.total = element.product.price * element.quantity;
+                subTotal += element.total;
+            });
+            if (wishlistItems.length === 0) 
+            {
+                res.render("emptyWishlist", { userData, logged,categoryData,walletBalance,cart ,subTotal});
+            } 
+            else 
+            {
+                res.render("wishlist", { userData, categoryData,logged, cart, wishlistItems,  walletBalance ,cart,subTotal});
+            }
+        } catch (error) {
+            console.log(error.message);
         }
-    } catch (error) {
-        console.log(error.message);
+
     }
+    
 };
 
 

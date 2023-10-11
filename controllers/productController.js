@@ -52,10 +52,33 @@ exports.shop = async (req, res) => {
         try 
         {
           const userData = req.session.user
+          const userId = userData._id;
+          const user = await User.findOne({ _id: userId }).populate("cart.product").lean();
+          const cart = user.cart;
+
+
           const productData = await Product.findById(productId);
           console.log("product is:",productData,)
           const image = productData.imageUrl
-          res.render("productdetail", { productData, logged:true,image, message: "",userData });
+          
+         
+            let cartId = null;
+            if (user.cart && user.cart.length > 0) 
+            {
+                cartId = user.cart[0]._id;
+
+                if (!productData) 
+                {
+                    res.render("404", { userData });
+                } 
+                else 
+                res.render("productdetail", { productData,cartId,logged:true,image,  userData, cart});
+            } 
+            else 
+            {
+                res.render("productdetail", { productData, userData ,cartId,logged:true,image,cart:{}});
+            }
+          // res.render("productdetail", { productData, logged:true,image, message: "",userData });
         } 
         catch (error) 
         {

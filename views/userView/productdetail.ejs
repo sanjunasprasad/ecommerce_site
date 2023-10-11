@@ -110,7 +110,12 @@
                                                 <a class="btn hvr-hover" data-fancybox-close="" href="#">Out of stock</a>
                                             <% } %>
 
-                                        <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
+                                            <!-- wishlist starts -->
+                                            <% if (userData) { %>
+                                            <a class="btn hvr-hover" onclick="addToWishlist('<%= productData._id %>','<%= cartId %>')" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
+                                            <% } else { %>
+                                            <a class="btn hvr-hover"  href="/login"><i class="fas fa-heart"></i> Add to wishlist</a>
+                                            <% } %>
                                     </div>
                                 </div>      
                     </div>
