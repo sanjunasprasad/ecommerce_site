@@ -241,17 +241,19 @@ function handleAddressSelection() {
 
 async function placeOrder(){
     try {
-console.log(242);
+         
         const selectedPayment = document.querySelector(".payment-radio:checked").value;
-     console.log(244,selectedPayment);   
+        console.log(244,selectedPayment);   
         if(selectedPayment === "Cash On Delivery"){
             cashOnDelivery(selectedPayment)
         }
         else if(selectedPayment === "Razorpay"){
             razorpay(selectedPayment)
+            console.log(245);   
         }
         else if(selectedPayment === 'Wallet'){
             wallet(selectedPayment)
+            console.log("its 244,wallet")
         }
 
         
@@ -304,11 +306,12 @@ const cashOnDelivery = async(selectedPayment, updatedBalance)=>{
 const razorpay = async (selectedPayment)=>{
     try {
 
+        console.log("razorpay reached")
         const subTotal = Number(document.getElementById('subTotalValue').value)
-
+        console.log("subtotal from razorpay:",subTotal)
         var options = {
             
-            "key": "rzp_test_bzUUiFqFZut9Yf" ,// Enter the Key ID generated from the Dashboard
+            "key": "rzp_test_O9K7l3TCg65Dt6" ,// Enter the Key ID generated from the Dashboard
             "amount": subTotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
             "name": "All Silks",
@@ -337,8 +340,11 @@ const razorpay = async (selectedPayment)=>{
 const wallet = async(selectedPayment)=>{
     try {
 
+        console.log("wallet reached")
         const balance = document.getElementById('userWallet').value
+        console.log("balance from wallet:",balance)
         const subTotal = Number(document.getElementById('subTotalValue').value)
+        console.log("subtotal from wallet:",subTotal)
         const insufficientBalanceAlert = document.getElementById('insufficientBalanceAlert');
 
 
@@ -514,12 +520,12 @@ const updateOrder = async (orderId, orderStatus)=>{
           
           console.log("orderid from updateorderjs:",orderId)
         const walletBalance = Number(document.getElementById('userWallet').value)
-        const grandTotal = Number(document.getElementById('grandTotal').value)
         console.log(`.....${walletBalance}`);
+        const grandTotal = Number(document.getElementById('grandTotal').value)
         console.log("total:",grandTotal);
 
-        const updatedBalance = walletBalance + grandTotal
-        console.log(updatedBalance)
+        const updatedBalance =  walletBalance+grandTotal
+        console.log("updated balance",updatedBalance)
         const paymentMethod = document.getElementById('paymentMethod').innerHTML
         const response = await fetch(`/updateOrder?orderId=${orderId}`,{
             method:'POST',

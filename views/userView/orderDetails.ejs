@@ -312,7 +312,7 @@ h3 {
                                     <% } %>
 
                                     
-                                    <% if (orderDetails.status === "Cancelled") { %>
+                                    <% if ((orderDetails.status === "Cancelled") && (orderDetails.paymentMethod === "Razorpay" || orderDetails.paymentMethod === "Wallet")) { %>
                                     <div id="refundMessage" class="col-lg-8 ml-4 mr-4 d-none">
                                         <div class="success-message">
                                             <i class="fa-solid fa-circle-check" style="color: #2fad01;"></i>
@@ -344,11 +344,33 @@ h3 {
                                         <td class="order-two" style="text-align: end;">₹ <%= orderDetails.total %></td>
                                         <input type="hidden" id="grandTotal" value="<%= orderDetails.total %>">
                                     </tr>
+                                    <% if (orderDetails.offerDiscount) { %>
+                                        <tr>
+                                            <td class="order-one" style="color: green;">Offer Discount :</td>
+                                            <td class="order-two" style="text-align: end; color: green;">₹ <%= orderDetails.offerDiscount %></td>
+                                            <input type="hidden" id="offerDiscount" value="<%= orderDetails.offerDiscount %>">
+                                        </tr>
+                                    <% } %>
                                     
                                     <tr>
                                         <td class="order-one">Payment method :</td>
                                         <td class="order-two" id="paymentMethod"><%= orderDetails.paymentMethod %></td>
                                     </tr>
+
+                                    <% if (orderDetails.couponName) { %>
+                                        <tr>
+                                            <td class="order-one">Coupon used :</td>
+                                            <td class="order-two"><%= orderDetails.couponName %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="order-one">Amount saved:</td>
+                                            <td class="order-two" >₹ <%= orderDetails.discountAmount %></td>
+                                        </tr>
+                                        <% } else { %>
+                                        <tr>
+                                            <td class="order-two">No coupons used</td>
+                                        </tr>
+                                        <% } %>
 
                                     
 
@@ -376,6 +398,7 @@ h3 {
                         </div><!-- End .sidebar sidebar-shop -->
                     </div>
 
+                    <input type="hidden" id="userWallet" value="<%= wallet %>" >
                     <% if (orderDetails.status === "Delivered") { %>
                     <div class="download-invoice">
                         <a href="/downloadInvoice?orderId=<%= orderDetails._id %>" class="btn btn-outline-dark-2 btn-block mb-3">
@@ -412,7 +435,7 @@ h3 {
 <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
 
 
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function () {
     // Your code here
     const orderId = /* get orderId */;
@@ -510,4 +533,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
   
-</script>
+</script> -->

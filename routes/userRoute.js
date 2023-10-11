@@ -51,12 +51,20 @@ user_route.get('/checkStock', cartController.checkStock)
 user_route.get('/checkout',isCheckout, isLogin, blockCheck,cartController.loadCheckout)
 user_route.post('/validateCoupon', cartController.validateCoupon)
 
-//orderx
+//order
 user_route.post('/placeOrder', orderController.placeOrder)
 user_route.get('/orderSuccess', orderController.orderSuccess)
 user_route.get('/myOrders', orderController.myOrders)
 user_route.get('/orderDetails',orderController.orderDetails)
 user_route.post('/updateOrder', orderController.updateOrder)
+
+
+//wishlist
+user_route.get('/wishlist', isLogin, blockCheck, cartController.loadWishlist)
+user_route.get('/addToWishlist', cartController.addToWishlist)
+user_route.get('/removeWishlist', cartController.removeWishlist)
+user_route.get('/addToCartFromWishlist', cartController.addToCartFromWishlist)
+
 
 
 //user profile 

@@ -5,6 +5,19 @@
     {
         color:whitesmoke
     }
+    .custom-alert {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+    }
+
+    .custom-alert svg {
+        fill: #721c24;
+    }
+
+    .custom-alert .btn-close {
+        color: #721c24;
+    }
 </style>
 
  <!-- Start All Title Box -->
@@ -87,6 +100,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
 
+                        <!-- billing address choosing area starts -->
                         <div class="col-md-12 col-lg-12">
                             <div class="odr-box">
                                 <div class="title-left">
@@ -115,6 +129,11 @@
                             </div>
                         </div>
                         <br><br>
+                        <!-- ends choose billing area -->
+
+
+
+                        <!-- order summary starts -->
                         <div class="col-md-12 col-lg-12">
                             <div  class="order-box">
                                 <div class="title-left">
@@ -135,12 +154,11 @@
                                     <td><p id="couponMessage"></p></td>
                                     <td ><p id="couponDiscount"></td>
                                 </tr>
-                                <input id="checkout-discount-input" class="ec-coupan" type="text" required=""
-                                placeholder="Enter Your Coupon Code" name="ec-coupan" value="">
-                            <button onclick="validateCoupon()"  class="btn btn-theme" type="submit"
-                                name="subscribe" value="">Apply</button>
+                                <input id="checkout-discount-input" class="ec-coupan" type="text" required=""placeholder="Enter Your Coupon Code" name="ec-coupan" value="">
+                               <button onclick="validateCoupon()"  class="btn btn-theme" type="submit" name="subscribe" value="">Apply</button>
 
                                 <br>
+                                <!-- grandtotal area -->
                                 <hr class="my-1">
                                 <input type="hidden" id="subTotalValue" value="<%= subTotal %>">
                                 <div class="d-flex gr-total">
@@ -149,8 +167,46 @@
                                 </div>
                             </div>
                         </div>
-
                         <br><br>
+                         <!-- order summary ends here -->
+
+
+                         <!-- wallet warning starts -->
+                         <input type="hidden" id="userWallet" value="<%= userData.wallet.balance %>" >
+                         <div class="col-lg-12 d-flex justify-content-end sticky-alert p-0">
+                            <div class="col-lg-4">
+                                <div class="row ">
+                                    <div id="insufficientBalanceAlert" class="alert custom-alert d-none align-items-center alert-dismissible" role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+                                            <use xlink:href="#exclamation-triangle-fill" />
+                                        </svg>
+                                        <div style="margin-left: 7px;">
+                                            Insufficient balance in your wallet <br> Please choose another payment method
+                                        </div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-12 d-flex justify-content-end sticky-alert p-0">
+                            <div class="col-lg-4">
+                                <div class="row ">
+                                    <div id="insufficientBalanceAlert" class="alert alert-danger d-none align-items-center alert-dismissible" role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+                                            <use xlink:href="#exclamation-triangle-fill" />
+                                        </svg>
+                                        <div style="margin-left: 7px;">
+                                            Insufficient balance in your wallet <br> Please choose another payment method
+                                        </div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- wallet warning ends -->
+
+
+                        <!-- payment method radio choosing -->
                         <div class="shipping-method-box">
                             <div class="title-left">
                                 <h3>Payment Method</h3>
@@ -186,6 +242,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- payment choosing ends -->
                     </div>
                     <button disabled onclick="placeOrder()"  id="place-order-btn" class="ml-auto text btn hvr-hover">
                         Place Order

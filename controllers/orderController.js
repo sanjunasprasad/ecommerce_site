@@ -4,47 +4,48 @@ const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const Address = require("../models/addressmodel");
 const Order = require("../models/orderModel");
+const Coupon = require("../models/couponmodel");
 const moment = require("moment");
 const path = require('path')
+const Razorpay = require('razorpay')
 
+var  walletBalance=0
 exports. placeOrder = async (req, res) => {
     try {
-         console.log(400)
         const userData = req.session.user;
-        // walletBalance=userData.wallet.balance
+        walletBalance=userData.wallet.balance
         const userId = userData._id;
-        const addressId = req.body.selectedAddress
-        console.log(500,addressId)
+        const addressId = req.body.selectedAddress;
         const amount = req.body.amount;
         const paymentMethod = req.body.selectedPayment;
-        console.log(600,paymentMethod)
-        // const couponData = req.body.couponData;
+        const couponData = req.body.couponData;
 
         const user = await User.findOne({ _id: userId }).populate("cart.product");
         const userCart = user.cart;
 
         let subTotal = 0;
-        // let offerDiscount = 0
+        let offerDiscount = 0
 
         userCart.forEach((item) => {
             item.total = item.product.price * item.quantity;
             subTotal += item.total;
         });
 
-        // userCart.forEach((item) => {
-        //     if(item.product.oldPrice > 0){
-        //     item.offerDiscount = (item.product.oldPrice - item.product.price) * item.quantity
-        //     offerDiscount += item.offerDiscount;
-        //     }
-        // });
+        userCart.forEach((item) => {
+            if(item.product.oldPrice > 0){
+            item.offerDiscount = (item.product.oldPrice - item.product.price) * item.quantity
+            offerDiscount += item.offerDiscount;
+            }
+        });
 
         let productData = userCart.map((item) => {
             return {
                 id: item.product._id,
                 name: item.product.name,
                 category: item.product.category,
+                subCategory: item.product.subCategory,
                 price: item.product.price,
-                // oldPrice: item.product.oldPrice,
+                oldPrice: item.product.oldPrice,
                 quantity: item.quantity,
                 image: item.product.imageUrl[0].url,
             };
@@ -59,7 +60,27 @@ exports. placeOrder = async (req, res) => {
             const ExpectedDeliveryDate = new Date()
             ExpectedDeliveryDate.setDate(ExpectedDeliveryDate.getDate() + 3 )
 
-           
+            if (couponData) {
+                const order = new Order({
+                    userId: userId,
+                    product: productData,
+                    address: addressId,
+                    orderId: orderId,
+                    total: amount,
+                    ExpectedDeliveryDate: ExpectedDeliveryDate,
+                    offerDiscount: offerDiscount,
+                    paymentMethod: paymentMethod,
+                    discountAmount: couponData.discountAmount,
+                    amountAfterDiscount: couponData.newTotal,
+                    couponName: couponData.couponName,
+                });
+
+                await order.save();
+
+                const couponCode = couponData.couponName
+                await Coupon.updateOne({ code: couponCode }, { $push: { usedBy: userId } })
+
+            } else {
                 const order = new Order({
                     userId: userId,
                     product: productData,
@@ -67,12 +88,12 @@ exports. placeOrder = async (req, res) => {
                     orderId: orderId,
                     total: subTotal,
                     ExpectedDeliveryDate: ExpectedDeliveryDate,
-                    // offerDiscount: offerDiscount,
+                    offerDiscount: offerDiscount,
                     paymentMethod: paymentMethod,
                 });
 
                 const orderSuccess = await order.save();
-            
+            }
 
             let userDetails = await User.findById(userId);
             let userCartDetails = userDetails.cart;
@@ -106,13 +127,57 @@ exports. placeOrder = async (req, res) => {
                     order: "Success",
                 });
                 
-            } 
-       
+            } else if (paymentMethod === "Razorpay") {
+                var instance = new Razorpay({
+                    key_id: process.env.RAZORPAY_KEY_ID,
+                    key_secret: process.env.RAZORPAY_KEY_SECRET,
+                });
+
+                const order = await instance.orders.create({
+                    amount: amount * 100,
+                    currency: "INR",
+                    receipt: "All Silks",
+                });
+
+                saveOrder();
+                req.session.checkout =false
+
+                res.json({
+                    order: "Success",
+                });
+                
+            } else if (paymentMethod === "Wallet") {
+                try {
+                    const walletBalance = req.body.walletBalance;
+
+                    await User.findByIdAndUpdate(userId, { $set: { "wallet.balance": walletBalance } }, { new: true });
+                    
+                    const transaction = {
+                        date: new Date(),
+                        details: `Confirmed Order - ${orderId}`,
+                        amount: subTotal,
+                        status: "Debit",
+                    };
+
+                    await User.findByIdAndUpdate(userId, { $push: { "wallet.transactions": transaction } }, { new: true })
+
+                    saveOrder();
+                    req.session.checkout =false
+
+                    res.json({
+                        order: "Success",
+                    });
+                } catch (error) {
+                    console.log(error.message);
+                }
+            }
         }
     } catch (error) {
         console.log(error.message);
     }
 };
+
+
 
 exports. orderSuccess = async (req, res) => {
     try {
@@ -241,6 +306,7 @@ exports.orderDetails = async (req, res) => {
         const wallet= userData.wallet.balance
        
         res.render("orderDetails", {
+            wallet,
             logged,
             currentDate,
             userData,
@@ -270,7 +336,6 @@ exports. updateOrder = async (req, res) => {
         const userId = userData._id;
 
         const orderId = req.query.orderId;
-        console.log("order id is:",orderId)
         const status = req.body.orderStatus;
         const paymentMethod = req.body.paymentMethod;
         console.log(paymentMethod)
