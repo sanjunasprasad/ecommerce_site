@@ -1,6 +1,7 @@
 const express = require("express");
 const admin_route = express.Router();
 const adminController = require("../controllers/adminController");
+const adminDashboard = require('../controllers/adminDashboard')
 const adminAuth= require('../middleware/adminAuth');
 const nocache=require('nocache')
 const store = require("../middleware/multer");
@@ -10,7 +11,14 @@ const { isLogout, isLogin } = adminAuth
 admin_route.get('/',isLogout,adminController.loadLogin)
 admin_route.post('/loginpost',adminController.verifyLogin)
 admin_route.get('/logout',adminController.adminLogout)
-// admin_route.get('/dash',adminController.dashbaord)
+
+//dashboard
+admin_route.get("/admindash",adminDashboard.loadDashboard);
+admin_route.get('/chartData', adminDashboard.chartData)
+// admin_route.get('/getSales', adminDashboard.getSales)
+// admin_route.post('/downloadSalesReport', adminDashboard.downloadSalesReport)
+// admin_route.get('/renderSalesReport', adminDashboard.renderSalesReport)
+
 
 //user management
 admin_route.get("/users",isLogin,  adminController.loadUsers)

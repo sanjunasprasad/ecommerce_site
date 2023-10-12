@@ -114,6 +114,7 @@ const removeCartalert = async (id) => {
 };
 
 const addToWishlist = async (productId, cartId) => {
+    console.log("iam clicked")
     const response = await fetch(`/addToWishlist?productId=${productId}&cartId=${cartId}`, {
         method: "GET",
         headers: {
@@ -124,6 +125,7 @@ const addToWishlist = async (productId, cartId) => {
     const data = await response.json();
 
     if (data.message === "Added to wishlist") {
+        
         Swal.fire({
             position: "center",
             icon: "success",
@@ -163,7 +165,9 @@ const moveToCart = async (productId) => {
                 showConfirmButton: true,
                 confirmButtonColor: "#00A300",
             });
-            document.getElementById("row" + productId).innerHTML = "";
+            window.location.href = "/wishlist";
+            document.getElementById("row" + productId).innerHTML = "";    
+            
         } else if (data.message === "Product is already in cart!!") {
             Swal.fire({
                 position: "center",
@@ -232,7 +236,9 @@ const removeFromWishlist = async (productId) => {
                 showConfirmButton: true,
                 confirmButtonText: "OK",
                 confirmButtonColor: "#4CAF50",
+                timer: 1800
             });
+            window.location.href = "/wishlist";
             console.log(`.......${productId}`);
             document.getElementById("row" + productId).innerHTML = "";
         } else {

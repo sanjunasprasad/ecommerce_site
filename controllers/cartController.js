@@ -323,6 +323,7 @@ exports. addToWishlist = async (req, res) => {
         const userData = req.session.user;
         const userId = userData._id;
         const productId = req.query.productId;
+        console.log("productid:",productId)
         const cartId = req.query.cartId;
 
         const existItem = await User.findOne({ _id: userId, wishlist: { $in: [productId] } });
