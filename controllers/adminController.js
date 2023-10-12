@@ -35,8 +35,7 @@ exports.verifyLogin = async (req, res) => {
         if (req.body.email == credentials.email && req.body.password == credentials.password) {
             req.session.admin = req.body.email;
             email=req.body.email
-          
-            res.render("dashboard",{user:"Admin"});
+            res.redirect("/admin/admindash");
         } else {
             req.session.wrongAdmin = true;
             res.redirect("/admin");

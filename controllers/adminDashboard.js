@@ -14,7 +14,7 @@ let totalSales  = 0
 exports. loadDashboard = async (req, res) => {
     try {
       const sales = await Sale.find({});
-  
+    //   console.log("sales from loaddashbaord:",sales)
       const salesByMonth = {};
   
       sales.forEach((sale) => {
@@ -55,9 +55,11 @@ exports. loadDashboard = async (req, res) => {
       });
   
       const thisMonthOrder = ordersByMonth[ordersByMonth.length - 1];
+      console.log("thismonthorder:",thisMonthOrder)
       const thisMonthSales = revenueByMonth[revenueByMonth.length - 1];
+      console.log("thismonthsales:",thisMonthSales)
   
-      res.render("admindash", {
+      res.render("dashboard", {
         user: req.session.admin,
         revenueByMonth,
         months,
@@ -73,6 +75,8 @@ exports. loadDashboard = async (req, res) => {
     }
 };
 
+
+//monthly revenue
 exports. chartData = async (req, res) => {
     try {
         res.json({
@@ -84,3 +88,153 @@ exports. chartData = async (req, res) => {
         console.log(error.message);
     }
 };
+
+//monthly sales
+exports. getSales = async (req, res) => {
+    try {
+        const { startDate, endDate } = req.query;
+
+        const newstartDate = new Date(startDate);
+        const newEndDate = new Date(endDate);
+
+        const orderData = await Order.find({
+            date: {
+                $gte: newstartDate,
+                $lte: newEndDate,
+            },
+            status: "Delivered",
+        }).sort({ date: "desc" });
+
+        const formattedOrders = orderData.map((order) => ({
+            date: moment(order.date).format("YYYY-MM-DD"),
+            ...order,
+        }));
+
+        let salesData = [];
+        
+        formattedOrders.forEach((element) => {
+            salesData.push({
+                date: element.date,
+                orderId: element._doc.orderId,
+                total: element._doc.total,
+                paymentMethod: element._doc.paymentMethod,
+                productName: element._doc.product,
+            });
+        });
+
+        let grandTotal = 0;
+
+        salesData.forEach((element) => {
+            grandTotal += element.total;
+        });
+
+        res.json({
+            grandTotal: grandTotal,
+            orders: salesData,
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+exports. downloadSalesReport = async (req, res) => {
+    try {
+      const orderData = req.body.orderData;
+      console.log(orderData);
+      const { startDate, endDate } = req.query;
+  
+      const pdfBuffer = await generateSalesReportPDF( startDate, endDate);
+  
+      res.set({
+          "Content-Type": "application/pdf",
+          "Content-Disposition": `attachment; filename=GadgetrySalesReport.pdf`,
+      });
+  
+      res.send(pdfBuffer);
+  } catch (error) {
+      console.log(error.message);
+      res.status(500).send('An error occurred');
+  }
+    };
+
+
+    exports. renderSalesReport = async (req, res) => {
+        try {
+          console.log("salesssssssss");
+          const orderData = JSON.parse(decodeURIComponent(req.query.orderData)); // Parse the orderData string into an object
+      
+          const startDate = moment(new Date(req.query.startDate)).format('MMMM D, YYYY');
+          const endDate = moment(new Date(req.query.endDate)).format('MMMM D, YYYY');
+      
+          const salesReportDate = moment(new Date()).format('MMMM D, YYYY');
+      
+          res.render('salesReport', { orderData, salesReportDate, startDate, endDate });
+          console.log("reprttttttttt");
+      
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+    
+
+
+    exports. generateSalesReportPDF = async ( startDate, endDate) => {
+        const newstartDate = new Date(startDate);
+        const newEndDate = new Date(endDate);
+        const orderData = await Order.find({
+          date: {
+              $gte: newstartDate,
+              $lte: newEndDate,
+          },
+          status: "Delivered",
+      }).sort({ date: "desc" });
+        return new Promise((resolve, reject) => {
+          
+            const doc = new PDFDocument();
+            const pdfBuffer = [];
+    
+            doc.on('data', (chunk) => {
+                pdfBuffer.push(chunk);
+            });
+    
+            doc.on('end', () => {
+                resolve(Buffer.concat(pdfBuffer));
+            });
+    
+            doc.on('error', (error) => {
+                reject(error);
+            });
+    
+            // Customize PDF content
+            doc.fontSize(18).text('Sales Report', { align: 'center' }).moveDown();
+            doc.fontSize(14).text(`Start Date: ${startDate}`, { align: 'center' });
+            doc.text(`End Date: ${endDate}`, { align: 'center' }).moveDown();
+    
+            // Add order data to the PDF
+            doc.moveDown();
+            doc.fontSize(14).text('Order Details:', { underline: true }).moveDown();
+    
+            orderData.forEach(async (order) => {
+                doc.text(`Order ID: ${order.orderId}`);
+              
+                doc.text(`Total: ${order.total}`);
+                doc.text(`Payment Method: ${order.paymentMethod}`);
+                doc.text(`Status: ${order.status}`);
+                doc.moveDown();
+    
+                // Add product details
+                order.product.forEach(product => {
+                    doc.text(`Product: ${product.name}`);
+                    doc.text(`Price: ${product.price}`);
+                    doc.text(`Quantity: ${product.quantity}`);
+                    doc.moveDown();
+                });
+    
+                doc.moveDown();
+            });
+    
+            doc.end();
+        });
+    };
+      
+    

@@ -47,7 +47,7 @@
     <div class="row">
         <div class="col-12" id="user_search">
             <div class="col-6" id="catMsg">
-                
+                <h5 style="color: #4CAF50;"><%= productUpdated %></h5>
                 <h5 id="noResultsFound">no results found!!</h5>
             </div>
 
@@ -71,7 +71,7 @@
                         <div class="card mb-4">
                             <div class="card-header">This Month Revenue</div>
                             <div class="card-body ml-3 p-5">
-                               
+                                <h2>₹<%= thisMonthSales %></h2>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         <div class="card mb-4">
                             <div class="card-header">This Month sales</div>
                             <div class="card-body ml-3 p-5">
-                               
+                                <h2><%= thisMonthOrder %></h2>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                         <div class="card mb-4">
                             <div class="card-header">Total Revenue</div>
                             <div class="card-body ml-3 p-5">
-                                
+                                <h2>₹<%= totalRevenue %></h2>
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                         <div class="card mb-4">
                             <div class="card-header">Total sales</div>
                             <div class="card-body ml-3 p-5">
-                               
+                                <h2><%= totalSales %></h2>
                             </div>
                         </div>
                     </div>
@@ -148,11 +148,11 @@
                         <div class="form-group p-2 mt-4">
                             <button onclick="getSalesData()" type="button" class="btn btn-primary">Submit</button>
                         </div>
-                       
+                        <input id="revenue" type="hidden" value="<%= revenueByMonth %>">
                     </div>
                 </nav>
 
-                <div class="row" id="table" >
+                <div class="row" id="table" ">
                     <!-- Your table content here -->
                                         
                     <!-- table end -->

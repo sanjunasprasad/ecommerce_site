@@ -9,15 +9,15 @@ const { isLogout, isLogin } = adminAuth
 
 //adminlogin
 admin_route.get('/',isLogout,adminController.loadLogin)
-admin_route.post('/loginpost',adminController.verifyLogin)
+admin_route.post('/login',adminController.verifyLogin)
 admin_route.get('/logout',adminController.adminLogout)
 
 //dashboard
-admin_route.get("/admindash",adminDashboard.loadDashboard);
+admin_route.get('/admindash',adminDashboard.loadDashboard);
 admin_route.get('/chartData', adminDashboard.chartData)
-// admin_route.get('/getSales', adminDashboard.getSales)
-// admin_route.post('/downloadSalesReport', adminDashboard.downloadSalesReport)
-// admin_route.get('/renderSalesReport', adminDashboard.renderSalesReport)
+admin_route.get('/getSales', adminDashboard.getSales)
+admin_route.post('/downloadSalesReport', adminDashboard.downloadSalesReport)
+admin_route.get('/renderSalesReport', adminDashboard.renderSalesReport)
 
 
 //user management
