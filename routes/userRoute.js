@@ -74,7 +74,7 @@ user_route.post("/editaccountpost", userController.editaccountpost );
 user_route.get('/wallet',userController.walletTransaction);
 
 //profile address
-user_route.post('/addNewAddress', userController.addNewAddress)
+user_route.post('/addNewAddress', userController.addNewAddress);
 user_route.get('/deleteAddress', userController.deleteAddress)
 user_route.get('/editAddress', userController.editAddress)
 user_route.post('/editAddressPost', userController.editAddressPost)

@@ -25,7 +25,7 @@ admin_route.get("/users",isLogin,  adminController.loadUsers)
 admin_route.get("/blockUser/:id",isLogin,  adminController.blockUser);
 
 //category management
-admin_route.get("/categories",isLogin,  adminController.loadCategories)
+admin_route.get("/categories",isLogin,  adminController.loadCategories);
 admin_route.get('/addCategory',isLogin,adminController.addCategory)
 admin_route.post('/addCategory',isLogin, store.single('image') , adminController.addNewCategory)
 admin_route.get('/editCategory/:id', isLogin,adminController.editCategory)
