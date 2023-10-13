@@ -14,9 +14,7 @@ let totalSales  = 0
 exports. loadDashboard = async (req, res) => {
     try {
       const sales = await Sale.find({});
-    //   console.log("sales from loaddashbaord:",sales)
       const salesByMonth = {};
-  
       sales.forEach((sale) => {
         const monthYear = moment(sale.date).format('MMMM YYYY');
         if (!salesByMonth[monthYear]) {

@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const form = event.target;
             const formData = new FormData(form);
+            console.log("formdata",formData)
 
             try {
                 const response = await fetch(`/editAddressPost?addressId=${addressId}`, {
@@ -142,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         "Content-Type": "application/json",
                     },
                 });
-
+                // console.log("response:",response)
                 if (response.ok) {
                     await Swal.fire({
                         icon: "success",

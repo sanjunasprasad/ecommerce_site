@@ -41,26 +41,28 @@
         <a class="nav-link" data-toggle="tab" href="#walletTab">Wallet</a>
       </li>  
     </ul>
-   <br><p>You can update profile details here</p>
+   <br>
 
+   <div id="profileTab" class="tab-pane">
+   <p>You can update profile details here</p>
    <form class="needs-validation" id="accountupdate">
       <input type="text" name="userid" id="useridedit" value="<%=user._id %>" hidden>
       
       <div class="row">
         <div class="col-md-6 mb-3">
             <label for="firstName">Full name *</label>
-            <input type="text" class="form-control" name="name" value="<%=user.firstName%>" >
+            <input type="text" class="form-control" name="firstName" value="<%=user.firstName%>" required>
             
         </div>
         <div class="col-md-6 mb-3">
             <label for="Mobile number">Mobile Number *</label>
-            <input type="mobile" class="form-control" name="phoneNumber" value="<%=user.phoneNumber%>">
+            <input type="number" class="form-control" name="phoneNumber" value="<%=user.phoneNumber%>" required minlength="10">
          
         </div>
     </div>
     <div class="mb-3">
         <label for="email">Email Address *</label>
-        <input type="email" class="form-control" name="email" value="<%=user.email%>">
+        <input type="email" class="form-control" name="email" value="<%=user.email%>" required>
 
     </div>
         <div class="mb-3">
@@ -68,14 +70,12 @@
         </div>        
  
    </form>
+   </div>
+
    
 
-
-
 </div>
 </div>
-
-
 <%- include('footer') %>
 
 
@@ -88,22 +88,23 @@
       });
     });
   </script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Main Js -->
-<script src="/js/vendor/index.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/users.js"></script>
-<script src="/js/userOrder.js"></script>
-<!-- Include SweetAlert CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
-<!-- Razorpay SDK -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<!-- Include SweetAlert JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
-
-
+ <!-- Main Js -->
+ <script src="/js/vendor/index.js"></script>
+ <script src="/js/main.js"></script>
+ <script src="/js/users.js"></script>
+ <script src="/js/userOrder.js"></script>
+ <!-- Include SweetAlert CSS -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+ <!-- Razorpay SDK -->
+ <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+ 
+ <!-- Include SweetAlert JS -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+ <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+ 
+ 
 
 
 
@@ -120,10 +121,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if (accountupdate) {
       accountupdate.addEventListener("submit", async function (event) {
           event.preventDefault();
-          console.log('Form submitted'); 
+          
 
           const form = event.target;
           const formData = new FormData(form);
+          console.log("formdata",formData)
 
           try {
               const response = await fetch(`/editaccountpost?userid=${userid}`, {
@@ -134,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   },
               });
 
+             
               if (response.ok) {
                   await Swal.fire({
                       icon: "success",
@@ -161,61 +164,4 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 </script>
-<!-- <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const accountupdate = document.getElementById("accountupdate");
-  const userid = document.getElementById("useridedit").value;
 
-  if (accountupdate) {
-      accountupdate.addEventListener("submit", async function (event) {
-          event.preventDefault();
-
-          const form = event.target;
-          const formData = new FormData(form);
-
-          try {
-              const response = await fetch(`/editaccountpost?userid=${userid}`, {
-                  method: "POST",
-                  body: JSON.stringify(Object.fromEntries(formData)),
-                  headers: {
-                      "Content-Type": "application/json",
-                  },
-              });
-
-              if (response.ok) {
-                  console.log('Form submitted successfully'); // Add this line for debugging
-                  const data = await response.json();
-
-                  // Show SweetAlert message for success
-                  Swal.fire({
-                      icon: "success",
-                      title: "Profile updated successfully",
-                      showConfirmButton: true,
-                      confirmButtonColor: "#50C878",
-                      timer: 1800
-                  }).then(() => {
-                      // Redirect to the address section after the SweetAlert message disappears
-                      window.location.href = "/myaccount#addAddressTab";
-                  });
-              } else {
-                  console.log('Error response from server:', response); // Log error response
-                  throw new Error('Server error occurred');
-              }
-          } catch (error) {
-              console.error("Error:", error.message);
-              // Show SweetAlert message for error
-              Swal.fire({
-                  icon: "error",
-                  title: "Some error occurred",
-                  showConfirmButton: true,
-                  confirmButtonText: "OK",
-                  confirmButtonColor: "#D22B2B",
-              });
-          }
-      });
-  }
-});
-</script> -->
-  
-
- 

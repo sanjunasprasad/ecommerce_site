@@ -542,12 +542,13 @@ exports.editaccount= async (req, res) => {
     logged=req.session.user
     if(req.session.user)
     {
-    //    res.render("editprofile",{logged:true})
+   
     try 
     {
         const userid = req.query.userid;
-        console.log("userid:",userid) // Assuming you pass the user ID as a query parameter
+        // console.log("userid:",userid) // Assuming you pass the user ID as a query parameter
         const user = await User.findById(userid);
+        // console.log("userfrom mongo:",user)
         if (!user) 
         {
           return res.status(404).json({ message: 'User not found' });
@@ -565,18 +566,24 @@ exports.editaccount= async (req, res) => {
   }
 
 exports.editaccountpost= async (req, res) => {
-    const { name, phoneNumber, email } = req.body;
+    const { firstName, phoneNumber, email } = req.body;
     const userid = req.query.userid; 
 
     try 
     {
 
       const updatedUser = await User.findByIdAndUpdate(userid, {
-        name: name,
+        firstName: firstName,
         phoneNumber: phoneNumber,
         email: email,
-      }, { new: true }); 
-      res.redirect(`/user/profile/${updatedUser._id}`);
+      }, 
+      { new: true }
+    ); 
+    //   res.redirect(`/user/profile/${updatedUser._id}`);
+    console.log("updateddata:",updatedUser.phoneNumber)
+    console.log("updateddata:",updatedUser.firstName)
+    console.log("updateddata:",updatedUser.email)
+
     } 
     catch (error) 
     {
