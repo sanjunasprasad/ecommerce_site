@@ -42,6 +42,8 @@ user_route.get("/prodetail",blockCheck,productController.prodetail)
 user_route.get('/categoryFilter', productController.categoryFilter)
 user_route.post('/sortProduct', productController.sortProduct)
 
+
+
 //cart
 user_route.get('/cart',isLogin,blockCheck,cartController.loadCart)
 user_route.get("/addToCart",cartController.addToCart)
@@ -68,8 +70,8 @@ user_route.get('/addToCartFromWishlist', cartController.addToCartFromWishlist)
 
 
 //user profile 
-user_route.get("/myaccount",isLogin, blockCheck,userController.loadProfile)
-user_route.get('/editaccount', userController.editaccount)
+user_route.get("/myaccount",isLogin, blockCheck,userController.loadProfile);
+user_route.get('/editaccount', userController.editaccount);
 user_route.post("/editaccountpost", userController.editaccountpost );
 user_route.get('/wallet',userController.walletTransaction);
 

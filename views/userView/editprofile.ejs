@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       "Content-Type": "application/json",
                   },
               });
-
+              console.log("response:",response)
              
               if (response.ok) {
                   await Swal.fire({
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   });
 
                   // Redirect to the address section after the SweetAlert message disappears
-                  window.location.href = "/myaccount#addAddressTab"; // Assuming addAddressTab is the anchor for your address section
+                  window.location.href = "/myaccount#profileTab"; // Assuming addAddressTab is the anchor for your address section
               } else {
                   Swal.fire({
                       icon: "error",

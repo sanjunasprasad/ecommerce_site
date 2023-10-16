@@ -46,6 +46,7 @@ cart: [
             type: Number,
             default: 1,
         },
+    
     },
 ],
 

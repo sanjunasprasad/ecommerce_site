@@ -168,7 +168,6 @@ exports. downloadSalesReport = async (req, res) => {
       
           res.render('salesReport', { orderData, salesReportDate, startDate, endDate });
           console.log("reprttttttttt");
-      
         } catch (error) {
           console.log(error.message);
         }

@@ -569,9 +569,10 @@ let endDate
 
 
 const getSalesData = async() => {
+  
     startDate = document.getElementById("start-date").value;
     endDate = document.getElementById("end-date").value;
-    console.log(startDate, endDate);
+    console.log("date:",startDate, endDate);
 
 
 

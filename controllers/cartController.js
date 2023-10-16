@@ -20,10 +20,6 @@ exports. loadCart = async (req, res) => {
         const categoryData = await Category.find({ is_blocked: false });
 
         const user = await User.findById(userId).populate("cart.product").lean();
-
-        // await User.populate(user, { path: "cart.product" });
-        // console.log("User after population:", user);
-
         const cart = user.cart;
         console.log("cart:",cart);
         let subTotal = 0;
@@ -286,6 +282,7 @@ exports. loadWishlist = async (req, res) => {
     if(req.session.user)
     {
         try {
+            console.log(600)
             const userData = req.session.user;
             const userId = userData._id;
             const categoryData = await Category.find({ is_blocked: false });
@@ -319,33 +316,50 @@ exports. loadWishlist = async (req, res) => {
 
 
 exports. addToWishlist = async (req, res) => {
-    try {
-        const userData = req.session.user;
-        const userId = userData._id;
-        const productId = req.query.productId;
-        console.log("productid:",productId)
-        const cartId = req.query.cartId;
+    const logged = req.session.user
+    if(req.session.user)
+    {
+        try {
 
-        const existItem = await User.findOne({ _id: userId, wishlist: { $in: [productId] } });
+            console.log("500")
+            const userData = req.session.user;
+            const userId = userData._id;
+            console.log("userid:",userId)
+            const productId = req.query.productId;
+            console.log("productid:",productId)
+            const cartId = req.query.cartId;
 
-        if (!existItem) {
-            await User.updateOne({ _id: userId }, { $push: { wishlist: productId } });
-            await Product.updateOne({ _id: productId }, { isWishlisted: true });
+            console.log(cartId,"cartid");
+    
+            const existItem = await User.findOne({ _id: userId, wishlist: { $in: [productId] } });
+            console.log("existitem",existItem)
+    
+            if (!existItem) {
+                console.log(1,userId);
+                await User.updateOne({ _id: userId }, { $push: { wishlist: productId } });
+                console.log(2,productId);
+                await Product.updateOne({ _id: productId }, { isWishlisted: true });
+                console.log(3,productId);
+                await Product.findOneAndUpdate({ _id: productId }, { $set: { isOnCart: false } }, { new: true });
+                console.log(4,userId);
+                if(cartId != ""){
+                    await User.updateOne({ _id: userId }, { $pull: { cart: { _id: cartId } } });
 
-            await Product.findOneAndUpdate({ _id: productId }, { $set: { isOnCart: false } }, { new: true });
-            await User.updateOne({ _id: userId }, { $pull: { cart: { _id: cartId } } });
-
-            res.json({
-                message: "Added to wishlist",
-            });
-        } else {
-            res.json({
-                message: "Already Exists in the wishlist",
-            });
+                }
+                console.log("final");
+                res.json({
+                    message: "Added to wishlist",
+                });
+            } else {
+                res.json({
+                    message: "Already Exists in the wishlist",
+                });
+            }
+        } catch (error) {
+            console.log(error.message);
         }
-    } catch (error) {
-        console.log(error.message);
     }
+    
 };
 
 exports. addToCartFromWishlist = async (req, res) => {

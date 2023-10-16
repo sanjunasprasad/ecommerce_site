@@ -124,6 +124,8 @@ const addToWishlist = async (productId, cartId) => {
 
     const data = await response.json();
 
+    console.log(data.message,"respose");
+
     if (data.message === "Added to wishlist") {
         
         Swal.fire({
@@ -590,101 +592,58 @@ const filteredData = (data) => {
     productList.innerHTML = ''; // Clear existing products
   
     if (data.length > 0) {
-      let row = document.createElement('div');
-      row.classList.add('row');
-      productList.appendChild(row);
+        let gridContainer = document.createElement('div');
+        gridContainer.classList.add('row');
+        productList.appendChild(gridContainer);
   
-      data.forEach((product, index) => {
-        if (index % 4 === 0) {
-          // Start a new row after every 4 products
-          row = document.createElement('div');
-          row.classList.add('row');
-          productList.appendChild(row);
-        }
+        data.forEach((product, index) => {
+            let productContainer = document.createElement('div');
+            productContainer.classList.add('col-sm-6', 'col-md-6', 'col-lg-4', 'col-xl-4');
+            productContainer.innerHTML = `
+            <div class="products-single fix">
+                <div class="box-img-hover">
+                    <div class="type-lb">
+                        <p class="sale">New</p>
+                    </div>
+                    <a href="/prodetail?id=${product._id}"><img src="${product.imageUrl[0].url}" class="img-fluid" alt=""></a>
+                    <div class="mask-icon">
+                        <ul>
+                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                        </ul>
+                        <!-- <a class="cart" href="#">Add to Cart</a> -->
+                    </div>
+                </div>
+                <div class="why-text">
+                    <a href="/prodetail?id=${product._id}"><h4>${product.name}</h4></a>
+                    <h5>₹${product.price}</h5>
+                    <p>${product.description}</p>
+                    <!-- <a class="btn hvr-hover" href="#">Add to Cart</a> -->
+                </div>
+            </div>`;
   
-        const col = document.createElement('div');
-        col.classList.add('col-lg-3', 'col-md-6', 'col-sm-6', 'col-6', 'mb-6', 'pro-gl-content');
-        col.innerHTML = `
-          <div class="ec-product-inner">
-            <div class="ec-pro-image-outer">
-              <div class="ec-pro-image">
-                ${product.stock ?
-                  `<a href="/productView?id=${product._id}" class="image">
-                    <img class="main-image" src="${product.imageUrl[0].url}" alt="Product" />
-
-                  </a>
-                  <span class="percentage"></span>
-                  <span class="flags">
-                    ${product.stock === 0 ? `<span class="sale">Sold Out</span>` : ''}
-                    ${product.offerlabel && product.offerlabel.length > 0 ? `<span class="sale">Sale</span>` : ''}
-                  </span>
-                  <a href="#" class="quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal"
-                    data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
-                  <div class="ec-pro-actions">
-                    <a href="#" class="ec-btn-group compare" title="Compare"><i class="fi fi-rr-arrows-repeat"></i></a>
-                    <button title="Add To Cart" class="add-to-cart"><i class="fi-rr-shopping-basket"></i> Add To Cart</button>
-                    <a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
-                  </div>` :
-  
-                  `<span class="product-label label-out">Out of Stock</span>
-                  <a href="/productView?id=${product._id}" class="image">
-                    <img class="main-image" src="${product.imageUrl[0].url}" alt="Product" />
-                    <img class="hover-image" src="${product.imageUrl[1].url}" alt="Product" />
-                  </a>
-                  <span class="flags">
-                    <span class="sale">Sold Out</span>
-                  </span>
-                  <a href="#" class="quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal"
-                    data-bs-target="#ec_quickview_modal"><i class="fi-rr-eye"></i></a>
-                  <div class="ec-pro-actions">
-                    <button style="border: none;" disabled="disabled" class="add-to-cart"><i class="fi-rr-shopping-basket"></i> Add To Cart</button>
-                    <a class="ec-btn-group wishlist" title="Wishlist"><i class="fi-rr-heart"></i></a>
-                  </div>`}
-              </div>
-            </div>
-            <div class="ec-pro-content">
-              <h5 class="ec-pro-title"><a href="/productView?id=${product._id}">${product.name}</a></h5>
-              <div class="ec-pro-rating">
-                <i class="ecicon eci-star fill"></i>
-                <i class="ecicon eci-star fill"></i>
-                <i class="ecicon eci-star fill"></i>
-                <i class="ecicon eci-star fill"></i>
-                <i class="ecicon eci-star"></i>
-              </div>
-              <div class="ec-pro-list-desc"></div>
-              
-              ${product.oldPrice ?
-                `<span class="ec-price">
-                  <span class="new-price">₹ ${product.price}</span>
-                  <span class="old-price">₹ ${product.oldPrice}</span>
-                </span>` :
-                `₹ ${product.price}`
-              }
-            </div>
-          </div>
-        `;
-  
-        row.appendChild(col);
-      });
+            gridContainer.appendChild(productContainer);
+        });
     } else {
-      productList.innerHTML = `
+        productList.innerHTML = `
         <div class="col-6 col-md-4 col-lg-4">
-          <div class="product product-7 text-center">
-            <div class="error-content text-center">
-              <div class="container">
-                <h1 class="error-title">Error 404</h1>
-                <p>We are sorry, the page you've requested is not available.</p>
-                <a href="/home" class="btn btn-outline-primary-2 btn-minwidth-lg">
-                  <span>BACK TO HOMEPAGE</span>
-                  <i class="icon-long-arrow-right"></i>
-                </a>
-              </div><!-- End .container -->
-            </div><!-- End .error-content text-center -->
-          </div>
-        </div>
-      `;
+            <div class="product product-7 text-center">
+                <div class="error-content text-center">
+                    <div class="container">
+                        <h1 class="error-title">Error 404</h1>
+                        <p>We are sorry, the page you've requested is not available.</p>
+                        <a href="/home" class="btn btn-outline-primary-2 btn-minwidth-lg">
+                            <span>BACK TO HOMEPAGE</span>
+                            <i class="icon-long-arrow-right"></i>
+                        </a>
+                    </div><!-- End .container -->
+                </div><!-- End .error-content text-center -->
+            </div>
+        </div>`;
     }
-  };
+};
+
   
   const categoryFilter = async (categoryId) => {
     const response = await fetch(`/categoryFilter?categoryId=${categoryId}`, {

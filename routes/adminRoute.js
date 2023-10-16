@@ -14,8 +14,8 @@ admin_route.get('/logout',adminController.adminLogout)
 
 //dashboard
 admin_route.get('/admindash',adminDashboard.loadDashboard);
-admin_route.get('/chartData', adminDashboard.chartData)
-admin_route.get('/getSales', adminDashboard.getSales)
+admin_route.get('/chartData', adminDashboard.chartData);
+admin_route.get('/getSales', adminDashboard.getSales);
 admin_route.post('/downloadSalesReport', adminDashboard.downloadSalesReport)
 admin_route.get('/renderSalesReport', adminDashboard.renderSalesReport)
 
