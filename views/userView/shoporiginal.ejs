@@ -29,7 +29,7 @@
                 <h2>SHOP</h2>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">SHOP</li>
+                    <li class="breadcrumb-item active"><a href="/shop">SHOP</a></li>
                 </ul>
             </div>
         </div>
@@ -44,12 +44,14 @@
       <div class="row">
           <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
               <div class="product-categori">
+                  
                   <div class="search-product">
-                      <form >
-                          <input class="form-control" placeholder="Search here..." type="text" >               
-                          <button type="submit"> <i class="fa fa-search"></i> </button>
-                      </form>
+                    <form action="/shop" method="get"> 
+                        <input class="form-control" name="q" placeholder="Search here..." type="text" value="<%= searchQuery %>"> <!-- Set the value of the input field to the searchQuery variable -->
+                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                    </form>
                   </div>
+
                   <div class="filter-sidebar-left">
                       <div class="title-left">
                           <h3>Categories</h3>
@@ -58,12 +60,13 @@
                           <a href="#" class="list-group-item list-group-item-action">Wedding Sarees </a>
                           <a href="#" class="list-group-item list-group-item-action">Festive Sarees </a>
                           <a href="#" class="list-group-item list-group-item-action">Partywear Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Festive Sarees </a>
+                          <a href="#" class="list-group-item list-group-item-action">Bridesmaid Sarees </a>
                           <a href="#" class="list-group-item list-group-item-action">Workwear Sarees </a>
                           <a href="#" class="list-group-item list-group-item-action">Onam Sarees  </a>
                           <a href="#" class="list-group-item list-group-item-action">Dailywear Sarees  </a>
                       </div>
                   </div>
+
                   <div class="filter-price-left">
                       <div class="title-left">
                           <h3>Price</h3>
@@ -87,7 +90,6 @@
                           <div class="toolbar-sorter-right">
                               <span>Sort by </span>
                               <select name="sortby" id="sortOptions" onchange="sortProducts()" class="selectpicker show-tick form-control">
-                                  <!-- <option data-display="Select">Relevance</option> -->
                                   <option value="relevant" selected="selected">Relevance</option>
                                   <option value="desc">Price: High to Low</option>
                                   <option value="asc">Price: Low to High</option>
@@ -180,20 +182,20 @@
                           </div> 
                           <!-- single view ends -->
 
-                          <!-- Pagination -->
-<div class="pagination">
+ <!-- Pagination -->
+ <div class="pagination">
     <% if (currentPage > 1) { %>
-        <a href="?page=<%= currentPage - 1 %>">Previous</a>
+        <a href="?page=<%= currentPage - 1 %>&q=<%= searchQuery %>">Previous</a>
     <% } %>
 
     <% for (let i = 1; i <= totalPages; i++) { %>
         <li class="<%= i === currentPage ? 'active' : '' %>">
-            <a href="?page=<%= i %>"><%= i %></a>
+            <a href="?page=<%= i %>&q=<%= searchQuery %>"><%= i %></a>
         </li>
     <% } %>
 
     <% if (currentPage < totalPages) { %>
-        <a href="?page=<%= currentPage + 1 %>">Next</a>
+        <a href="?page=<%= currentPage + 1 %>&q=<%= searchQuery %>">Next</a>
     <% } %>
 </div>
 

@@ -187,3 +187,34 @@
 
 
 
+// mycode
+// exports.shop = async (req, res) => {
+//   const logged = req.session.user
+//    if(req.session.user)
+//    {
+//     try {
+//         const  productData = await Product.find();
+//         res.render('shoporiginal', {  
+//           productData ,
+          
+//           logged});
+//       } catch (err) {
+//         console.error(err);
+//         res.status(500).send('Internal Server Error');
+//       }
+//    }
+//    else
+//    {
+//     try {
+      
+//       const  productData = await Product.find();
+//       res.render('shoporiginal', {  
+//         productData ,
+       
+//         logged:null});
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).send('Internal Server Error');
+//     }
+//    }
+// };

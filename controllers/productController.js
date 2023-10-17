@@ -6,73 +6,72 @@ const Address = require("../models/addressmodel");
 
 
 
-
-
-
-// mycode
+// const ITEMS_PER_PAGE = 6;
 // exports.shop = async (req, res) => {
-//   const logged = req.session.user
-//    if(req.session.user)
-//    {
-//     try {
-//         const  productData = await Product.find();
-//         res.render('shoporiginal', {  
-//           productData ,
-          
-//           logged});
-//       } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Internal Server Error');
-//       }
-//    }
-//    else
-//    {
-//     try {
-      
-//       const  productData = await Product.find();
-//       res.render('shoporiginal', {  
-//         productData ,
-       
-//         logged:null});
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).send('Internal Server Error');
-//     }
-//    }
+//   const logged = req.session.user;
+//   const page = +req.query.page || 1; 
+
+//   try {
+//     const totalProducts = await Product.countDocuments();
+//     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+
+//     const products = await Product.find()
+//       .skip((page - 1) * ITEMS_PER_PAGE) // Skip the required number of products based on the current page
+//       .limit(ITEMS_PER_PAGE); // Limit the number of products per page
+
+//     res.render('shoporiginal', {
+//       productData: products,
+//       logged,
+//       currentPage: page,
+//       totalPages,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Internal Server Error');
+//   }
 // };
 
-const ITEMS_PER_PAGE = 3;
 
+
+
+const ITEMS_PER_PAGE = 6;
 exports.shop = async (req, res) => {
   const logged = req.session.user;
-  const page = +req.query.page || 1; 
+  const page = +req.query.page || 1;
+  const searchQuery = req.query.q || ''; // Get the search query from the request
 
   try {
-    const totalProducts = await Product.countDocuments();
+    let query = {};
+
+    // If there is a search query, update the query object to filter products based on the search query
+    if (searchQuery) {
+      query = {
+        $or: [
+          { title: { $regex: searchQuery, $options: 'i' } }, // Case-insensitive search by title
+          { description: { $regex: searchQuery, $options: 'i' } }, // Case-insensitive search by description
+        ],
+      };
+    }
+
+    const totalProducts = await Product.countDocuments(query);
     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
 
-    const products = await Product.find()
-      .skip((page - 1) * ITEMS_PER_PAGE) // Skip the required number of products based on the current page
-      .limit(ITEMS_PER_PAGE); // Limit the number of products per page
+    const products = await Product.find(query)
+      .skip((page - 1) * ITEMS_PER_PAGE)
+      .limit(ITEMS_PER_PAGE);
 
     res.render('shoporiginal', {
       productData: products,
       logged,
       currentPage: page,
       totalPages,
+      searchQuery,
     });
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal Server Error');
   }
 };
-
-
-
-
-
-
-
 
 
   exports.prodetail= async(req,res)=>{
