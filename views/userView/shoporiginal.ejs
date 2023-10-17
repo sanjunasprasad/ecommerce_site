@@ -1,4 +1,24 @@
 <%-include('header')%> 
+<style>
+    .pagination {
+        display: flex;
+        list-style: none;
+        justify-content: center;
+    }
+
+    .pagination li {
+        margin: 0 5px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .pagination li.active {
+        background-color: #d33b33;
+        color: black;
+    }
+</style>
+
 <body>
 <%-include('headsection')%> 
  <!-- Start All Title Box -->
@@ -160,6 +180,28 @@
                           </div> 
                           <!-- single view ends -->
 
+                          <!-- Pagination -->
+<div class="pagination">
+    <% if (currentPage > 1) { %>
+        <a href="?page=<%= currentPage - 1 %>">Previous</a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+        <li class="<%= i === currentPage ? 'active' : '' %>">
+            <a href="?page=<%= i %>"><%= i %></a>
+        </li>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+        <a href="?page=<%= currentPage + 1 %>">Next</a>
+    <% } %>
+</div>
+
+                          
+                         
+
+
+  
                         </div>
                    </div>
                 </div>

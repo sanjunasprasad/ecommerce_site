@@ -53,9 +53,9 @@ exports. loadDashboard = async (req, res) => {
       });
   
       const thisMonthOrder = ordersByMonth[ordersByMonth.length - 1];
-      console.log("thismonthorder:",thisMonthOrder)
+      // console.log("thismonthorder:",thisMonthOrder)
       const thisMonthSales = revenueByMonth[revenueByMonth.length - 1];
-      console.log("thismonthsales:",thisMonthSales)
+      // console.log("thismonthsales:",thisMonthSales)
   
       res.render("dashboard", {
         user: req.session.admin,
@@ -176,6 +176,7 @@ exports. downloadSalesReport = async (req, res) => {
 
 
     exports. generateSalesReportPDF = async ( startDate, endDate) => {
+      console.log("generate rport here")
         const newstartDate = new Date(startDate);
         const newEndDate = new Date(endDate);
         const orderData = await Order.find({

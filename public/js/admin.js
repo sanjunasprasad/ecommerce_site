@@ -537,7 +537,9 @@ window.onload = function() {
 
 
 const startDateInput = document.getElementById("start-date");
+console.log("startdate:",startDateInput)
 const endDateInput = document.getElementById("end-date");
+console.log("enddate:",endDateInput)
 
 const today = new Date().toISOString().split('T')[0];
 const tomorrow = new Date();
@@ -569,14 +571,16 @@ let endDate
 
 
 const getSalesData = async() => {
+
+     console.log("get salesdata() called from dashboard.ejs")
   
     startDate = document.getElementById("start-date").value;
     endDate = document.getElementById("end-date").value;
-    console.log("date:",startDate, endDate);
+    console.log("2 date:",startDate, endDate);
 
 
 
-    const salesReportTemplate = `
+  const salesReportTemplate = `
     <%
     function forLoop(from, to, incr, block) {
       let accum = "";
@@ -632,9 +636,11 @@ const getSalesData = async() => {
 `;
 
 function renderSalesReport(orderData) {
+  console.log("render sales report called from getsalesreport()")
+  console.log(orderData)
   const salesReportHTML = ejs.render(salesReportTemplate, { data: orderData });
   document.getElementById("table").innerHTML = salesReportHTML;
-
+   
   jQuery(document).ready(function ($) {
     $("#my-table").DataTable({
       dom: "Bfrtip",
@@ -650,7 +656,8 @@ function renderSalesReport(orderData) {
     const response = await fetch(`/admin/getSales?startDate=${startDate}&endDate=${endDate}`, {
         headers: { "Content-Type": "application/json" },
     });
-
+    
+    console.log("response:",response)
     orderData = await response.json();
     if (orderData) {
         renderSalesReport(orderData);
