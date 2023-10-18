@@ -45,6 +45,16 @@ exports.aboutus = (req, res) => {
         res.render("aboutus", { logged: null })
     }
 }
+exports.contactus = (req, res) => {
+    const logged = req.session.user
+    if (req.session.user) {
+        res.render("contactus", { logged })
+    }
+    else {
+        res.render("contactus", { logged: null })
+    }
+    // res.render("contactus")
+}
 //render login page
 exports.loginload = async (req, res) => {
 

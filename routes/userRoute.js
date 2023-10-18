@@ -12,6 +12,8 @@ const { isLogout, isLogin,isCheckout, blockCheck } = auth
 user_route.get('/',userController.homeload)
 user_route.get('/userhome',userController.userhomeload)
 user_route.get('/aboutus',userController.aboutus)
+user_route.get('/contactus',userController.contactus)
+
 
 //login
 user_route.get("/login",isLogout ,userController.loginload);
