@@ -51,18 +51,18 @@
       <div class="row">
         <div class="col-md-6 mb-3">
             <label for="firstName">Full name *</label>
-            <input type="text" class="form-control" name="firstName" value="<%=user.firstName%>" required pattern="[A-Za-z ]+" title="Only letters and spaces are allowed">
+            <input type="text" class="form-control" name="firstName" value="<%=user.firstName%>" required>
             
         </div>
         <div class="col-md-6 mb-3">
             <label for="Mobile number">Mobile Number *</label>
-            <input type="tel" class="form-control" name="phoneNumber" value="<%=user.phoneNumber%>" required pattern="[0-9]{10}" title="Only 10-digit phone number are allowed">
+            <input type="number" class="form-control" name="phoneNumber" value="<%=user.phoneNumber%>" required minlength="10">
          
         </div>
     </div>
     <div class="mb-3">
         <label for="email">Email Address *</label>
-        <input type="email" class="form-control" name="email" value="<%=user.email%>" required >
+        <input type="email" class="form-control" name="email" value="<%=user.email%>" required>
 
     </div>
         <div class="mb-3">
@@ -105,69 +105,63 @@
  <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
  
  
+
+
+
+
+ 
+ 
+<!-- Your HTML content -->
+
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const accountupdate = document.getElementById("accountupdate");
-    const userid = document.getElementById("useridedit").value;
+document.addEventListener("DOMContentLoaded", function () {
+  const accountupdate = document.getElementById("accountupdate");
+  const userid = document.getElementById("useridedit").value;
 
-    if (accountupdate) {
-        accountupdate.addEventListener("submit", async function (event) {
-            event.preventDefault();
+  if (accountupdate) {
+      accountupdate.addEventListener("submit", async function (event) {
+          event.preventDefault();
+          
 
-            const form = event.target;
-            const formData = new FormData(form);
+          const form = event.target;
+          const formData = new FormData(form);
+          console.log("formdata",formData)
 
-            // Additional validation logic
-            const phoneNumberInput = formData.get("phoneNumber");
-            if (phoneNumberInput.length !== 10) {
-                // Display an error message to the user
-                alert("Invalid phone number. Please enter a 10-digit phone number.");
-                return;
-            }
+          try {
+              const response = await fetch(`/editaccountpost?userid=${userid}`, {
+                  method: "POST",
+                  body: JSON.stringify(Object.fromEntries(formData)),
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+              });
+              console.log("response:",response)
+             
+              if (response.ok) {
+                  await Swal.fire({
+                      icon: "success",
+                      title: "Profile updated successfully",
+                      showConfirmButton: "OK",
+                      confirmButtonColor: "#50C878",
+                      timer: 1800
+                  });
 
-            try {
-                const response = await fetch(`/editaccountpost?userid=${userid}`, {
-                    method: "POST",
-                    body: JSON.stringify(Object.fromEntries(formData)),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-
-                if (response.ok) {
-                    await Swal.fire({
-                        icon: "success",
-                        title: "Profile updated successfully",
-                        showConfirmButton: "OK",
-                        confirmButtonColor: "#50C878",
-                        timer: 1800
-                    });
-
-                    // Redirect to the address section after the SweetAlert message disappears
-                    window.location.href = "/myaccount#profileTab"; // Assuming addAddressTab is the anchor for your address section
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Some error occurred",
-                        showConfirmButton: true,
-                        confirmButtonText: "OK",
-                        confirmButtonColor: "#D22B2B",
-                    });
-                }
-            } catch (error) {
-                console.error("Error:", error);
-                Swal.fire({
-                    icon: "error",
-                    title: "An error occurred",
-                    text: "Please try again later.",
-                    showConfirmButton: true,
-                    confirmButtonText: "OK",
-                    confirmButtonColor: "#D22B2B",
-                });
-            }
-        });
-    }
+                  // Redirect to the address section after the SweetAlert message disappears
+                  window.location.href = "/myaccount#profileTab"; // Assuming addAddressTab is the anchor for your address section
+              } else {
+                  Swal.fire({
+                      icon: "error",
+                      title: "Some error occurred",
+                      showConfirmButton: true,
+                      confirmButtonText: "OK",
+                      confirmButtonColor: "#D22B2B",
+                  });
+              }
+          } catch (error) {
+              console.log("Error:", error.message);
+          }
+      });
+  }
 });
-
-
 </script>
+
