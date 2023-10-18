@@ -5,25 +5,36 @@ const Product = require("../models/productModel");
 const Address = require("../models/addressmodel");
 
 
-
 // const ITEMS_PER_PAGE = 6;
 // exports.shop = async (req, res) => {
 //   const logged = req.session.user;
-//   const page = +req.query.page || 1; 
+//   const page = +req.query.page || 1;
+//   const searchQuery = req.query.q || ''; 
 
 //   try {
-//     const totalProducts = await Product.countDocuments();
+//     let query = {};
+//     if (searchQuery) {
+//       query = {
+//         $or: [
+//           { title: { $regex: searchQuery, $options: 'i' } }, 
+//           { description: { $regex: searchQuery, $options: 'i' } }, 
+//         ],
+//       };
+//     }
+
+//     const totalProducts = await Product.countDocuments(query);
 //     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
 
-//     const products = await Product.find()
-//       .skip((page - 1) * ITEMS_PER_PAGE) // Skip the required number of products based on the current page
-//       .limit(ITEMS_PER_PAGE); // Limit the number of products per page
+//     const products = await Product.find(query)
+//       .skip((page - 1) * ITEMS_PER_PAGE)
+//       .limit(ITEMS_PER_PAGE);
 
 //     res.render('shoporiginal', {
 //       productData: products,
 //       logged,
 //       currentPage: page,
 //       totalPages,
+//       searchQuery,
 //     });
 //   } catch (err) {
 //     console.error(err);
@@ -33,25 +44,28 @@ const Address = require("../models/addressmodel");
 
 
 
-
 const ITEMS_PER_PAGE = 6;
+
 exports.shop = async (req, res) => {
   const logged = req.session.user;
   const page = +req.query.page || 1;
-  const searchQuery = req.query.q || ''; // Get the search query from the request
+  const searchQuery = req.query.q || '';
+  const minPrice = parseFloat(req.query.minPrice) || 0; // Minimum price from user input
+  const maxPrice = parseFloat(req.query.maxPrice) || Number.MAX_VALUE; // Maximum price from user input
 
   try {
     let query = {};
-
-    // If there is a search query, update the query object to filter products based on the search query
     if (searchQuery) {
       query = {
         $or: [
-          { title: { $regex: searchQuery, $options: 'i' } }, // Case-insensitive search by title
-          { description: { $regex: searchQuery, $options: 'i' } }, // Case-insensitive search by description
+          { title: { $regex: searchQuery, $options: 'i' } },
+          { description: { $regex: searchQuery, $options: 'i' } },
         ],
       };
     }
+
+    // Include price filtering conditions in the query
+    query.price = { $gte: minPrice, $lte: maxPrice };
 
     const totalProducts = await Product.countDocuments(query);
     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
@@ -66,6 +80,8 @@ exports.shop = async (req, res) => {
       currentPage: page,
       totalPages,
       searchQuery,
+      minPrice, // Pass these values back to the view to repopulate the filter form
+      maxPrice,
     });
   } catch (err) {
     console.error(err);

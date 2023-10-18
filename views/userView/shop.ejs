@@ -1,4 +1,26 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <%-include('header')%> 
+<style>
+    .pagination {
+        display: flex;
+        list-style: none;
+        justify-content: center;
+    }
+
+    .pagination li {
+        margin: 0 5px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .pagination li.active {
+        background-color: #d33b33;
+        color: black;
+    }
+</style>
+
 <body>
 <%-include('headsection')%> 
  <!-- Start All Title Box -->
@@ -9,7 +31,7 @@
                 <h2>SHOP</h2>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">SHOP</li>
+                    <li class="breadcrumb-item active"><a href="/shop">SHOP</a></li>
                 </ul>
             </div>
         </div>
@@ -24,36 +46,33 @@
       <div class="row">
           <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
               <div class="product-categori">
+                  
                   <div class="search-product">
-                      <form action="/shop" method="get">
-                          <input class="form-control" placeholder="Search here..." type="text">
-                          <button type="submit"> <i class="fa fa-search"></i> </button>
-                      </form>
+                    <form action="/shop" method="get"> 
+                        <input class="form-control" name="q" placeholder="Search here..." type="text" value="<%= searchQuery %>"> <!-- Set the value of the input field to the searchQuery variable -->
+                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                    </form>
                   </div>
+
                   <div class="filter-sidebar-left">
-                      <div class="title-left">
-                          <h3>Categories</h3>
-                      </div>
+                      <div class="title-left"><h3>Filter</h3></div>
                       <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
-                        <form action="/shop" method="get" id="filterForm">
-                            <select class="form-control list-group-item list-group-item-action" id="sortSelect" name="filtertype" onchange="submitForm()">
-                                <option <% if (!filtertype) { %>disabled selected<% } %>>Category Filter</option>
-                                <option value="Wedding Sarees">Wedding Sarees</option>
-                                <option value="Festive Sarees">Festive Sarees</option>
-                                <option value="Partywear Sarees">Partywear Sarees</option>
-                                <option value="Workwear Sarees">Workwear Sarees</option>
-                                <option value="Onam Sarees">Onam Sarees</option>
-                            </select>
-                            
-                          <!-- <a href="#" class="list-group-item list-group-item-action">Wedding Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Festive Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Partywear Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Festive Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Workwear Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Onam Sarees  </a>
-                          <a href="#" class="list-group-item list-group-item-action">Dailywear Sarees  </a> -->
+                        <!-- subfilter -->
+                        <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Categories</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Wedding Sarees </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Festive Sarees </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Partywear Sarees </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Workwear Sarees </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Onam Sarees  </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Dailywear Sarees  </a>
+                        <!-- subfilter -->
+                        <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Material</a>     
+                        <a href="#" class="list-group-item list-group-item-action">test1 </a>
+                        <a href="#" class="list-group-item list-group-item-action">test2</a>
+                        <a href="#" class="list-group-item list-group-item-action">test3 </a>
                       </div>
                   </div>
+
                   <div class="filter-price-left">
                       <div class="title-left">
                           <h3>Price</h3>
@@ -77,7 +96,6 @@
                           <div class="toolbar-sorter-right">
                               <span>Sort by </span>
                               <select name="sortby" id="sortOptions" onchange="sortProducts()" class="selectpicker show-tick form-control">
-                                  <!-- <option data-display="Select">Relevance</option> -->
                                   <option value="relevant" selected="selected">Relevance</option>
                                   <option value="desc">Price: High to Low</option>
                                   <option value="asc">Price: Low to High</option>
@@ -170,9 +188,36 @@
                           </div> 
                           <!-- single view ends -->
 
+<br>
+ <!-- Pagination -->
+ <% if (productData.length === 0) { %>
+    <p>No search results found.</p>
+<% } else { %>
+    <div class="pagination">
+        <% if (currentPage > 1) { %>
+            <a href="?page=<%= currentPage - 1 %>&q=<%= searchQuery %>">Previous</a>
+        <% } %>
+
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="<%= i === currentPage ? 'active' : '' %>">
+                <a href="?page=<%= i %>&q=<%= searchQuery %>"><%= i %></a>
+            </li>
+        <% } %>
+
+        <% if (currentPage < totalPages) { %>
+            <a href="?page=<%= currentPage + 1 %>&q=<%= searchQuery %>">Next</a>
+        <% } %>
+    </div>
+<% } %>
+
+                          
+                         
+
+
+  
                         </div>
-                    </div>
-                  </div>
+                   </div>
+                </div>
               </div>
           </div>
       </div>
@@ -185,36 +230,18 @@
 <%-include('footer')%> 
 
 
+<!-- Main Js -->
+<script src="/js/vendor/index.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/users.js"></script>
+<script src="/js/userOrder.js"></script>
+<!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- Include SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
 
 
-// mycode
-// exports.shop = async (req, res) => {
-//   const logged = req.session.user
-//    if(req.session.user)
-//    {
-//     try {
-//         const  productData = await Product.find();
-//         res.render('shoporiginal', {  
-//           productData ,
-          
-//           logged});
-//       } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Internal Server Error');
-//       }
-//    }
-//    else
-//    {
-//     try {
-      
-//       const  productData = await Product.find();
-//       res.render('shoporiginal', {  
-//         productData ,
-       
-//         logged:null});
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).send('Internal Server Error');
-//     }
-//    }
-// };

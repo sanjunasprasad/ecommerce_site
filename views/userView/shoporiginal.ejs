@@ -1,3 +1,5 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <%-include('header')%> 
 <style>
     .pagination {
@@ -52,21 +54,86 @@
                     </form>
                   </div>
 
-                  <div class="filter-sidebar-left">
-                      <div class="title-left">
-                          <h3>Categories</h3>
-                      </div>
+                  <!-- <div class="filter-sidebar-left">
+                      <div class="title-left"><h3>Filter</h3></div>
                       <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
-                          <a href="#" class="list-group-item list-group-item-action">Wedding Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Festive Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Partywear Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Bridesmaid Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Workwear Sarees </a>
-                          <a href="#" class="list-group-item list-group-item-action">Onam Sarees  </a>
-                          <a href="#" class="list-group-item list-group-item-action">Dailywear Sarees  </a>
+                         subfilter
+                        <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Categories</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Wedding Sarees </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Festive Sarees </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Partywear Sarees </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Workwear Sarees </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Onam Sarees  </a>
+                                    <a href="#" class="list-group-item list-group-item-action">Dailywear Sarees  </a>
+                        subfilter
+                        <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Material</a>   
+                        <a href="#" class="list-group-item list-group-item-action">Kanchipuram silk</a>    
+                        <a href="#" class="list-group-item list-group-item-action">Banarasi silk</a>
+                        <a href="#" class="list-group-item list-group-item-action">Cotton silk</a>
+                        <a href="#" class="list-group-item list-group-item-action">Mysore silk</a>
+                        <a href="#" class="list-group-item list-group-item-action">Georgette silk</a>
                       </div>
-                  </div>
+                  </div> -->
 
+
+
+                  <div class="filter-sidebar-left">
+                    <div class="title-left">
+                        <h3>Filter</h3>
+                    </div>
+                    <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
+                        <!-- subfilter -->
+                        <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Categories</a>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="wedding-sarees-checkbox">
+                            <label for="wedding-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Wedding Sarees</a></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="festive-sarees-checkbox">
+                            <label for="festive-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Festive Sarees</a></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="partywear-sarees-checkbox">
+                            <label for="partywear-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Partywear Sarees</a></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="workwear-sarees-checkbox">
+                            <label for="workwear-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Workwear Sarees</a></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="onam-sarees-checkbox">
+                            <label for="onam-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Onam Sarees</a></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="dailywear-sarees-checkbox">
+                            <label for="dailywear-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Dailywear Sarees</a></label>
+                        </div>
+                        <!-- subfilter -->
+                        <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Material</a>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="kanchipuram-silk-checkbox">
+                            <label for="kanchipuram-silk-checkbox"><a href="#" class="list-group-item list-group-item-action">Kanchipuram Silk</a></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="banarasi-silk-checkbox">
+                            <label for="banarasi-silk-checkbox"><a href="#" class="list-group-item list-group-item-action">Banarasi Silk</a></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="cotton-silk-checkbox">
+                            <label for="cotton-silk-checkbox"><a href="#" class="list-group-item list-group-item-action">Cotton Silk</a></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="mysore-silk-checkbox">
+                            <label for="mysore-silk-checkbox"><a href="#" class="list-group-item list-group-item-action">Mysore Silk</a></label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="georgette-silk-checkbox">
+                            <label for="georgette-silk-checkbox"><a href="#" class="list-group-item list-group-ibtem-action">Georgette Silk</a></label>
+                        </div>
+                    </div>
+                </div>
+                
+                    <!-- price filter -->
                   <div class="filter-price-left">
                       <div class="title-left">
                           <h3>Price</h3>
@@ -79,10 +146,11 @@
                           </p>
                       </div>
                   </div>
-                 
+        </div>
+    </div>
 
-              </div>
-          </div>
+
+          <!-- right side -->
           <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
               <div class="right-product-box">
                   <div class="product-item-filter row">
@@ -130,7 +198,6 @@
                                                       <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                                       <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                   </ul>
-                                                  <!-- <a class="cart" href="#">Add to Cart</a> -->
                                               </div>
                                           </div>
                                           <div class="why-text">
@@ -173,7 +240,6 @@
                                               <a href="/prodetail?id=<%= product._id %>"><h4><%= product.name %></h4></a>
                                               <h5>₹<%= product.price %> </h5>
                                               <p><%= product.description %></p>
-                                              <!-- <a class="btn hvr-hover" href="#">Add to Cart</a> -->
                                           </div>
                                       </div>
                                   </div>
@@ -182,22 +248,27 @@
                           </div> 
                           <!-- single view ends -->
 
+<br>
  <!-- Pagination -->
- <div class="pagination">
-    <% if (currentPage > 1) { %>
-        <a href="?page=<%= currentPage - 1 %>&q=<%= searchQuery %>">Previous</a>
-    <% } %>
+ <% if (productData.length === 0) { %>
+    <p>No search results found.</p>
+<% } else { %>
+    <div class="pagination">
+        <% if (currentPage > 1) { %>
+            <a href="?page=<%= currentPage - 1 %>&q=<%= searchQuery %>">Previous</a>
+        <% } %>
 
-    <% for (let i = 1; i <= totalPages; i++) { %>
-        <li class="<%= i === currentPage ? 'active' : '' %>">
-            <a href="?page=<%= i %>&q=<%= searchQuery %>"><%= i %></a>
-        </li>
-    <% } %>
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="<%= i === currentPage ? 'active' : '' %>">
+                <a href="?page=<%= i %>&q=<%= searchQuery %>"><%= i %></a>
+            </li>
+        <% } %>
 
-    <% if (currentPage < totalPages) { %>
-        <a href="?page=<%= currentPage + 1 %>&q=<%= searchQuery %>">Next</a>
-    <% } %>
-</div>
+        <% if (currentPage < totalPages) { %>
+            <a href="?page=<%= currentPage + 1 %>&q=<%= searchQuery %>">Next</a>
+        <% } %>
+    </div>
+<% } %>
 
                           
                          
