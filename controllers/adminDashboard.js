@@ -53,9 +53,9 @@ exports. loadDashboard = async (req, res) => {
       });
   
       const thisMonthOrder = ordersByMonth[ordersByMonth.length - 1];
-      // console.log("thismonthorder:",thisMonthOrder)
+     
       const thisMonthSales = revenueByMonth[revenueByMonth.length - 1];
-      // console.log("thismonthsales:",thisMonthSales)
+
   
       res.render("dashboard", {
         user: req.session.admin,
@@ -94,7 +94,7 @@ exports. getSales = async (req, res) => {
 
         const newstartDate = new Date(startDate);
         const newEndDate = new Date(endDate);
-
+        
         const orderData = await Order.find({
             date: {
                 $gte: newstartDate,
@@ -103,6 +103,7 @@ exports. getSales = async (req, res) => {
             status: "Delivered",
         }).sort({ date: "desc" });
 
+      
         const formattedOrders = orderData.map((order) => ({
             date: moment(order.date).format("YYYY-MM-DD"),
             ...order,
@@ -175,7 +176,7 @@ exports. downloadSalesReport = async (req, res) => {
     
 
 
-    exports. generateSalesReportPDF = async ( startDate, endDate) => {
+    const generateSalesReportPDF = async ( startDate, endDate) => {
       console.log("generate rport here")
         const newstartDate = new Date(startDate);
         const newEndDate = new Date(endDate);
@@ -235,4 +236,4 @@ exports. downloadSalesReport = async (req, res) => {
         });
     };
       
-    
+   

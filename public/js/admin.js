@@ -388,7 +388,7 @@ $(document).ready(function () {
   if(orderUpdateSelects){
     orderUpdateSelects.forEach((orderUpdateSelect) => {
     orderUpdateSelect.addEventListener('change', async ()=>{
-      console.log("helloo");
+    
       const selectedOption = orderUpdateSelect.value
       const orderId = orderUpdateSelect.id.split('-')[1]
 
@@ -537,9 +537,8 @@ window.onload = function() {
 
 
 const startDateInput = document.getElementById("start-date");
-console.log("startdate:",startDateInput)
 const endDateInput = document.getElementById("end-date");
-console.log("enddate:",endDateInput)
+
 
 const today = new Date().toISOString().split('T')[0];
 const tomorrow = new Date();
@@ -572,13 +571,10 @@ let endDate
 
 const getSalesData = async() => {
 
-     console.log("get salesdata() called from dashboard.ejs")
+ 
   
     startDate = document.getElementById("start-date").value;
     endDate = document.getElementById("end-date").value;
-    console.log("2 date:",startDate, endDate);
-
-
 
   const salesReportTemplate = `
     <%
@@ -636,8 +632,7 @@ const getSalesData = async() => {
 `;
 
 function renderSalesReport(orderData) {
-  console.log("render sales report called from getsalesreport()")
-  console.log(orderData)
+  
   const salesReportHTML = ejs.render(salesReportTemplate, { data: orderData });
   document.getElementById("table").innerHTML = salesReportHTML;
    

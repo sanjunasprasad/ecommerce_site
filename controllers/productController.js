@@ -5,67 +5,22 @@ const Product = require("../models/productModel");
 const Address = require("../models/addressmodel");
 
 
-// const ITEMS_PER_PAGE = 6;
-// exports.shop = async (req, res) => {
-//   const logged = req.session.user;
-//   const page = +req.query.page || 1;
-//   const searchQuery = req.query.q || ''; 
-
-//   try {
-//     let query = {};
-//     if (searchQuery) {
-//       query = {
-//         $or: [
-//           { title: { $regex: searchQuery, $options: 'i' } }, 
-//           { description: { $regex: searchQuery, $options: 'i' } }, 
-//         ],
-//       };
-//     }
-
-//     const totalProducts = await Product.countDocuments(query);
-//     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
-
-//     const products = await Product.find(query)
-//       .skip((page - 1) * ITEMS_PER_PAGE)
-//       .limit(ITEMS_PER_PAGE);
-
-//     res.render('shoporiginal', {
-//       productData: products,
-//       logged,
-//       currentPage: page,
-//       totalPages,
-//       searchQuery,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Internal Server Error');
-//   }
-// };
-
-
-
 const ITEMS_PER_PAGE = 6;
-
 exports.shop = async (req, res) => {
   const logged = req.session.user;
   const page = +req.query.page || 1;
-  const searchQuery = req.query.q || '';
-  const minPrice = parseFloat(req.query.minPrice) || 0; // Minimum price from user input
-  const maxPrice = parseFloat(req.query.maxPrice) || Number.MAX_VALUE; // Maximum price from user input
+  const searchQuery = req.query.q || ''; 
 
   try {
     let query = {};
     if (searchQuery) {
       query = {
         $or: [
-          { title: { $regex: searchQuery, $options: 'i' } },
-          { description: { $regex: searchQuery, $options: 'i' } },
+          { title: { $regex: searchQuery, $options: 'i' } }, 
+          { description: { $regex: searchQuery, $options: 'i' } }, 
         ],
       };
     }
-
-    // Include price filtering conditions in the query
-    query.price = { $gte: minPrice, $lte: maxPrice };
 
     const totalProducts = await Product.countDocuments(query);
     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
@@ -80,14 +35,18 @@ exports.shop = async (req, res) => {
       currentPage: page,
       totalPages,
       searchQuery,
-      minPrice, // Pass these values back to the view to repopulate the filter form
-      maxPrice,
     });
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal Server Error');
   }
 };
+
+
+
+
+
+
 
 
   exports.prodetail= async(req,res)=>{
