@@ -55,4 +55,14 @@ admin_route.post('/blockCoupon', adminController.blockCoupon)
 admin_route.post('/deleteCoupon', adminController.deleteCoupon)
 
 
+//banner
+admin_route.get("/banners", isLogin, adminController.loadBanners)
+admin_route.get("/addBanner", isLogin, adminController.addBanner)
+admin_route.post('/addBanner', isLogin, store.single('image') , adminController.addNewBanner)
+admin_route.get('/updateBanner/:id', isLogin, adminController.editBanner)
+admin_route.post('/updateBanner/:id',isLogin, store.single('image') , adminController.updateBanner)
+admin_route.get('/bannerStatus/:id', isLogin, adminController.bannerStatus)
+
+
+
 module.exports=admin_route
