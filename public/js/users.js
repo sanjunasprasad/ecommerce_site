@@ -1,20 +1,23 @@
 ////////////////CART & WISHLIST MANAGEMENT////////////////
 
+//product quantity in productdetails page
 const productQuantity = async (id, act) => {
     const elem = document.getElementById(id);
+    console.log("elem from prodetail page",elem)
     if (act == "inc") elem.value ? (elem.value = Number(elem.value) + 1) : "";
     else if (act == "dec") elem.value > 1 ? (elem.value = Number(elem.value) - 1) : "";
 
     elem.setAttribute("value", elem.value);
 };
 
+
+//add to  cart in productdetails page
 const addToCart = async (productId) => {
 
     const addToCartButton = document.getElementById("addToCartBtn");
-
     const productName = document.getElementsByName("productName")[0].value;
     const quantity = document.getElementById(productId).value;
-    console.log(quantity, productId)
+    console.log("from add to cart:",quantity, productId)
     const response = await fetch(`/addToCart?id=${productId}&quantity=${quantity}`, {
         method: "GET",
         headers: {
@@ -44,8 +47,9 @@ const addToCart = async (productId) => {
     }
 };
 
+//total price in cart page
 const totalPrice = async (id, act, stock) => {
-    console.log(11);
+    console.log(" totalprice fn reached");
     const elem = document.getElementById(id);
 
     if (act == "inc") elem.value ? (elem.value = Number(elem.value) + 1) : "";
@@ -54,7 +58,7 @@ const totalPrice = async (id, act, stock) => {
     let subTotal = 0;
     let datas = [];
     let length = document.getElementsByName("productTotal").length;
-    console.log(length);
+    console.log("product type total",length);
 
     for (let i = 0; i < length; i++) {
 
@@ -72,11 +76,10 @@ const totalPrice = async (id, act, stock) => {
             quantity: Number(document.getElementsByName("num-product")[i].value),
         });
     }
-    // console.log(document.getElementById("subTotal")); 
-    console.log(subTotal);
+    console.log("subtotal:",subTotal);
     document.getElementById("subTotal").innerText = "₹ " + subTotal.toFixed();
     document.getElementById("subTotal2").innerText = "₹ " + subTotal.toFixed();
-    console.log(33);
+  
     let data = await fetch("/cartUpdation", {
         method: "POST",
         headers: {
@@ -88,6 +91,7 @@ const totalPrice = async (id, act, stock) => {
     });
 };
 
+//from cart page to remove product alert
 const removeCartalert = async (id) => {
     const productId = document.getElementById("product_id" + id).value;
     const cartId = document.getElementsByName("cart_id")[0].value;
@@ -104,7 +108,7 @@ const removeCartalert = async (id) => {
         confirmButtonText: "Move to wishlist",
         cancelButtonText: "Yes, remove",
     });
-
+     
     // Handle the user's response
     if (result.value) {
         addToWishlist(productId, cartId);
@@ -113,6 +117,7 @@ const removeCartalert = async (id) => {
     }
 };
 
+// product details --> add to wishlist
 const addToWishlist = async (productId, cartId) => {
     console.log("iam clicked")
     const response = await fetch(`/addToWishlist?productId=${productId}&cartId=${cartId}`, {
@@ -148,6 +153,8 @@ const addToWishlist = async (productId, cartId) => {
     }
 };
 
+
+//product  from wishlist --> cart
 const moveToCart = async (productId) => {
     try {
         const response = await fetch(`/addToCartFromWishlist?productId=${productId}`, {
@@ -166,8 +173,11 @@ const moveToCart = async (productId) => {
                 title: "Product is moved to cart",
                 showConfirmButton: true,
                 confirmButtonColor: "#00A300",
+                timer: 1800
             });
-            window.location.href = "/wishlist";
+            if (data) {
+                window.location.reload();
+            }
             document.getElementById("row" + productId).innerHTML = "";    
             
         } else if (data.message === "Product is already in cart!!") {
@@ -192,6 +202,7 @@ const moveToCart = async (productId) => {
     }
 };
 
+//alert display after removing from cartpage
 const removeFromCart = async (productId, cartId) => {
     const response = await fetch(`/removeCart?productId=${productId}&cartId=${cartId}`, {
         method: "GET",
@@ -262,8 +273,10 @@ const proceedToCheckout = async () => {
             "Content-Type": "application/json",
         },
     });
-
+     console.log("checkout data response:",response)
     const data = await response.json();
+    console.log("data.message:",data.stock)
+     
 
     if (data.message === "In stock") {
         window.location.href = "/checkout";
@@ -271,7 +284,7 @@ const proceedToCheckout = async () => {
         data.forEach((element) => {
             Swal.fire({
                 icon: "error",
-                title: `${element.name}\nis out of stock!!`,
+                title: `${element.name}\nis out of stock,\nplease reduce the quantity!!`,
                 showConfirmButton: true,
                 confirmButtonText: "CANCEL",
                 confirmButtonColor: "#D22B2B",
@@ -342,7 +355,7 @@ if (addAddress) {
 const addAddressCheckout = document.getElementById("addAddressCheckout");
 
 if (addAddressCheckout) {
-    console.log(337, addAddressCheckout);
+    console.log("add address", addAddressCheckout);
     addAddressCheckout.addEventListener("submit", async function (event) {
         event.preventDefault();
 
@@ -496,7 +509,7 @@ if (updateAddress) {
 
         const form = event.target;
         const formData = new FormData(form);
-        console.log(11);
+     
         const addressId = document.getElementById("addressId").value;
 
         if ($(form).valid()) {

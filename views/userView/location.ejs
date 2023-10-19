@@ -1,0 +1,67 @@
+<%-include('header')%> 
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
+<body>
+<%-include('headsection')%> 
+ <!-- Start All Title Box -->
+ <div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>LOCATION</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Locate us</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+
+<!-- location starts -->
+<div class="contact-box-main">
+    <div class="container">
+       
+              <div id="map"></div>
+     
+    </div>
+</div>
+<!-- location ends -->
+<%-include('footer')%> 
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Initialize the map
+    var map = L.map('map').setView([12.9716, 77.5946], 13); // Set view to Bangalore's coordinates and zoom level 13
+
+    // Add OpenStreetMap tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add zoom control to the map
+    L.control.zoom({
+        position: 'bottomright'
+    }).addTo(map);
+
+    // Function to add a marker to the map
+    function addMarker(latitude, longitude) {
+        var marker = L.marker([latitude, longitude]).addTo(map);
+        marker.bindPopup("All Silks").openPopup();
+    }
+
+    // Add a marker at Bangalore's coordinates
+    addMarker(12.9716, 77.5946);
+});
+
+</script>

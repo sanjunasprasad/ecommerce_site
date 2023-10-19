@@ -6,67 +6,67 @@ const Address = require("../models/addressmodel");
 const Order = require("../models/orderModel");
 const Coupon = require("../models/couponmodel");
 
-var  walletBalance=0
-exports. loadCart = async (req, res) => {
+
+var walletBalance = 0
+exports.loadCart = async (req, res) => {
     try {
         req.session.checkout = true
-        logged=req.session.user
+        logged = req.session.user
         const userData = req.session.user;
         const userId = userData._id;
-        const usertest= await User.findById(userId).lean();
+        const usertest = await User.findById(userId).lean();
         console.log("User before population:", usertest);
 
-        walletBalance=userData.wallet.balance
+        walletBalance = userData.wallet.balance
         const categoryData = await Category.find({ is_blocked: false });
 
         const user = await User.findById(userId).populate("cart.product").lean();
         const cart = user.cart;
-        console.log("cart:",cart);
+        console.log("cart:", cart);
         let subTotal = 0;
 
         cart.forEach((val) => {
             val.total = val.product.price * val.quantity;
             subTotal += val.total;
         });
-     
-        console.log("length of cart:",cart.length);
+
+        // console.log("length of cart from loadcart:", cart.length);
         if (cart.length === 0) {
-            res.render("emptyCart", { userData, categoryData ,cart:{},subTotal:0,walletBalance,logged});
+            res.render("emptyCart", { userData, categoryData, cart: {}, subTotal: 0, walletBalance, logged });
         } else {
-            res.render("cart", { userData, cart, subTotal,walletBalance, categoryData,logged});
+            res.render("cart", { userData, cart, subTotal, walletBalance, categoryData, logged });
         }
     } catch (error) {
         console.log(error.message);
         const userData = req.session.user;
         const categoryData = await Category.find({ is_blocked: false });
-        res.render("404", { userData, categoryData ,loggedIn:true,walletBalance});
+        res.render("404", { userData, categoryData, loggedIn: true, walletBalance });
     }
 };
 
 
-exports. addToCart = async (req, res) => {
-    const logged=req.session.user
-    if(req.session.user)
-    {
+exports.addToCart = async (req, res) => {
+    const logged = req.session.user
+    if (req.session.user) {
         try {
-        
+
             const userData = req.session.user;
             const productId = req.query.id;
             const quantity = req.query.quantity;
             const userId = userData._id;
-    
+
             const product = await Product.findById(productId);
             const existed = await User.findOne({ _id: userId, "cart.product": productId });
-            const filter={_id:productId}
+            const filter = { _id: productId }
             if (existed) {
                 await User.findOneAndUpdate(
                     { _id: userId, "cart.product": productId },
                     { $inc: { "cart.$.quantity": quantity ? quantity : 1 } },
                     { new: true }
                 );
-              
-    
-               return res.json({ message: "Item already in cart!!" });
+
+
+                return res.json({ message: "Item already in cart!!" });
             } else {
                 await Product.findOneAndUpdate(filter, { isOnCart: true });
                 await User.findByIdAndUpdate(
@@ -82,8 +82,8 @@ exports. addToCart = async (req, res) => {
                     { new: true }
                 );
                 console.log(User)
-    
-              return  res.json({ message: "Item added to cart" });
+
+                return res.json({ message: "Item added to cart" });
             }
         } catch (error) {
             console.log(error.message);
@@ -92,21 +92,20 @@ exports. addToCart = async (req, res) => {
         }
 
     }
-   
+
 };
 
-exports. updateCart = async (req, res) => {
-    const logged=req.session.user
-    if(req.session.user)
-    {
+exports.updateCart = async (req, res) => {
+    const logged = req.session.user
+    if (req.session.user) {
         try {
-      
+
             const userData = req.session.user;
             const data = await User.find({ _id: userData._id }, { _id: 0, cart: 1 }).lean();
             data[0].cart.forEach((val, i) => {
                 val.quantity = req.body.datas[i].quantity;
             });
-    
+
             await User.updateOne({ _id: userData._id }, { $set: { cart: data[0].cart } });
             res.status(200).send();
         } catch (error) {
@@ -114,10 +113,10 @@ exports. updateCart = async (req, res) => {
         }
 
     }
-   
+
 };
 
-exports. removeCart = async (req, res) => {
+exports.removeCart = async (req, res) => {
     try {
         const userData = req.session.user;
         const userId = userData._id;
@@ -135,7 +134,7 @@ exports. removeCart = async (req, res) => {
 };
 
 
-exports. checkStock = async (req, res) => {
+exports.checkStock = async (req, res) => {
     try {
         const userData = req.session.user;
         const userId = userData._id;
@@ -144,15 +143,17 @@ exports. checkStock = async (req, res) => {
         const cart = userCart.cart;
 
         let stock = [];
-
         cart.forEach((element) => {
-            if (element.product.stock - element.quantity <= 0) {
+            if ((element.product.stock - element.quantity) < 0) {
                 stock.push(element.product);
             }
         });
 
+        console.log("100,stock length from admin=", stock.length)
         if (stock.length > 0) {
             res.json(stock);
+            console.log("stock fromresponse:", stock)
+
         } else {
             res.json({ message: "In stock" });
         }
@@ -164,10 +165,12 @@ exports. checkStock = async (req, res) => {
 
 
 
-exports. loadCheckout = async (req, res) => {
+
+
+exports.loadCheckout = async (req, res) => {
 
     try {
-       
+
         const userData = req.session.user;
         const userId = userData._id;
         const categoryData = await Category.find({ is_blocked: false });
@@ -184,9 +187,9 @@ exports. loadCheckout = async (req, res) => {
         });
 
         cart.forEach((element) => {
-            if(element.product.oldPrice > 0){
-            element.offerDiscount = (element.product.oldPrice - element.product.price) * element.quantity;
-            offerDiscount += element.offerDiscount
+            if (element.product.oldPrice > 0) {
+                element.offerDiscount = (element.product.oldPrice - element.product.price) * element.quantity;
+                offerDiscount += element.offerDiscount
             }
         });
 
@@ -198,18 +201,18 @@ exports. loadCheckout = async (req, res) => {
         })
 
 
-        res.render("checkout", { 
-            userData, 
-            categoryData, 
-            addressData, 
+        res.render("checkout", {
+            userData,
+            categoryData,
+            addressData,
             walletBalance,
-            offerDiscount, 
+            offerDiscount,
             availableCoupons,
-            subTotal, 
-            cart, 
-            loggedIn:true,  
+            subTotal,
+            cart,
+            loggedIn: true,
         });
-        
+
     } catch (error) {
         console.log(error.message);
     }
@@ -244,21 +247,21 @@ exports.validateCoupon = async (req, res) => {
                 const discountValue = Number(discount);
                 const couponDiscount = (subTotal * discountValue) / 100;
 
-                if(couponDiscount < minDiscount){
+                if (couponDiscount < minDiscount) {
 
                     res.json("minimum value not met")
 
-                }else{
-                    if(couponDiscount > maxDiscount){
+                } else {
+                    if (couponDiscount > maxDiscount) {
                         discountAmount = maxDiscount
                         maximum = "maximum"
-                    }else{
+                    } else {
                         discountAmount = couponDiscount
                     }
-                    
+
                     const newTotal = subTotal - discountAmount;
                     const couponName = coupon;
-    
+
                     res.json({
                         couponName,
                         discountAmount,
@@ -266,8 +269,8 @@ exports.validateCoupon = async (req, res) => {
                         maximum
                     });
                 }
-                
-                
+
+
             }
         }
     } catch (error) {
@@ -277,72 +280,68 @@ exports.validateCoupon = async (req, res) => {
 
 
 
-exports. loadWishlist = async (req, res) => {
+exports.loadWishlist = async (req, res) => {
     const logged = req.session.user
-    if(req.session.user)
-    {
+    if (req.session.user) {
         try {
             console.log(600)
             const userData = req.session.user;
             const userId = userData._id;
             const categoryData = await Category.find({ is_blocked: false });
-    
+
             const user = await User.findById(userId).populate("wishlist");
             const wishlistItems = user.wishlist;
-    
+
             const userCart = await User.findOne({ _id: userId }).populate("cart.product").lean();
             const cart = userCart.cart;
-            walletBalance=userData.wallet.balance
+            walletBalance = userData.wallet.balance
             let subTotal = 0;
             cart.forEach((element) => {
                 element.total = element.product.price * element.quantity;
                 subTotal += element.total;
             });
-            if (wishlistItems.length === 0) 
-            {
-                res.render("emptyWishlist", { userData, logged,categoryData,walletBalance,cart ,subTotal});
-            } 
-            else 
-            {
-                res.render("wishlist", { userData, categoryData,logged, cart, wishlistItems,  walletBalance ,cart,subTotal});
+            if (wishlistItems.length === 0) {
+                res.render("emptyWishlist", { userData, logged, categoryData, walletBalance, cart, subTotal });
+            }
+            else {
+                res.render("wishlist", { userData, categoryData, logged, cart, wishlistItems, walletBalance, cart, subTotal });
             }
         } catch (error) {
             console.log(error.message);
         }
 
     }
-    
+
 };
 
 
-exports. addToWishlist = async (req, res) => {
+exports.addToWishlist = async (req, res) => {
     const logged = req.session.user
-    if(req.session.user)
-    {
+    if (req.session.user) {
         try {
 
             console.log("500")
             const userData = req.session.user;
             const userId = userData._id;
-            console.log("userid:",userId)
+            console.log("userid:", userId)
             const productId = req.query.productId;
-            console.log("productid:",productId)
+            console.log("productid:", productId)
             const cartId = req.query.cartId;
 
-            console.log(cartId,"cartid");
-    
+            console.log(cartId, "cartid");
+
             const existItem = await User.findOne({ _id: userId, wishlist: { $in: [productId] } });
-            console.log("existitem",existItem)
-    
+            console.log("existitem", existItem)
+
             if (!existItem) {
-                console.log(1,userId);
+                console.log(1, userId);
                 await User.updateOne({ _id: userId }, { $push: { wishlist: productId } });
-                console.log(2,productId);
+                console.log(2, productId);
                 await Product.updateOne({ _id: productId }, { isWishlisted: true });
-                console.log(3,productId);
+                console.log(3, productId);
                 await Product.findOneAndUpdate({ _id: productId }, { $set: { isOnCart: false } }, { new: true });
-                console.log(4,userId);
-                if(cartId != ""){
+                console.log(4, userId);
+                if (cartId != "") {
                     await User.updateOne({ _id: userId }, { $pull: { cart: { _id: cartId } } });
 
                 }
@@ -359,10 +358,10 @@ exports. addToWishlist = async (req, res) => {
             console.log(error.message);
         }
     }
-    
+
 };
 
-exports. addToCartFromWishlist = async (req, res) => {
+exports.addToCartFromWishlist = async (req, res) => {
     try {
         const userData = req.session.user;
         const userId = userData._id;
@@ -375,7 +374,7 @@ exports. addToCartFromWishlist = async (req, res) => {
         if (existed) {
             res.json({ message: "Product is already in cart!!" });
         } else {
-            await Product.findOneAndUpdate({_id:productId}, { isOnCart: true });
+            await Product.findOneAndUpdate({ _id: productId }, { isOnCart: true });
             await User.findByIdAndUpdate(
                 userId,
                 {
@@ -408,7 +407,7 @@ exports. addToCartFromWishlist = async (req, res) => {
 
 
 
-exports. removeWishlist = async (req, res) => {
+exports.removeWishlist = async (req, res) => {
     try {
         const userData = req.session.user;
         const userId = userData._id;

@@ -59,7 +59,7 @@
                                     <td class="quantity-box">
                                         <div class="input-group input-spinner size">
                                             <div class="input-group-prepend">
-                                                <button onclick="totalPrice('<%= item.product._id %>','dec')" style="min-width: 26px" class="btn btn-decrement btn-spinner" type="button">
+                                                <button onclick="totalPrice('<%= item.product._id %>','dec','<%= item.product.stock %>')" style="min-width: 26px" class="btn btn-decrement btn-spinner" type="button">
                                                     <i class="fi fi-rr-minus">-</i>
                                                 </button>
                                             </div>
@@ -113,8 +113,8 @@
                     </div>
                 </div>
                 <div class="col-12 d-flex shopping-box">
-                    <div class="col-12 d-flex shopping-box"><a href="/checkout" class="ml-auto btn hvr-hover">Checkout</a> </div>
-                    <!-- <button class="ml-auto btn hvr-hover" style=" color: white" onclick="proceedToCheckout()" >Check Out</button> -->
+                    <!-- <div class="col-12 d-flex shopping-box"><a href="/checkout" class="ml-auto btn hvr-hover">Checkout</a> </div> -->
+                    <button class="ml-auto btn hvr-hover" style=" color: white" onclick="proceedToCheckout()" >Check Out</button>
 
                 </div>
             </div>

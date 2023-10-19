@@ -56,6 +56,7 @@ exports.shop = async (req, res) => {
       {
         try 
         {
+          const productId = req.query.id;
           const userData = req.session.user
           const userId = userData._id;
           const user = await User.findOne({ _id: userId }).populate("cart.product").lean();

@@ -13,6 +13,7 @@ user_route.get('/',userController.homeload)
 user_route.get('/userhome',userController.userhomeload)
 user_route.get('/aboutus',userController.aboutus)
 user_route.get('/contactus',userController.contactus)
+user_route.get('/location',userController.location)
 
 
 //login
