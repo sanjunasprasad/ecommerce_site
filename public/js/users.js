@@ -293,6 +293,8 @@ const proceedToCheckout = async () => {
     }
 };
 
+
+
 ////////////////ADDRESS MANAGEMENT////////////////
 
 ///////////Add Address///////////

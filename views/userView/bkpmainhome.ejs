@@ -1,4 +1,5 @@
 
+
 <%-include('header')%>
 
 <body>
@@ -7,31 +8,51 @@
     <%-include('headsection')%>
 
     <!-- Start Slider -->
-   
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
-            <% bannerData.forEach(function(slides) { %>
             <li class="text-left">
-                <img src="<%= slides.image.url %>" alt="">
+                <img src="../assetu/images/bnr1.jpg" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong><%= slides.title %></strong></h1>
-                            <p class="m-b-40"><%= slides.description %>
-                                <br> </p>
-                            <p><a class="btn hvr-hover" href="#"><%= slides.subtitle %></a></p>
+                            <h1 class="m-b-20"><strong>Welcome To <br> AllSilks</strong></h1>
+                            <p class="m-b-40">Elegance Woven in Threads: Explore the Timeless Beauty of Silk Sarees!
+                                <br>Elevate Your Style and Embrace Tradition in Every Drape. </p>
+                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
                         </div>
                     </div>
                 </div>
             </li>
-            <% }) %>
+            <li class="text-center">
+                <img src="../assetu/images/bnr3.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br> AllSilks</strong></h1>
+                            <p class="m-b-40"> Elegance Woven in Threads: Explore the Timeless Beauty of Silk Sarees!<br> Elevate Your Style and Embrace Tradition in Every Drape .</p>
+                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-right">
+                <img src="../assetu/images/bnr2.jpg" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br> AllSilks</strong></h1>
+                            <p class="m-b-40">Elegance Woven in Threads: Explore the Timeless Beauty of Silk Sarees! <br> Elevate Your Style and Embrace Tradition in Every Drape.</p>
+                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
         </ul>
         <div class="slides-navigation">
             <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
             <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
         </div>
     </div>
-
     <!-- End Slider -->
 
     <!-- Start Categories  -->

@@ -10,8 +10,34 @@ exports.shop = async (req, res) => {
   const logged = req.session.user;
   const page = +req.query.page || 1;
   const searchQuery = req.query.q || ''; 
-
   try {
+
+
+    //filterdata
+    // const page = parseInt(req.query.allProductsPage) || 1; // Get the current page number from the query parameter
+    // const productsPerPage = 8;
+    // const categoryFilterData = await Category.find({ is_blocked: false });
+    // categoryFilterData.forEach(async (category, index) => {
+    // const productCount = await Product.countDocuments({ category: category._id });
+    // categoryFilterData[index].productCount = productCount;
+    //   });
+    //   let productData;
+
+    //   const search = req.query.search;
+
+    //   if (search) {
+    //       productData = await Product.find({
+    //           name: { $regex: ".*" + search + ".*", $options: "i" },
+    //       })
+    //           .skip((page - 1) * productsPerPage)
+    //           .limit(productsPerPage);
+    //   } else {
+    //       productData = await Product.find()
+    //           .skip((page - 1) * productsPerPage)
+    //           .limit(productsPerPage);
+    //   }
+
+    //search code
     let query = {};
     if (searchQuery) {
       query = {
@@ -22,6 +48,7 @@ exports.shop = async (req, res) => {
       };
     }
 
+    //pagination -->products,sort,search
     const totalProducts = await Product.countDocuments(query);
     const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
 
@@ -35,13 +62,13 @@ exports.shop = async (req, res) => {
       currentPage: page,
       totalPages,
       searchQuery,
+     
     });
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal Server Error');
   }
 };
-
 
 
 

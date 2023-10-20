@@ -164,9 +164,6 @@ exports.checkStock = async (req, res) => {
 
 
 
-
-
-
 exports.loadCheckout = async (req, res) => {
 
     try {

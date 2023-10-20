@@ -54,66 +54,26 @@
                     </form>
                   </div>
 
+                  <!-- filter area -->
                   <div class="filter-sidebar-left">
                       <div class="title-left"><h3>Filter</h3></div>
                       <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
                          <!-- subfilter -->
-                        <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Categories</a>
-                                    <a href="#" class="list-group-item list-group-item-action">Wedding Sarees </a>
-                                    <a href="#" class="list-group-item list-group-item-action">Festive Sarees </a>
-                                    <a href="#" class="list-group-item list-group-item-action">Partywear Sarees </a>
-                                    <a href="#" class="list-group-item list-group-item-action">Workwear Sarees </a>
-                                    <a href="#" class="list-group-item list-group-item-action">Onam Sarees  </a>
-                                    <a href="#" class="list-group-item list-group-item-action">Dailywear Sarees  </a>
-                        <!-- subfilter -->
-                        <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Material</a>   
-                        <a href="#" class="list-group-item list-group-item-action">Kanchipuram silk</a>    
-                        <a href="#" class="list-group-item list-group-item-action">Banarasi silk</a>
-                        <a href="#" class="list-group-item list-group-item-action">Cotton silk</a>
-                        <a href="#" class="list-group-item list-group-item-action">Mysore silk</a>
-                        <a href="#" class="list-group-item list-group-item-action">Georgette silk</a>
+                            <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Categories</a>
+                            <form id="categoryFilterForm">
+                                <label><input type="checkbox" name="category" value="Wedding Sarees"> Wedding Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="Festive Sarees"> Festive Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="Wedding Sarees"> Onam Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="Festive Sarees"> Party Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="Wedding Sarees"> Dailywear Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="Festive Sarees"> Workwear Sarees</label><br>
+                                <button type="button" class="ml-auto btn hvr-hover" style=" color: white" onclick="applyCategoryFilter()">Apply Filter</button>   
+                            </form>       
                       </div>
                   </div>
 
-
-
-                  <!-- <div class="filter-sidebar-left">
-                    <div class="title-left">
-                        <h3>Filter</h3>
-                    </div>
-                    <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
-                         subfilter 
-                        <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Categories</a>
-                        <div class="checkbox-group">
-                            <input type="checkbox" ">
-                            <label for="wedding-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Wedding Sarees</a></label>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="festive-sarees-checkbox">
-                            <label for="festive-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Festive Sarees</a></label>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="partywear-sarees-checkbox">
-                            <label for="partywear-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Partywear Sarees</a></label>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="workwear-sarees-checkbox">
-                            <label for="workwear-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Workwear Sarees</a></label>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="onam-sarees-checkbox">
-                            <label for="onam-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Onam Sarees</a></label>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="dailywear-sarees-checkbox">
-                            <label for="dailywear-sarees-checkbox"><a href="#" class="list-group-item list-group-item-action">Dailywear Sarees</a></label>
-                        </div>
-                        
-                    </div>
-                 </div> -->
-                
-                    <!-- price filter -->
-                  <div class="filter-price-left">
+                <!-- price filter -->
+                  <!-- <div class="filter-price-left">
                       <div class="title-left">
                           <h3>Price</h3>
                       </div>
@@ -124,7 +84,8 @@
                               <button class="btn hvr-hover" type="submit">Filter</button>
                           </p>
                       </div>
-                  </div>
+                  </div> -->
+                <!-- price filter ends-->
         </div>
     </div>
 
@@ -227,7 +188,7 @@
                           </div> 
                           <!-- single view ends -->
 
-<br>
+ <br>
  <!-- Pagination -->
  <% if (productData.length === 0) { %>
     <p>No search results found.</p>
@@ -248,11 +209,6 @@
         <% } %>
     </div>
 <% } %>
-
-                          
-                         
-
-
   
                         </div>
                    </div>
@@ -282,5 +238,12 @@
 <!-- Include SweetAlert JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
 <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+<script>
+    function applyCategoryFilter() {
+        const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value);
+        const queryString = `?page=1&q=${selectedCategories.join(',')}`;
+        window.location.href = `/shop${queryString}`;
+    }
+</script>
 
 

@@ -4,6 +4,7 @@ const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const Address = require("../models/addressmodel");
 const Order = require("../models/orderModel");
+const Banner = require('../models/bannerModel')
 
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
@@ -23,16 +24,43 @@ const securePassword = async (password) => {
 };
 
 //Main home+aboutus+userhome
-exports.homeload = (req, res) => {
+exports.homeload = async (req, res) => {
     const logged = req.session.user
-    if (req.session.user) {
-        res.render("mainhome", { logged })
+    if (req.session.user) 
+    {
+       
+        try
+        {
+
+            const bannerData = await Banner.find({ active: true });
+            console.log("banner",bannerData[0].image.url)
+             res.render("mainhome", { logged:true,bannerData,})
+        }
+        catch (error) 
+        {
+            console.log(error.message);
+        }   
+        
     }
-    else {
-        res.render("mainhome", { logged: null })
+    else 
+    {
+      
+        try
+        {
+
+            const bannerData = await Banner.find({ active: true });
+            console.log("banner",bannerData[0].image.url)
+             res.render("mainhome", { logged:null,bannerData, })
+        }
+        catch (error) 
+        {
+            console.log(error.message);
+        } 
     }
 
 }
+
+
 exports.userhomeload = (req, res) => {
     res.render("userhome")
 }
