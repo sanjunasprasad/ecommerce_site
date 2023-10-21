@@ -60,20 +60,21 @@
                       <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
                          <!-- subfilter -->
                             <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Categories</a>
-                            <form id="categoryFilterForm">
-                                <label><input type="checkbox" name="category" value="Wedding Sarees"> Wedding Sarees</label><br>
-                                <label><input type="checkbox" name="category" value="Festive Sarees"> Festive Sarees</label><br>
-                                <label><input type="checkbox" name="category" value="Wedding Sarees"> Onam Sarees</label><br>
-                                <label><input type="checkbox" name="category" value="Festive Sarees"> Party Sarees</label><br>
-                                <label><input type="checkbox" name="category" value="Wedding Sarees"> Dailywear Sarees</label><br>
-                                <label><input type="checkbox" name="category" value="Festive Sarees"> Workwear Sarees</label><br>
-                                <button type="button" class="ml-auto btn hvr-hover" style=" color: white" onclick="applyCategoryFilter()">Apply Filter</button>   
+                            <form action="/categoryFilter" method="GET">
+                                <label><input type="checkbox" name="category" value="wedding sarees" > Wedding Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="festive sarees" > Festive Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="onamsarees" > Onam Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="partywear sarees"> Partywear Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="dailywear sarees" > Dailywear Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="workwear sarees" > Workwear Sarees</label><br>
+                                <label><input type="checkbox" name="category" value="test Sarees" > test Sarees</label><br>
+                                <button type="submit" class="ml-auto btn hvr-hover" style=" color: white">Apply Filter</button>   
                             </form>       
                       </div>
                   </div>
 
                 <!-- price filter -->
-                  <!-- <div class="filter-price-left">
+                  <div class="filter-price-left">
                       <div class="title-left">
                           <h3>Price</h3>
                       </div>
@@ -84,7 +85,7 @@
                               <button class="btn hvr-hover" type="submit">Filter</button>
                           </p>
                       </div>
-                  </div> -->
+                  </div>
                 <!-- price filter ends-->
         </div>
     </div>
@@ -238,12 +239,6 @@
 <!-- Include SweetAlert JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
 <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
-<script>
-    function applyCategoryFilter() {
-        const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value);
-        const queryString = `?page=1&q=${selectedCategories.join(',')}`;
-        window.location.href = `/shop${queryString}`;
-    }
-</script>
+
 
 

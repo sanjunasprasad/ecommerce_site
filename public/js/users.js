@@ -603,6 +603,7 @@ const deleteAddress = async (addressId) => {
 
 //////////////// FILTER AND SORT MANAGEMENT ////////////////
 const filteredData = (data) => {
+    console.log("fffff")
     const productList = document.getElementById('productList');
     productList.innerHTML = ''; // Clear existing products
   
@@ -659,37 +660,41 @@ const filteredData = (data) => {
     }
 };
 
-  
-  const categoryFilter = async (categoryId) => {
-    const response = await fetch(`/categoryFilter?categoryId=${categoryId}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  
-    const data = await response.json();
-  
-    if (data.length > 0) {
-      filteredData(data);
-    } else {
-      const productList = document.getElementById('productList');
-      productList.innerHTML = `
-        <div class="products mb-3" id="productList">
-          <div class="row justify-content-center">
-            <div class="col-12">
-              <div class="alert alert-info text-center">No products found for the selected category.</div>
-            </div>
-          </div>
-        </div>
-      `;
+const categoryFilter = async (categories) => {
+    console.log("category filter called")
+    try {
+        const response = await fetch(`/categoryFilter?category=${categories.join(',')}`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const data = await response.json();
+
+        if (data.length > 0) {
+            console.log(11111)
+            filteredData(data);
+        } else {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = `
+                <div class="products mb-3" id="productList">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">No products found for the selected categories.</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error(error);
     }
-  };
+};
+
+
   
   
 const sortProducts = async()=>{
-
-    console.log("inside function");
-
     const selectElement = document.getElementById("sortOptions");
     const selectedValue = selectElement.value;
 

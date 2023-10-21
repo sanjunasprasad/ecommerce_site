@@ -52,10 +52,11 @@ exports. loadDashboard = async (req, res) => {
         totalSales += Number(data.totalOrders);
       });
   
+      console.log(" order by month:",ordersByMonth)
       const thisMonthOrder = ordersByMonth[ordersByMonth.length - 1];
-     
+       console.log("thismonth order:",thisMonthOrder)
       const thisMonthSales = revenueByMonth[revenueByMonth.length - 1];
-
+      console.log("thismonth sales:",thisMonthSales)
   
       res.render("dashboard", {
         user: req.session.admin,

@@ -29,12 +29,12 @@ user_route.get('/showOtp', isLogout,userController.showOtp) //send otp for verfi
 user_route.post('/otpEnter' ,isLogout,userController.verifyOtp); //otp postverfication
 
 //forgot 
-user_route.get('/forgotPassword',isLogout,userController.loadForgotPassword)
-user_route.post('/verifyEmail',isLogout,userController.verifyForgotpasswordEmail)
-user_route.get('/forgotOtpEnter',isLogout,userController.showForgotpasswordOtp)//forgot otp
-user_route.post('/verifyForgotOtp',isLogout,userController.verifyForgotOtp)
+user_route.get('/forgotPassword',isLogout,userController.loadForgotPassword)//forgot pw --> verify mail page to send otp
+user_route.post('/verifyEmail',isLogout,userController.verifyForgotpasswordEmail)//send otp and redirect to otp page
+user_route.get('/forgotOtpEnter',isLogout,userController.showForgotpasswordOtp)//otp page for setting forgot pw
+user_route.post('/verifyForgotOtp',isLogout,userController.verifyForgotOtp)//pw setting page
 user_route.get('/resendForgotPasswordotp', isLogout ,userController.resendForgotOtp)//forgot otp resend
-user_route.post('/newPassword',isLogout, userController.updatePassword)
+user_route.post('/newPassword',isLogout, userController.updatePassword)//if success go to login page
 
 //user side productview
 user_route.get("/shop",blockCheck, productController.shop)    

@@ -26,40 +26,46 @@ const securePassword = async (password) => {
 //Main home+aboutus+userhome
 exports.homeload = async (req, res) => {
     const logged = req.session.user
-    if (req.session.user) 
-    {
-       
-        try
-        {
+    if (req.session.user) {
+
+        try {
 
             const bannerData = await Banner.find({ active: true });
-            console.log("banner",bannerData[0].image.url)
-             res.render("mainhome", { logged:true,bannerData,})
+            console.log("banner", bannerData[0].image.url)
+            res.render("mainhome", { logged: true, bannerData, })
         }
-        catch (error) 
-        {
+        catch (error) {
             console.log(error.message);
-        }   
-        
+        }
+
     }
-    else 
-    {
-      
-        try
-        {
+    else {
+
+        try {
 
             const bannerData = await Banner.find({ active: true });
-            console.log("banner",bannerData[0].image.url)
-             res.render("mainhome", { logged:null,bannerData, })
+            // console.log("banner",bannerData[0].image.url)
+            res.render("mainhome", { logged: null, bannerData, })
         }
-        catch (error) 
-        {
+        catch (error) {
             console.log(error.message);
-        } 
+        }
     }
 
 }
 
+
+// exports.homeload = (req, res) => {
+//     const logged = req.session.user
+//     if (req.session.user) 
+//     {
+//         res.render("bkpmainhome",{logged})
+//     }
+//     else
+//     {
+//         res.render("bkpmainhome",{logged:null})
+//     }
+// }
 
 exports.userhomeload = (req, res) => {
     res.render("userhome")
@@ -81,7 +87,7 @@ exports.contactus = (req, res) => {
     else {
         res.render("contactus", { logged: null })
     }
-    
+
 }
 
 exports.location = (req, res) => {
@@ -92,7 +98,7 @@ exports.location = (req, res) => {
     else {
         res.render("location", { logged: null })
     }
-    
+
 }
 //render login page
 exports.loginload = async (req, res) => {
@@ -400,19 +406,37 @@ exports.verifyOtp = async (req, res) => {
 //********FORGOT SECTION **********//
 
 exports.loadForgotPassword = async (req, res) => {
-    try {
-        // const categoryData = await Category.find({ is_blocked: false });
+    const logged = req.session.user
+    if (req.session.user) {
+        try {
+            if (req.session.forgotEmailNotExist) {
 
-        if (req.session.forgotEmailNotExist) {
-
-            res.render("verifyEmail", { emailNotExist: "Sorry, email does not exist! Please register now!", });
-            req.session.forgotEmailNotExist = false;
-        } else {
-            res.render("verifyEmail", { loggedIn: false, });
+                res.render("verifyEmail", { emailNotExist: "Sorry, email does not exist! Please register now!", logged: true });
+                req.session.forgotEmailNotExist = false;
+            } else {
+                res.render("verifyEmail", { logged: true });
+            }
+        } catch (error) {
+            console.log(error.message);
         }
-    } catch (error) {
-        console.log(error.message);
     }
+    else {
+        try {
+
+            console.log(88888)
+            if (req.session.forgotEmailNotExist) {
+
+                res.render("verifyEmail", { emailNotExist: "Sorry, email does not exist! Please register now!", logged: null });
+                req.session.forgotEmailNotExist = false;
+            } else {
+                res.render("verifyEmail", { logged: null });
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    }
+
 };
 
 exports.verifyForgotpasswordEmail = async (req, res) => {
@@ -423,7 +447,7 @@ exports.verifyForgotpasswordEmail = async (req, res) => {
         if (ExistingEmail) {
             if (!forgotPasswordOtp) {
                 forgotPasswordOtp = generateOTP();
-                console.log("FORGOT password's OTP IS:", forgotPasswordOtp);
+                console.log("FORGOT PW OTP ISSSS:", forgotPasswordOtp);
                 email = verifyEmail;
                 sendForgotPasswordOtp(email, forgotPasswordOtp);
                 res.redirect("/forgotOtpEnter");
@@ -507,7 +531,7 @@ exports.resendForgotOtp = async (req, res) => {
     try {
         const generatedOtp = generateOTP();
         forgotPasswordOtp = generatedOtp;
-
+        console.log("********RESEND OTP:", forgotPasswordOtp)
         sendForgotPasswordOtp(email, generatedOtp);
         res.redirect("/forgotOtpEnter");
         setTimeout(() => {
@@ -614,7 +638,7 @@ exports.editaccountpost = async (req, res) => {
         },
             { new: true }
         );
-        
+
         console.log("updateddata:", updatedUser.phoneNumber)
         console.log("updateddata:", updatedUser.firstName)
         console.log("updateddata:", updatedUser.email)
