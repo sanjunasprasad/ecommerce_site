@@ -91,16 +91,16 @@ const validateCoupon = async () => {
             confirmButtonColor: "#4CAF50",
         });
     } else {
-        if(couponData.maximum === "maximum" ) {
+        if (couponData.maximum === "maximum") {
             Swal.fire({
                 icon: "success",
                 title: `"${coupon}" APPLIED SUCCESSFULLY!!`,
-                html:`<strong>Maximum discount </strong>for this coupon is <strong style="color: green;" >₹ ${couponData.discountAmount}</strong>, and you have reached the maximum discount limit!`,
+                html: `<strong>Maximum discount </strong>for this coupon is <strong style="color: green;" >₹ ${couponData.discountAmount}</strong>, and you have reached the maximum discount limit!`,
                 showConfirmButton: true,
                 confirmButtonText: "OK",
                 confirmButtonColor: "#4CAF50",
             });
-        }else{
+        } else {
             Swal.fire({
                 icon: "success",
                 title: `"${coupon}" APPLIED SUCCESSFULLY!!`,
@@ -111,12 +111,12 @@ const validateCoupon = async () => {
             });
         }
 
-         if (couponMessage) {
-    // The element with ID "couponMessage" is found in the DOM
-    if (couponData.maximum === "maximum") {
-      couponMessage.innerHTML = "Maximum Coupon Discount:";
-    }
-  }
+        if (couponMessage) {
+            // The element with ID "couponMessage" is found in the DOM
+            if (couponData.maximum === "maximum") {
+                couponMessage.innerHTML = "Maximum Coupon Discount:";
+            }
+        }
         // couponModel.style.display = "table-row";
         couponDiscount.innerHTML = `₹ ${couponData.discountAmount}`;
 
@@ -135,17 +135,17 @@ couponDelete = async () => {
 
     const result = await Swal.fire({
         title: `Do you want to remove the coupon "${coupon}"?`,
-        html:`By doing so, you will lose the discount amount <strong style="color: green;" >₹ ${couponData.discountAmount}</strong> associated with the coupon. Please confirm your decision`,
+        html: `By doing so, you will lose the discount amount <strong style="color: green;" >₹ ${couponData.discountAmount}</strong> associated with the coupon. Please confirm your decision`,
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33", 
+        cancelButtonColor: "#d33",
         confirmButtonText: 'Yes, Remove',
         cancelButtonText: 'DISMISS'
-        
+
     });
 
-    if(result.value){
+    if (result.value) {
 
         const couponModel = document.getElementById("couponModel");
         const subTotalText = document.getElementById("subTotalText");
@@ -170,7 +170,7 @@ couponDelete = async () => {
             confirmButtonColor: "#4CAF50",
         });
     }
-    
+
 }
 
 
@@ -223,10 +223,10 @@ paymentRadios.forEach((radio) => {
 
 
 function handleAddressSelection() {
-    
+
     const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
     const selectedPayment = document.querySelector(".payment-radio:checked");
-    
+
 
     if (selectedAddress && selectedPayment) {
         placeOrderBtn.disabled = false;
@@ -239,37 +239,37 @@ function handleAddressSelection() {
 
 /////////// Order Management ///////////
 
-async function placeOrder(){
+async function placeOrder() {
     try {
-         
+
         const selectedPayment = document.querySelector(".payment-radio:checked").value;
-        console.log(244,selectedPayment);   
-        if(selectedPayment === "Cash On Delivery"){
+        console.log(244, selectedPayment);
+        if (selectedPayment === "Cash On Delivery") {
             cashOnDelivery(selectedPayment)
         }
-        else if(selectedPayment === "Razorpay"){
+        else if (selectedPayment === "Razorpay") {
             razorpay(selectedPayment)
-            console.log(245);   
+            console.log(245);
         }
-        else if(selectedPayment === 'Wallet'){
+        else if (selectedPayment === 'Wallet') {
             wallet(selectedPayment)
             console.log("its 244,wallet")
         }
 
-        
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
 
-const cashOnDelivery = async(selectedPayment, updatedBalance)=>{
+const cashOnDelivery = async (selectedPayment, updatedBalance) => {
     try {
 
         const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
         const subTotal = Number(document.getElementById('subTotalValue').value)
-        
-        const response = await fetch('/placeOrder',{
+
+        const response = await fetch('/placeOrder', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -282,43 +282,43 @@ const cashOnDelivery = async(selectedPayment, updatedBalance)=>{
                 amount: subTotal,
                 walletBalance: updatedBalance,
                 couponData: couponData,
-                
-              })
+
+            })
         })
 
-        
+
 
         const orderConfirmData = await response.json()
 
-        if(orderConfirmData.order ===  "Success"){
+        if (orderConfirmData.order === "Success") {
 
             window.location.href = '/orderSuccess'
-            
 
-        }       
-        
+
+        }
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
 
-const razorpay = async (selectedPayment)=>{
+const razorpay = async (selectedPayment) => {
     try {
 
         console.log("razorpay reached")
         const subTotal = Number(document.getElementById('subTotalValue').value)
-        console.log("subtotal from razorpay:",subTotal)
+        console.log("subtotal from razorpay:", subTotal)
         var options = {
-            
-            "key": "rzp_test_O9K7l3TCg65Dt6" ,// Enter the Key ID generated from the Dashboard
+
+            "key": "rzp_test_O9K7l3TCg65Dt6",// Enter the Key ID generated from the Dashboard
             "amount": subTotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
             "name": "All Silks",
             "description": "Order payment",
             "image": "../assetu/images/logo.png",
             "order_id": undefined, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "handler": function (response){
+            "handler": function (response) {
                 cashOnDelivery(selectedPayment)
                 console.log(response);
             },
@@ -328,35 +328,35 @@ const razorpay = async (selectedPayment)=>{
         }
 
         var rzp1 = new Razorpay(options);
-        
+
         rzp1.open();
-        
+
     } catch (error) {
         console.log(error.message)
     }
 }
 
 
-const wallet = async(selectedPayment)=>{
+const wallet = async (selectedPayment) => {
     try {
 
         console.log("wallet reached")
         const balance = document.getElementById('userWallet').value
-        console.log("balance from wallet:",balance)
+        console.log("balance from wallet:", balance)
         const subTotal = Number(document.getElementById('subTotalValue').value)
-        console.log("subtotal from wallet:",subTotal)
+        console.log("subtotal from wallet:", subTotal)
         const insufficientBalanceAlert = document.getElementById('insufficientBalanceAlert');
 
 
-        if(balance > subTotal){
+        if (balance > subTotal) {
             const updatedBalance = balance - subTotal
-            cashOnDelivery(selectedPayment, updatedBalance )
-        }else{
+            cashOnDelivery(selectedPayment, updatedBalance)
+        } else {
             insufficientBalanceAlert.classList.remove('d-none');
             insufficientBalanceAlert.classList.add('d-flex');
         }
 
-        
+
     } catch (error) {
         console.log(error.message);
     }
@@ -372,7 +372,7 @@ window.addEventListener("load", function () {
 });
 
 const closeButton = document.querySelector(".btn-close");
-if(closeButton){
+if (closeButton) {
     closeButton.addEventListener("click", function () {
         const insufficientBalanceAlert = document.getElementById("insufficientBalanceAlert");
         insufficientBalanceAlert.classList.remove("d-flex");
@@ -471,7 +471,7 @@ function getStatusColor(status) {
 
 /////////// Order cancel and Return ///////////
 
-const returnOrder = async()=>{
+const returnOrder = async () => {
 
     const orderId = document.getElementById('orderId').value
 
@@ -481,70 +481,70 @@ const returnOrder = async()=>{
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33", 
+        cancelButtonColor: "#d33",
         confirmButtonText: 'Yes, Return',
         cancelButtonText: 'DISMISS'
-        
+
     });
 
-    if(result.value){
+    if (result.value) {
         updateOrder(orderId, "Returned")
     }
 }
 
 
-const cancelOrder = async()=>{
-   
+const cancelOrder = async () => {
+
     const orderId = document.getElementById('orderId').value
-     console.log("order id",orderId)
+    console.log("order id", orderId)
     const result = await Swal.fire({
         title: `Do you want to cancel this order?`,
         text: "For further assistance,\n contact our customer support team.\n We're here to help!",
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33", 
+        cancelButtonColor: "#d33",
         confirmButtonText: 'Yes, Cancel',
         cancelButtonText: 'DISMISS'
-        
-    });
-    console.log("result value:",result.value)
 
-    if(result.value){
+    });
+    console.log("result value:", result.value)
+
+    if (result.value) {
         updateOrder(orderId, "Cancelled")
     }
 }
 
-const updateOrder = async (orderId, orderStatus)=>{
+const updateOrder = async (orderId, orderStatus) => {
     try {
-          
-          console.log("orderid from updateorderjs:",orderId)
+
+        console.log("orderid from updateorderjs:", orderId)
         const walletBalance = Number(document.getElementById('userWallet').value)
         console.log(`.....${walletBalance}`);
         const grandTotal = Number(document.getElementById('grandTotal').value)
-        console.log("total:",grandTotal);
+        console.log("total:", grandTotal);
 
-        const updatedBalance =  walletBalance+grandTotal
-        console.log("updated balance",updatedBalance)
+        const updatedBalance = walletBalance + grandTotal
+        console.log("updated balance", updatedBalance)
         const paymentMethod = document.getElementById('paymentMethod').innerHTML
-        const response = await fetch(`/updateOrder?orderId=${orderId}`,{
-            method:'POST',
+        const response = await fetch(`/updateOrder?orderId=${orderId}`, {
+            method: 'POST',
             headers: {
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json'
             },
-            body:JSON.stringify({
+            body: JSON.stringify({
                 orderStatus: orderStatus,
                 paymentMethod: paymentMethod,
                 wallet: updatedBalance,
                 total: grandTotal
             })
         })
-       
+
         const data = await response.json()
 
         const orderStatusBtn = document.getElementById('orderStatusBtn')
-        console.log("statusbtn:",orderStatusBtn)
-        if(data.message === "Cancelled"){
+        console.log("statusbtn:", orderStatusBtn)
+        if (data.message === "Cancelled") {
             const result = await Swal.fire({
                 position: "center",
                 icon: "success",
@@ -554,7 +554,7 @@ const updateOrder = async (orderId, orderStatus)=>{
                 confirmButtonColor: "#00A300",
             });
 
-            if(result.value){
+            if (result.value) {
 
                 console.log(data.refund)
 
@@ -562,18 +562,18 @@ const updateOrder = async (orderId, orderStatus)=>{
                 expectedDate.classList.add("d-none")
 
 
-                orderStatusBtn.innerHTML= `<p class="disabled btn-product btn-cart icon-info-circle"><span>Order Cancelled</span></p>`
-                
-                    if(data.refund === "Refund"){
-                        const refundMessage = document.getElementById('refundMessage');
-                        refundMessage.classList.remove('d-none');
-                    }else{
-                        const refundMessage = document.getElementById("refundMessage");
-                        refundMessage.classList.add("d-none");
-                    }
+                orderStatusBtn.innerHTML = `<p class="disabled btn-product btn-cart icon-info-circle"><span>Order Cancelled</span></p>`
+
+                if (data.refund === "Refund") {
+                    const refundMessage = document.getElementById('refundMessage');
+                    refundMessage.classList.remove('d-none');
+                } else {
+                    const refundMessage = document.getElementById("refundMessage");
+                    refundMessage.classList.add("d-none");
+                }
             }
 
-        }else if(data.message === "Returned"){
+        } else if (data.message === "Returned") {
             const result = await Swal.fire({
                 position: "center",
                 icon: "success",
@@ -583,24 +583,24 @@ const updateOrder = async (orderId, orderStatus)=>{
                 confirmButtonColor: "#00A300",
             });
 
-            if(result.value){
+            if (result.value) {
 
                 const expectedDate = document.getElementById('expectedDate')
                 expectedDate.classList.add("d-none")
 
-                orderStatusBtn.innerHTML=`<p  class="disabled btn-product btn-cart icon-info-circle"><span>Order Returned</span></p>`
+                orderStatusBtn.innerHTML = `<p  class="disabled btn-product btn-cart icon-info-circle"><span>Order Returned</span></p>`
 
-                if(data.refund === "Refund"){
+                if (data.refund === "Refund") {
                     const refundMessage = document.getElementById('refundMessage');
                     refundMessage.classList.remove('d-none');
-                }else{
+                } else {
                     const refundMessage = document.getElementById("refundMessage");
                     refundMessage.classList.add("d-none");
                 }
             }
 
         }
-        
+
     } catch (error) {
         console.log(error.message);
     }
@@ -609,12 +609,12 @@ const updateOrder = async (orderId, orderStatus)=>{
 
 
 
-const downloadInvoice = async (orderId)=>{
+const downloadInvoice = async (orderId) => {
     try {
 
-        const response = await fetch(`/downloadInvoice?orderId=${orderId}`,{
-            method:'GET',
-            headers:{
+        const response = await fetch(`/downloadInvoice?orderId=${orderId}`, {
+            method: 'GET',
+            headers: {
                 'Content-Type': 'application/pdf'
             }
         })
@@ -625,9 +625,9 @@ const downloadInvoice = async (orderId)=>{
         link.href = url
         link.download = "Order-Invoice.pdf"
         link.click()
-        
+
         URL.revokeObjectURL(url)
-        
+
     } catch (error) {
         console.log(error.message);
     }

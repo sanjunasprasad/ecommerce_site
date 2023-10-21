@@ -2,33 +2,33 @@ const mongoose = require('mongoose')
 
 const bannerSchema = new mongoose.Schema({
 
-    title:{
+    title: {
         type: String,
         required: true
     },
 
-    subtitle:{
+    subtitle: {
         type: String,
         required: true
     },
 
-    image:{
-        public_id:{
+    image: {
+        public_id: {
             type: String,
             required: true
         },
-        url:{
+        url: {
             type: String,
-            required:true
+            required: true
         }
     },
 
-    label:{
+    label: {
         type: String,
         required: true
     },
 
-    active:{
+    active: {
         type: Boolean,
         default: true
     }

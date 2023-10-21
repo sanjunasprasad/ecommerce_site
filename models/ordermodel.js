@@ -9,15 +9,15 @@ const orderSchema = new mongoose.Schema({
     },
     product: [
         {
-          id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-          name: { type: String },
-          category: { type: String  },
-          subCategory: { type: String  },
-          price: { type: Number },
-          oldPrice: { type: Number },
-          quantity: { type: Number },
-          image: { type: String },
-          address: { type: Object },
+            id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+            name: { type: String },
+            category: { type: String },
+            subCategory: { type: String },
+            price: { type: Number },
+            oldPrice: { type: Number },
+            quantity: { type: Number },
+            image: { type: String },
+            address: { type: Object },
         },
     ],
     address: {
@@ -45,28 +45,28 @@ const orderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    ExpectedDeliveryDate:{
+    ExpectedDeliveryDate: {
         type: Date
     },
-    deliveredDate:{
+    deliveredDate: {
         type: Date
     },
-    returnEndDate:{
-        type:Date,
+    returnEndDate: {
+        type: Date,
     },
-    offerDiscount:{
-        type:Number,
+    offerDiscount: {
+        type: Number,
         default: 0
     },
-    discountAmount:{
-        type:Number,
+    discountAmount: {
+        type: Number,
         default: 0
     },
-    amountAfterDiscount:{
-        type:Number
+    amountAfterDiscount: {
+        type: Number
     },
-    couponName:{
-        type:String,
+    couponName: {
+        type: String,
         default: "NIL"
     }
 })

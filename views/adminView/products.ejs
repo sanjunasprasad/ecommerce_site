@@ -1,118 +1,135 @@
 <%-include('adminhead')%>
-<style>
-    .nav-6 h2 a {
-        color: black;
-    }
-</style>
+    <style>
+        .nav-6 h2 a {
+            color: black;
+        }
+    </style>
 
-<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="row">
+            <div id="user_search">
+                <div class="col-lg-6">
+
+                    <div id="catMsg">
+                        <h5 style="color: #4CAF50;">
+                            <%= productUpdated %>
+                        </h5>
+                        <h5 id="noResultsFound">no results found!!</h5>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div id="search">
+                        <input type="search" placeholder="Search Products" aria-label="Search" />
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
     <div class="row">
-        <div id="user_search">
-            <div class="col-lg-6">
-
-                <div id="catMsg">
-                    <h5 style="color: #4CAF50;"><%= productUpdated %></h5>
-                    <h5 id="noResultsFound">no results found!!</h5>
-
-                </div>
+        <div class="col-lg-10 m-auto">
+            <div class="table-container">
+                <table class="table table-hover mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">NO</th>
+                            <th scope="col">IMAGE</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">CATEGORY</th>
+                            <th scope="col">PRICE</th>
+                            <th scope="col">QUANTITY</th>
+                            <th scope="col">DESCRIPTION</th>
+                            <th scope="col">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% productData.forEach(function(product, adjindex) { %>
+                            <% var index=adjindex + 1; %>
+                                <tr>
+                                    <td scope="row">
+                                        <%= index %>
+                                    </td>
+                                    <td>
+                                        <img style="width: 80px; height: 80px;" src="<%= product.imageUrl[0].url %>"
+                                            alt="Product Image">
+                                    </td>
+                                    <td class="name-Cell" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                        title="<%= product.name %>">
+                                        <%= product.name %>
+                                    </td>
+                                    <td>
+                                        <%= product.category.category %>
+                                    </td>
+                                    <td>₹ <%= product.price %>
+                                    </td>
+                                    <td>
+                                        <%= product.stock %>
+                                    </td>
+                                    <td class="description-Cell" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                        title="%= product.description %>">
+                                        <%= product.description %>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/updateProduct/<%= product._id %>"
+                                            class="btn btn-sm btn-primary">Update</a>
+                                        <button value="<%= product._id %>"
+                                            class="productDeleteBtn btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                    </tbody>
+                </table>
             </div>
 
-            <div class="col-lg-6">
+            <div class="row mt-2">
+                <div class="col-lg-7 ">
 
-                <div id="search">
-                    <input type="search" placeholder="Search Products" aria-label="Search" />
+
+                    <div class="d-flex justify-content-end">
+                        <a href="/admin/addProduct"><button class="btn btn-primary add_user" id="addUser">Add
+                                Product</button></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+
+                    <div class="d-flex justify-content-end">
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-sm">
+                                <% if (totalPages> 1) { %>
+                                    <% for (let i=1; i <=totalPages; i++) { %>
+                                        <% if (i===currentPage) { %>
+                                            <li class="page-item active" aria-current="page">
+                                                <span class="page-link">
+                                                    <%= i %>
+                                                </span>
+                                            </li>
+                                            <% } else { %>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page=<%= i %>">
+                                                        <%= i %>
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <% } %>
+                                                        <% } %>
+                            </ul>
+                        </nav>
+                    </div>
+
                 </div>
 
             </div>
-
         </div>
     </div>
-</div>
-</div>
-</div>
 
 
-<div class="row">
-    <div class="col-lg-10 m-auto">
-        <div class="table-container">
-            <table class="table table-hover mt-4">
-                <thead>
-                    <tr>
-                        <th scope="col">NO</th>
-                        <th scope="col">IMAGE</th>
-                        <th scope="col">NAME</th>
-                        <th scope="col">CATEGORY</th>   
-                        <th scope="col">PRICE</th>
-                        <th scope="col">QUANTITY</th>
-                        <th scope="col">DESCRIPTION</th>
-                        <th scope="col">ACTION</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% productData.forEach(function(product, adjindex) { %>
-                        <% var index = adjindex + 1; %>
-                    <tr>
-                        <td scope="row"><%= index %></td>
-                        <td>
-                            <img style="width: 80px; height: 80px;" src="<%= product.imageUrl[0].url %>"
-                                alt="Product Image">
-                        </td>
-                        <td class="name-Cell" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="<%= product.name %>">
-                            <%= product.name %>   
-                        </td>
-                        <td><%= product.category.category %></td>
-                        <td>₹ <%= product.price %> </td>
-                        <td><%= product.stock %></td>
-                        <td class="description-Cell" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="%= product.description %>"><%= product.description %></td>
-                        <td>
-                            <a href="/admin/updateProduct/<%= product._id %>" class="btn btn-sm btn-primary">Update</a>
-                            <button value="<%= product._id %>" class="productDeleteBtn btn btn-sm btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <% }); %>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="row mt-2">
-            <div class="col-lg-7 ">
-
-
-                <div class="d-flex justify-content-end">
-                    <a href="/admin/addProduct"><button class="btn btn-primary add_user" id="addUser">Add
-                            Product</button></a>
-                </div>
-            </div>
-
-            <div class="col-lg-5">
-
-                <div class="d-flex justify-content-end">
-                    <nav aria-label="...">
-                        <ul class="pagination pagination-sm">
-                            <% if (totalPages > 1) { %>
-                                <% for (let i = 1; i <= totalPages; i++) { %>
-                                <% if (i === currentPage) { %>
-                            <li class="page-item active" aria-current="page">
-                                <span class="page-link"><%= i %></span>
-                            </li>
-                            <% } else { %>
-                            <li class="page-item">
-                                <a class="page-link" href="?page=<%= i %>"><%= i %></a>
-                            </li>
-                            <% } %>
-                            <% } %>
-                            <% } %>
-                        </ul>
-                    </nav>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<%-include('adminfoot')%>
+    <%-include('adminfoot')%>

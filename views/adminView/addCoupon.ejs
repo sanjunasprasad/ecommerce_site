@@ -1,58 +1,58 @@
 <%- include('adminhead') %>
 
-<style>
-    form {
-        display: flex;
-        flex-direction: column;
-        margin-top: 30px;
-        margin-left: 1rem;
-    }
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+            margin-left: 1rem;
+        }
 
-    input[type="text"],
-    input[type="number"],
-    input[type="date"]{
-        margin-bottom: 20px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        max-width: 400px;
-    }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
 
 
-    button {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: bold;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        max-width: 400px;
-        margin-bottom: 2rem;
-    }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
 
-    button:hover {
-        background-color: #3e8e41;
-    }
+        button:hover {
+            background-color: #3e8e41;
+        }
 
-   
 
-    .container {
-        border-radius: 20px;
-        border: 1px solid black;
-        margin-left: 7.9rem;
-        background-color: #2e92a9;
-        color: white;
-        width: 55%;
 
-        margin-bottom: 2rem
-    }
-</style>
+        .container {
+            border-radius: 20px;
+            border: 1px solid black;
+            margin-left: 7.9rem;
+            background-color: #2e92a9;
+            color: white;
+            width: 55%;
+
+            margin-bottom: 2rem
+        }
+    </style>
 
 
 
@@ -62,8 +62,8 @@
 
     <div class="container" id="addCategory">
         <h1>Add New Coupon</h1>
-    
-      
+
+
         <form id="addCoupon">
 
             <div class="row">
@@ -77,10 +77,12 @@
 
             <div class="row">
                 <div class="col-lg-6">
-                    <input type="number" placeholder="Enter minimum discount amount" id="minDiscount" name="minDiscount">
+                    <input type="number" placeholder="Enter minimum discount amount" id="minDiscount"
+                        name="minDiscount">
                 </div>
                 <div class="col-lg-6">
-                    <input type="number" placeholder="Enter maximum discount amount" id="maxDiscount" name="maxDiscount">
+                    <input type="number" placeholder="Enter maximum discount amount" id="maxDiscount"
+                        name="maxDiscount">
                 </div>
             </div>
 
@@ -89,16 +91,16 @@
                     <input type="date" placeholder="Expiry Date" id="couponDate" name="couponDate" required>
                 </div>
             </div>
-            
+
 
             <button type="submit">ADD COUPON</button>
         </form>
     </div>
 
-   </div>
-  </div>
+    </div>
+    </div>
 
 
-</div>
+    </div>
 
-<%- include('adminfoot') %>
+    <%- include('adminfoot') %>

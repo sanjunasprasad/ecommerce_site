@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 
 const produtSchema = new mongoose.Schema({
- 
+
     name: {
         type: String,
         required: true
@@ -24,37 +24,37 @@ const produtSchema = new mongoose.Schema({
         required: true
     },
 
-    imageUrl:[{
-        public_id:{
+    imageUrl: [{
+        public_id: {
             type: String,
             required: true
         },
-        url:{
+        url: {
             type: String,
-            required:true
+            required: true
         }
     }],
-    
-    stock:{
-        type:Number,
-        required:true
+
+    stock: {
+        type: Number,
+        required: true
     },
 
-    isOnCart:{
-        type:Boolean,
-        default:false
+    isOnCart: {
+        type: Boolean,
+        default: false
     },
 
-    isWishlisted:{
-        type:Boolean,
-        default:false
+    isWishlisted: {
+        type: Boolean,
+        default: false
     },
-    offerlabel:{
+    offerlabel: {
         type: Array,
         default: []
     },
 
-    oldPrice:{
+    oldPrice: {
         type: Number,
         default: 0
     }

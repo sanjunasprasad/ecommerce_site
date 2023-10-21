@@ -1,160 +1,164 @@
 <%-include('header')%>
-<body>
-    <style>
 
-.ec-login-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 70vh; /* This ensures the container takes up the full viewport height */
-}
-        
-   
-
-.ec-login-box {
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-
-
-.ec-login-box label {
-    font-weight: bold;
-}
-
-.ec-login-box input[type="email"],
-.ec-login-box input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-.txt
-{
-    color:white;
-    border-radius: 5px;
-}
-
-
-/* Add any other styles you need */
-
-
-    </style>
-    <%-include('headsection_login')%>
-
-    <!-- Ec login page -->
-    <section class="ec-page-content section-space-p">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-12 text-center">
-                  <div class="section-title">
-                      
-                  
-                  </div>
-              </div>
-              <div class="ec-login-wrapper">
-               
-                  <div class="ec-login-container">
-                    <div class="ec-login-box">
-                      <div class="ec-login-form">
-                       
-                          <form id="loginForm">
-                            <h2 class="ec-bg-title text-center">Log In </h2>
-                              <span class="ec-login-wrap">
-                                  <label>Email Address*</label>
-                                  <input type="email" name="email" placeholder="Enter your email address " required  />
-                                  <p id="emailError" class="p-1 text-danger"></p>
-                                </span>
-                              <span class="ec-login-wrap">
-                                  <label>Password*</label>
-                                  <input type="password" name="password" placeholder="Enter your password" />
-                                  <p id="passwordError" class="p-1 text-danger"></p>
-                              </span>
-                              <span class="ec-login-wrap ec-login-fp">
-                                  <label><a href="/forgotPassword">Forgot Password?</a></label>
-                              </span>
-                           
-                           
-                              <h3 id="accountBlock" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="text-danger text-decoration"></h3>
-                            
-                              <span class="ec-login-wrap ec-login-btn">
-                                  <button class="ml-auto btn hvr-hover txt" type="submit" id="submit">submit</button>
-                               
-                              </span>
-                             <br>
-                        <div class="member">
-                          Note a member?
-                          <a class="ml-auto btn hvr-hover txt " href="/register">Signup Now!!</a>
-                      </div>
-                          </form>
-                      </div>
-                    </div>
-                  
-                 </div>
-              </div>
-          </div>
-      </div>
-  </section>
-  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-
-  <script>
-    
-        const handleSubmit = async (event) => {
-            event.preventDefault();
-           
-            const formData = new FormData(event.target);
-            
-           
-            try {
-                const response = await axios.post('/login',formData, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                
-
-                if (response.status === 200) {
-                    window.location.href = '/userhome'
-                }
-            } catch (error) {
-                console.log(error);
-
-                if (error.response.status == 400) {
-                    const errors = error.response.data.error;
-                    Object.keys(errors).forEach((key) => {
-                        let element = document.getElementById(key).textContent = errors[key];
-                    });
-                } else if (error.response.status == 401) {
-                    document.getElementById('emailError').textContent = error.response.data.error;
-                }
-                else if (error.response.status == 409) {
-                    document.getElementById('passwordError').textContent = error.response.data.error;
-                }else if(error.response.status==402){
-                    document.getElementById('accountBlock').textContent = error.response.data.error;
-
-                }
-                else {
-                    alert("something went wrong");
-                }
-
+    <body>
+        <style>
+            .ec-login-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 70vh;
+                /* This ensures the container takes up the full viewport height */
             }
-        };
 
-        document.getElementById('loginForm').addEventListener('submit', handleSubmit);
 
-                              function togglePasswordVisibility() {
-                                const passwordField = document.getElementById("password");
-                                if (passwordField.type === "password") {
-                                  passwordField.type = "text";
-                                } else {
-                                  passwordField.type = "password";
-                                }
-                              }
-                         
-</script>
- 
-<%-include('footer')%>
+
+            .ec-login-box {
+                background-color: #fff;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+
+
+            .ec-login-box label {
+                font-weight: bold;
+            }
+
+            .ec-login-box input[type="email"],
+            .ec-login-box input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .txt {
+                color: white;
+                border-radius: 5px;
+            }
+
+
+            /* Add any other styles you need */
+        </style>
+        <%-include('headsection_login')%>
+
+            <!-- Ec login page -->
+            <section class="ec-page-content section-space-p">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="section-title">
+
+
+                            </div>
+                        </div>
+                        <div class="ec-login-wrapper">
+
+                            <div class="ec-login-container">
+                                <div class="ec-login-box">
+                                    <div class="ec-login-form">
+
+                                        <form id="loginForm">
+                                            <h2 class="ec-bg-title text-center">Log In </h2>
+                                            <span class="ec-login-wrap">
+                                                <label>Email Address*</label>
+                                                <input type="email" name="email" placeholder="Enter your email address "
+                                                    required />
+                                                <p id="emailError" class="p-1 text-danger"></p>
+                                            </span>
+                                            <span class="ec-login-wrap">
+                                                <label>Password*</label>
+                                                <input type="password" name="password"
+                                                    placeholder="Enter your password" />
+                                                <p id="passwordError" class="p-1 text-danger"></p>
+                                            </span>
+                                            <span class="ec-login-wrap ec-login-fp">
+                                                <label><a href="/forgotPassword">Forgot Password?</a></label>
+                                            </span>
+
+
+                                            <h3 id="accountBlock"
+                                                style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+                                                class="text-danger text-decoration"></h3>
+
+                                            <span class="ec-login-wrap ec-login-btn">
+                                                <button class="ml-auto btn hvr-hover txt" type="submit"
+                                                    id="submit">submit</button>
+
+                                            </span>
+                                            <br>
+                                            <div class="member">
+                                                Note a member?
+                                                <a class="ml-auto btn hvr-hover txt " href="/register">Signup Now!!</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+            <script>
+
+                const handleSubmit = async (event) => {
+                    event.preventDefault();
+
+                    const formData = new FormData(event.target);
+
+
+                    try {
+                        const response = await axios.post('/login', formData, {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+
+
+                        if (response.status === 200) {
+                            window.location.href = '/userhome'
+                        }
+                    } catch (error) {
+                        console.log(error);
+
+                        if (error.response.status == 400) {
+                            const errors = error.response.data.error;
+                            Object.keys(errors).forEach((key) => {
+                                let element = document.getElementById(key).textContent = errors[key];
+                            });
+                        } else if (error.response.status == 401) {
+                            document.getElementById('emailError').textContent = error.response.data.error;
+                        }
+                        else if (error.response.status == 409) {
+                            document.getElementById('passwordError').textContent = error.response.data.error;
+                        } else if (error.response.status == 402) {
+                            document.getElementById('accountBlock').textContent = error.response.data.error;
+
+                        }
+                        else {
+                            alert("something went wrong");
+                        }
+
+                    }
+                };
+
+                document.getElementById('loginForm').addEventListener('submit', handleSubmit);
+
+                function togglePasswordVisibility() {
+                    const passwordField = document.getElementById("password");
+                    if (passwordField.type === "password") {
+                        passwordField.type = "text";
+                    } else {
+                        passwordField.type = "password";
+                    }
+                }
+
+            </script>
+
+            <%-include('footer')%>

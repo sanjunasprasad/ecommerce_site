@@ -2,48 +2,48 @@ const mongoose = require('mongoose')
 
 const addressSchema = new mongoose.Schema({
 
-    userId:{
+    userId: {
         type: String,
         required: true
     },
 
-    name:{
+    name: {
         type: String,
         required: true
     },
 
-    mobile:{
+    mobile: {
         type: Number,
         required: true
     },
 
-    addressLine:{
+    addressLine: {
         type: String,
         required: true
     },
 
-    city:{
+    city: {
         type: String,
         required: true
     },
 
-    email:{
-        type: String,
-        required:true
-    },
-
-    state:{
+    email: {
         type: String,
         required: true
     },
 
-    pincode:{
+    state: {
+        type: String,
+        required: true
+    },
+
+    pincode: {
         type: Number,
         required: true
     },
 
-    is_default:{
-        type:Boolean,
+    is_default: {
+        type: Boolean,
         required: true
     }
 })

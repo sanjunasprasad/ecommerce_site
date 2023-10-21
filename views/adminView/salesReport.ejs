@@ -10,7 +10,7 @@
   <link rel="icon" href="/images/logo/logo.png" type="image/x-icon">
   <meta name="robots" content="noindex,nofollow" />
   <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
-  
+
   <style>
     @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
@@ -137,8 +137,8 @@
     </tr>
     <tr>
       <td>
-        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-          bgcolor="#ffffff" style="border-radius: 10px 10px 0 0;">
+        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff"
+          style="border-radius: 10px 10px 0 0;">
           <tr class="hiddenMobile">
             <td height="40"></td>
           </tr>
@@ -155,8 +155,8 @@
                       <table width="220" border="0" cellpadding="0" cellspacing="0" align="left" class="col">
                         <tbody>
                           <tr>
-                            <td align="left"> <img src="images\logo\logo.png" width="50"
-                                height="19" style="margin-top: 8px;" alt="logo" border="0" /></td>
+                            <td align="left"> <img src="images\logo\logo.png" width="50" height="19"
+                                style="margin-top: 8px;" alt="logo" border="0" /></td>
                           </tr>
                           <tr class="hiddenMobile">
                             <td height="40"></td>
@@ -165,9 +165,14 @@
                             <td height="20"></td>
                           </tr>
                           <tr>
-                            <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
-                              Sales Report Inbetween <br> <strong><%= startDate %></strong> -
-                              <strong><%= endDate %></strong>
+                            <td
+                              style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
+                              Sales Report Inbetween <br> <strong>
+                                <%= startDate %>
+                              </strong> -
+                              <strong>
+                                <%= endDate %>
+                              </strong>
                             </td>
                           </tr>
                         </tbody>
@@ -194,9 +199,12 @@
                             <td height="20"></td>
                           </tr>
                           <tr>
-                            <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right;">
+                            <td
+                              style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right;">
 
-                              Date :<strong> <%= salesReportDate %></strong>
+                              Date :<strong>
+                                <%= salesReportDate %>
+                              </strong>
                             </td>
                           </tr>
                         </tbody>
@@ -217,7 +225,8 @@
     <tbody>
       <tr>
         <td>
-          <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+          <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
+            bgcolor="#ffffff">
             <tbody>
               <tr>
               <tr class="hiddenMobile">
@@ -231,60 +240,96 @@
                   <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
                     <tbody>
                       <tr>
-                        <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" align="left">
+                        <th
+                          style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;"
+                          align="left">
                           Date
                         </th>
-                        <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="left">
+                        <th
+                          style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;"
+                          align="left">
                           Order id
                         </th>
-                        <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                        <th
+                          style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;"
+                          align="center">
                           Payment Method
                         </th>
-                        <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 20px 7px;" align="right">
+                        <th
+                          style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 20px 7px;"
+                          align="right">
                           Product Details
                         </th>
-                        <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px; margin-left: 3rem;" align="right">
+                        <th
+                          style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px; margin-left: 3rem;"
+                          align="right">
                           Total
                         </th>
                       </tr>
 
-                      <% orderData.orders.forEach((order) => { %>
-                      <tr>
-                        <td height="1" style="background: #bebebe;" colspan="5"></td>
-                      </tr>
-                      <tr>
-                        <td height="10" colspan="4"></td>
-                      </tr>
+                      <% orderData.orders.forEach((order)=> { %>
+                        <tr>
+                          <td height="1" style="background: #bebebe;" colspan="5"></td>
+                        </tr>
+                        <tr>
+                          <td height="10" colspan="4"></td>
+                        </tr>
 
 
-                      <tr>
-                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff2c2c;  line-height: 18px;  vertical-align: top; padding:10px 0; width: 60px;" class="article">
-                          <small><%= order.date %></small>
-                        </td>
-                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;">
-                          <small><%= order.orderId %></small>
-                        </td>
-                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center"><%= order.paymentMethod %></td>
+                        <tr>
+                          <td
+                            style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff2c2c;  line-height: 18px;  vertical-align: top; padding:10px 0; width: 60px;"
+                            class="article">
+                            <small>
+                              <%= order.date %>
+                            </small>
+                          </td>
+                          <td
+                            style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;">
+                            <small>
+                              <%= order.orderId %>
+                            </small>
+                          </td>
+                          <td
+                            style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"
+                            align="center">
+                            <%= order.paymentMethod %>
+                          </td>
 
 
-                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 20px;" align="right">
-                          <% order.productName.forEach((product) => { %>
-                          <small><p>Name : <%= product.name %></p></small>
-                          <small><p>Quantity : <%= product.quantity %></p></small>
-                          <small><p>Price : <span>₹</span><%= product.price %></p></small>
-                          <br>
-                          <% }) %>
-                        </td>
+                          <td
+                            style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 20px;"
+                            align="right">
+                            <% order.productName.forEach((product)=> { %>
+                              <small>
+                                <p>Name : <%= product.name %>
+                                </p>
+                              </small>
+                              <small>
+                                <p>Quantity : <%= product.quantity %>
+                                </p>
+                              </small>
+                              <small>
+                                <p>Price : <span>₹</span>
+                                  <%= product.price %>
+                                </p>
+                              </small>
+                              <br>
+                              <% }) %>
+                          </td>
 
-                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center">₹<%= order.total %></td>
+                          <td
+                            style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"
+                            align="center">₹<%= order.total %>
+                          </td>
 
 
-                      </tr>
+                        </tr>
 
-                      <tr>
-                        <td height="1" colspan="5" style="border-bottom:1px solid #e4e4e4"></td>
-                      </tr>
-                      <% }) %>
+                        <tr>
+                          <td height="1" colspan="5" style="border-bottom:1px solid #e4e4e4"></td>
+                        </tr>
+                        <% }) %>
 
 
                     </tbody>
@@ -306,7 +351,8 @@
     <tbody>
       <tr>
         <td>
-          <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+          <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
+            bgcolor="#ffffff">
             <tbody>
               <tr>
                 <td>
@@ -316,10 +362,12 @@
                     <tbody>
 
                       <tr>
-                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                        <td
+                          style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
                           <strong>Grand Total </strong>
                         </td>
-                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                        <td
+                          style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
                           <strong>₹<%= orderData.grandTotal %></strong>
                         </td>
                       </tr>
@@ -346,17 +394,18 @@
   <!-- Information -->
 
   <!-- /Information -->
-  <table width="100%" border="0" cellpadding="0" cellspacing="0"  align="center" class="fullTable" bgcolor="#e1e1e1">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
     <tr>
       <td>
-        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-          bgcolor="#ffffff" style="border-radius: 0 0 10px 10px;">
+        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff"
+          style="border-radius: 0 0 10px 10px;">
           <tr>
             <td>
               <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
                 <tbody>
                   <tr>
-                    <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
+                    <td
+                      style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
                       Have a nice day.
                     </td>
                   </tr>
@@ -378,5 +427,3 @@
 </body>
 
 </html>
-
-

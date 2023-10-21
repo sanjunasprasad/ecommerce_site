@@ -1,21 +1,21 @@
 <%-include('adminhead')%>
 
-<style>
+  <style>
     h1 {
-        margin-left: 1.3rem;
-        margin-top: 1.5rem;
+      margin-left: 1.3rem;
+      margin-top: 1.5rem;
     }
 
     #details {
-        display: flex;
-        flex-direction: row;
-        margin-top: 50px;
+      display: flex;
+      flex-direction: row;
+      margin-top: 50px;
     }
 
     #images {
-        margin-left: 1.5rem;
+      margin-left: 1.5rem;
 
-        margin-top: 50px;
+      margin-top: 50px;
     }
 
 
@@ -24,88 +24,88 @@
     #Price,
     #new-brand-input,
     #offerPrice {
-        margin-bottom: 20px;
-        margin-left: 22px;
+      margin-bottom: 20px;
+      margin-left: 22px;
 
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        width: 20rem;
-        max-width: 400px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      width: 20rem;
+      max-width: 400px;
     }
 
-   
 
-    textarea{
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        margin-top: 40px;
-        margin-left: 22px;
-        width: 80%;
+
+    textarea {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      margin-top: 40px;
+      margin-left: 22px;
+      width: 80%;
     }
 
     input[type="file"] {
-        margin-bottom: 20px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        max-width: 400px;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
     }
 
     input[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: bold;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        max-width: 400px;
-        margin-left: 1.2rem;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+      margin-left: 1.2rem;
     }
 
     input[type="submit"]:hover {
-        background-color: #3e8e41;
+      background-color: #3e8e41;
     }
 
 
 
     .image-preview-container {
-        display: flex;
+      display: flex;
 
-        margin-bottom: 20px;
+      margin-bottom: 20px;
 
-        width: 100px;
-        max-width: 400px;
+      width: 100px;
+      max-width: 400px;
     }
 
     .image-preview {
-        height: 100px;
-        width: 100px;
-        margin-bottom: 10px;
-        margin-left: 2rem;
-        border-radius: 5px;
-        object-fit: cover;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      height: 100px;
+      width: 100px;
+      margin-bottom: 10px;
+      margin-left: 2rem;
+      border-radius: 5px;
+      object-fit: cover;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     }
 
     .container {
-        border-radius: 20px;
-        border: 1px solid black;
-        position: relative;
-        left: 2rem;
-        padding-bottom: 1.2rem;
-        margin-bottom: 5rem;
-        background-color: #2e92a9;
-        color: white;
+      border-radius: 20px;
+      border: 1px solid black;
+      position: relative;
+      left: 2rem;
+      padding-bottom: 1.2rem;
+      margin-bottom: 5rem;
+      background-color: #2e92a9;
+      color: white;
 
     }
 
@@ -113,48 +113,46 @@
     .subCategory-select,
     .brand-select {
 
-        margin-left: 22px;
-        margin-top: 8px;
-        height: 30px;
-        width: 50px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      margin-left: 22px;
+      margin-top: 8px;
+      height: 30px;
+      width: 50px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     }
 
 
-     #new-brand-input{
-        margin-top: 15px;
+    #new-brand-input {
+      margin-top: 15px;
     }
 
-    
+
 
     #image1-error {
-        position: absolute;
-        top: 86%;
-        right: 86%;
-        font-size: 10pt;
+      position: absolute;
+      top: 86%;
+      right: 86%;
+      font-size: 10pt;
     }
 
     #name-error,
     #Price-error,
     #category-error,
-    #quantity-error ,
-    #subCategory-error{
-        font-size: 10pt;
-        margin: auto;
-        margin-left: 4px;
-        
+    #quantity-error,
+    #subCategory-error {
+      font-size: 10pt;
+      margin: auto;
+      margin-left: 4px;
+
     }
 
-    #description-error{
-        font-size: 10pt;
-        margin: auto;
-        margin-left: 1.8rem;
+    #description-error {
+      font-size: 10pt;
+      margin: auto;
+      margin-left: 1.8rem;
     }
-
-    
-</style>
+  </style>
 
 
 
@@ -162,11 +160,11 @@
 
 
 
-<div class="container">
+  <div class="container">
     <h1>Add New Product</h1>
-  
+
     <form action="/admin/addProduct" method="post" id="addProductValidation" enctype="multipart/form-data">
-  
+
       <div class="container-fluid">
         <div class="row mt-4">
           <div class="col-lg-12 col-md-6 p-0">
@@ -175,27 +173,28 @@
             <input type="number" placeholder="Quantity" id="quantity" name="quantity">
           </div>
         </div>
-  
+
         <div class="row mt-4">
           <div class="col-lg-12 col-md-6 p-0">
             <select style="width:180px;" name="category" class="category-select" required>
               <option value="" disabled selected>Select category</option>
               <% categoryData.forEach(function(category) { %>
-                <option value="<%= category._id %>"><%= category.category %></option>
-              <% }); %>
+                <option value="<%= category._id %>">
+                  <%= category.category %>
+                </option>
+                <% }); %>
             </select>
-  
-            
-  
-  
-            <input type="text" id="new-brand-input" class="d-none" name="newBrand" placeholder="Enter brand"
-              required>
+
+
+
+
+            <input type="text" id="new-brand-input" class="d-none" name="newBrand" placeholder="Enter brand" required>
           </div>
         </div>
-  
-        
+
+
       </div>
-  
+
       <textarea type="text" placeholder="Description" id="description" name="description" required></textarea>
       <div id="images">
         <input type="file" id="image1" name="image" required>
@@ -204,7 +203,7 @@
         <input type="file" id="image3" name="image" required>
         <input type="file" id="image4" name="image" required>
       </div>
-  
+
       <div class="image-preview-container">
         <img id="preview1" class="image-preview" src="#" alt="Image Preview" style="display: none;">
         <img id="preview2" class="image-preview" src="#" alt="Image Preview" style="display: none;">
@@ -214,19 +213,19 @@
       <input type="submit" value="Add Product">
     </form>
   </div>
-  
+
   <script>
     // Image preview code
     function previewImage(event, imageNumber) {
       var preview = document.getElementById(`preview${imageNumber}`);
       var file = event.target.files[0];
       var reader = new FileReader();
-  
-      reader.onload = function() {
+
+      reader.onload = function () {
         preview.src = reader.result;
         preview.style.display = "block";
       }
-  
+
       if (file) {
         reader.readAsDataURL(file);
       } else {
@@ -234,30 +233,30 @@
         preview.style.display = "none";
       }
     }
-  
+
     // Add event listeners for image previews
-    document.getElementById("image1").addEventListener("change", function(event) {
+    document.getElementById("image1").addEventListener("change", function (event) {
       previewImage(event, 1);
     });
-  
-    document.getElementById("image2").addEventListener("change", function(event) {
+
+    document.getElementById("image2").addEventListener("change", function (event) {
       previewImage(event, 2);
     });
-  
-    document.getElementById("image3").addEventListener("change", function(event) {
+
+    document.getElementById("image3").addEventListener("change", function (event) {
       previewImage(event, 3);
     });
-  
-    document.getElementById("image4").addEventListener("change", function(event) {
+
+    document.getElementById("image4").addEventListener("change", function (event) {
       previewImage(event, 4);
     });
   </script>
-  
 
 
 
 
-</div>
+
+  </div>
 
 
-<%-include('adminfoot')%>
+  <%-include('adminfoot')%>

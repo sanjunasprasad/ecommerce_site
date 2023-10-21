@@ -1,176 +1,175 @@
 <%- include('header') %>
-<%- include('headsection') %>
+  <%- include('headsection') %>
 
 
-<!-- Start All Title Box -->
-<div class="all-title-box">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <h2>My Account</h2>
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Address</a></li>
-          <li class="breadcrumb-item active">My Account</li>
-        </ul>
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>My Account</h2>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Address</a></li>
+              <li class="breadcrumb-item active">My Account</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<!-- End All Title Box -->
+    <!-- End All Title Box -->
 
-<div class="cart-box-main">
+    <div class="cart-box-main">
 
-  <div class="container mt-5">
-    <ul class="nav nav-tabs" id="accountTabs">
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profileTab">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#addAddressTab">Address</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#displayAddressTab">Cart details</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#wishlistTab">Wishlist</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#cartTab">My Orders</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#walletTab">Wallet</a>
-      </li>  
-    </ul>
-   <br><br><p>You can update address here</p>
-   
- 
-    <form class="needs-validation"  id="userEditAddress">
-        <input type="text" name="addressId" id="userAddressIdEdit" value="<%=address._id %>" hidden>
-      <div class="row">
-          <div class="col-md-6 mb-3">
+      <div class="container mt-5">
+        <ul class="nav nav-tabs" id="accountTabs">
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#profileTab">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#addAddressTab">Address</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#displayAddressTab">Cart details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#wishlistTab">Wishlist</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#cartTab">My Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#walletTab">Wallet</a>
+          </li>
+        </ul>
+        <br><br>
+        <p>You can update address here</p>
+
+
+        <form class="needs-validation" id="userEditAddress">
+          <input type="text" name="addressId" id="userAddressIdEdit" value="<%=address._id %>" hidden>
+          <div class="row">
+            <div class="col-md-6 mb-3">
               <label for="firstName">Full name *</label>
-              <input type="text" class="form-control" name="name" value="<%=address.name%>" >
-              
-          </div>
-          <div class="col-md-6 mb-3">
+              <input type="text" class="form-control" name="name" value="<%=address.name%>">
+
+            </div>
+            <div class="col-md-6 mb-3">
               <label for="Mobile number">Mobile Number *</label>
               <input type="mobile" class="form-control" name="mobile" value="<%=address.mobile%>">
-           
+
+            </div>
           </div>
-      </div>
-      <div class="mb-3">
-          <label for="email">Email Address *</label>
-          <input type="email" class="form-control" name="email" value="<%=address.email%>">
- 
-      </div>
-      <div class="mb-3">
-          <label for="address">Address Line *</label>
-          <input type="text" class="form-control" name="addressLine" value="<%=address.addressLine%>">
-         
-      </div>
-      <div class="mb-3">
-          <label for="address2">Town/City *</label>
-          <input type="text" class="form-control" name="city" value="<%=address.city%>" > 
-      </div>
-      <div class="row">
-          <div class="col-md-5 mb-3">
+          <div class="mb-3">
+            <label for="email">Email Address *</label>
+            <input type="email" class="form-control" name="email" value="<%=address.email%>">
+
+          </div>
+          <div class="mb-3">
+            <label for="address">Address Line *</label>
+            <input type="text" class="form-control" name="addressLine" value="<%=address.addressLine%>">
+
+          </div>
+          <div class="mb-3">
+            <label for="address2">Town/City *</label>
+            <input type="text" class="form-control" name="city" value="<%=address.city%>">
+          </div>
+          <div class="row">
+            <div class="col-md-5 mb-3">
               <label for="state">State *</label>
               <input type="text" name="state" class="form-control" value="<%=address.state%>">
-            
-          </div>
-          <div class="col-md-5 mb-3">
+
+            </div>
+            <div class="col-md-5 mb-3">
               <label for="zip">Pincode *</label>
               <input type="text" class="form-control" name="pincode" value="<%=address.pincode%>">
+            </div>
+            <div class="col-md-5 mb-3">
+              <button type="submit" class="btn btn-outline-primary-2 mt-1 bttn"> <span> Update </span> </button>
+            </div>
           </div>
-          <div class="col-md-5 mb-3">
-            <button type="submit" class="btn btn-outline-primary-2 mt-1 bttn"> <span> Update </span> </button>                    
-          </div>        
+        </form>
       </div>
-  </form>
-  </div>
-</div>
+    </div>
 
 
-<%- include('footer') %>
+    <%- include('footer') %>
 
 
 
-<script>
-    // Activate Bootstrap tabs
-    $(document).ready(function(){
-      $("# a").click(function(){
-        $(this).tab('show');
-      });
-    });
-  </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- <!-- Main Js -->
- <script src="/js/vendor/index.js"></script>
- <script src="/js/main.js"></script>
- <script src="/js/users.js"></script>
- <script src="/js/userOrder.js"></script>
- <!-- Include SweetAlert CSS -->
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
- <!-- Razorpay SDK -->
- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
- 
- <!-- Include SweetAlert JS -->
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
- <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
- 
- 
+      <script>
+        // Activate Bootstrap tabs
+        $(document).ready(function () {
+          $("# a").click(function () {
+            $(this).tab('show');
+          });
+        });
+      </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <!-- Main Js -->
+      <script src="/js/vendor/index.js"></script>
+      <script src="/js/main.js"></script>
+      <script src="/js/users.js"></script>
+      <script src="/js/userOrder.js"></script>
+      <!-- Include SweetAlert CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+      <!-- Razorpay SDK -->
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+      <!-- Include SweetAlert JS -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+      <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
 
 
-<script>
 
-document.addEventListener("DOMContentLoaded", function () {
-    const userEditAddress = document.getElementById("userEditAddress");
-    const addressId = document.getElementById("userAddressIdEdit").value;
 
-    if (userEditAddress) {
-        userEditAddress.addEventListener("submit", async function (event) {
-            event.preventDefault(); // Prevent form submission to allow asynchronous request
+      <script>
 
-            const form = event.target;
-            const formData = new FormData(form);
-            console.log("formdata",formData)
+        document.addEventListener("DOMContentLoaded", function () {
+          const userEditAddress = document.getElementById("userEditAddress");
+          const addressId = document.getElementById("userAddressIdEdit").value;
 
-            try {
+          if (userEditAddress) {
+            userEditAddress.addEventListener("submit", async function (event) {
+              event.preventDefault(); // Prevent form submission to allow asynchronous request
+
+              const form = event.target;
+              const formData = new FormData(form);
+              console.log("formdata", formData)
+
+              try {
                 const response = await fetch(`/editAddressPost?addressId=${addressId}`, {
-                    method: "POST",
-                    body: JSON.stringify(Object.fromEntries(formData)),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                  method: "POST",
+                  body: JSON.stringify(Object.fromEntries(formData)),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
                 });
                 // console.log("response:",response)
                 if (response.ok) {
-                    await Swal.fire({
-                        icon: "success",
-                        title: "Address updated successfully",
-                        showConfirmButton: "OK",
-                        confirmButtonColor: "#50C878",
-                        timer: 1800 // Set a timer for 1.5 seconds to display the message
-                    });
+                  await Swal.fire({
+                    icon: "success",
+                    title: "Address updated successfully",
+                    showConfirmButton: "OK",
+                    confirmButtonColor: "#50C878",
+                    timer: 1800 // Set a timer for 1.5 seconds to display the message
+                  });
 
-                    
-                    window.location.href = "/myaccount#addAddressTab"; // Assuming addAddressTab is the anchor for your address section
-                } 
-                else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Some error occurred",
-                        showConfirmButton: true,
-                        confirmButtonText: "OK",
-                        confirmButtonColor: "#D22B2B",
-                    });
+
+                  window.location.href = "/myaccount#addAddressTab"; // Assuming addAddressTab is the anchor for your address section
                 }
-            } catch (error) {
+                else {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Some error occurred",
+                    showConfirmButton: true,
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#D22B2B",
+                  });
+                }
+              } catch (error) {
                 console.log("Error:", error.message);
-            }
+              }
+            });
+          }
         });
-    }
-});
-</script>
-
- 
+      </script>

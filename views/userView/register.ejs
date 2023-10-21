@@ -1,157 +1,166 @@
 <%-include('header')%>
-<%-include('headsection')%>
-<style>
-    /* Add styles for the container */
-    .ec-register-container {
-        width: 100%;
-        max-width: 400px; /* Adjust the maximum width as needed */
-        margin: 50px auto; /* Center the container horizontally and add margin */
-        padding: 20px; /* Add some padding for spacing */
-        border: 1px solid #ccc; /* Add a border */
-        border-radius: 5px; /* Add border-radius for rounded corners */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a box shadow for depth */
-    }
-
-    .ec-register-wrap.ec-register-half {
-        width: 100%;
-    }
-
-    .ec-register-row {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 5px;
-    }
-
-    .ec-register-field {
-        flex: 1;
-        margin-right: 0 4px;
-    }
-
-    .txt
-   {
-    color:white;
-    border-radius: 5px;
- }
-
-</style>
-
-<body>
-    <div class="ec-register-wrap ec-register-half">
-        <div class="ec-register-container">
-            <form id="signupForm">
-            <h1 class="ec-bg-title text-center">Register</h1>
-            <br>
-            <div class="ec-register-row">
-                <div class="ec-register-field">
-                    <label>First Name*</label>
-                    <input type="text" name="firstname" placeholder="Enter your first name" />
-                    <p id="firstnameError" class="p-1 text-danger"></p>
-                </div>
-                <div class="ec-register-field">
-                    <label>Last Name*</label>
-                    <input type="text" name="lastname" placeholder="Enter your last name" />
-                    <p id="lastnameError" class="p-1 text-danger"></p>
-                </div>
-            </div>
-           
-            <div class="ec-register-row">
-                <div class="ec-register-field">
-                    <label>Email*</label>
-                    <input type="email" name="email" id="email" placeholder="Enter your email add..." />
-                    <p id="emailError" class="p-1 text-danger"></p>
-                </div>
-                <div class="ec-register-field">
-                    <label>Phone Number*</label>
-                    <input type="text" name="phonenumber" id="phonenumber" placeholder="Enter your phone number" />
-                    <p id="phoneError" class="p-1 text-danger"></p>
-                </div>
-            </div>
-           
-            <div class="ec-register-row">
-                <div class="ec-register-field">
-                    <label>Password*</label>
-                    <input type="password" name="password" id="password" placeholder="Enter your password" />
-                    <p id="passwordError" class="p-1 text-danger"></p>
-                </div>
-                <div class="ec-register-field">
-                    <label>Re-Type Password*</label>
-                    <input type="password" name="repassword" id="password2" placeholder="Re-Type your password" />
-                    <p id="repasswordError" class="p-1 pb-0 text-danger"></p>
-                </div>
-            </div>
-            <div style="display: flex;">
-                <input type="checkbox" style="width: 15px; margin-left: 10px; " id="showPassword" onchange="togglePasswordVisibility()" />
-                <label for="showPassword">Show Password</label>
-            </div>
-            <span class="ec-register-wrap ec-register-btn">
-                <button class="ml-auto btn hvr-hover txt" type="submit">Submit</button>
-            </span>
-            <br>
-            <div class="member mb-4">
-                Already a member? <a class="ml-auto btn hvr-hover txt" href="/login">Login here</a>
-            </div>
-            </form>
-        </div>
-    </div>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    
-        const handleSubmit = async (event) => {
-            event.preventDefault();
-            
-            
-            const formData = new FormData(event.target);
-            console.log("Form Data:", formData);
-
-            try {
-                const response = await axios.post('/signup',formData, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                console.log(response.status);
-                
-
-                // if (response.status === 200) {
-                //  alert(11);
-                window.location.href = '/showOtp';
-                
-                // }
-
-            } 
-            catch (error) {
-                
-console.log(error);
-                if (error.response.status == 400) {
-                    const errors = error.response.data.error;
-                    Object.keys(errors).forEach((key) => {
-                        let element = document.getElementById(key).textContent = errors[key];
-                    });
-                } 
-                else {
-                    alert("something went wrong");
-                }
-
+    <%-include('headsection')%>
+        <style>
+            /* Add styles for the container */
+            .ec-register-container {
+                width: 100%;
+                max-width: 400px;
+                /* Adjust the maximum width as needed */
+                margin: 50px auto;
+                /* Center the container horizontally and add margin */
+                padding: 20px;
+                /* Add some padding for spacing */
+                border: 1px solid #ccc;
+                /* Add a border */
+                border-radius: 5px;
+                /* Add border-radius for rounded corners */
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                /* Add a box shadow for depth */
             }
-        };
 
-        document.getElementById('signupForm').addEventListener('submit', handleSubmit);
-    
+            .ec-register-wrap.ec-register-half {
+                width: 100%;
+            }
 
-        
-        
-                              function togglePasswordVisibility() {
-                                const passwordField = document.getElementById("password");
-                                if (passwordField.type === "password") {
-                                  passwordField.type = "text";
-                                } else {
-                                  passwordField.type = "password";
-                                }
-                              }
-                         
-</script>
-<%-include('footer')%>
+            .ec-register-row {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: baseline;
+                margin-bottom: 5px;
+            }
 
+            .ec-register-field {
+                flex: 1;
+                margin-right: 0 4px;
+            }
+
+            .txt {
+                color: white;
+                border-radius: 5px;
+            }
+        </style>
+
+        <body>
+            <div class="ec-register-wrap ec-register-half">
+                <div class="ec-register-container">
+                    <form id="signupForm">
+                        <h1 class="ec-bg-title text-center">Register</h1>
+                        <br>
+                        <div class="ec-register-row">
+                            <div class="ec-register-field">
+                                <label>First Name*</label>
+                                <input type="text" name="firstname" placeholder="Enter your first name" />
+                                <p id="firstnameError" class="p-1 text-danger"></p>
+                            </div>
+                            <div class="ec-register-field">
+                                <label>Last Name*</label>
+                                <input type="text" name="lastname" placeholder="Enter your last name" />
+                                <p id="lastnameError" class="p-1 text-danger"></p>
+                            </div>
+                        </div>
+
+                        <div class="ec-register-row">
+                            <div class="ec-register-field">
+                                <label>Email*</label>
+                                <input type="email" name="email" id="email" placeholder="Enter your email add..." />
+                                <p id="emailError" class="p-1 text-danger"></p>
+                            </div>
+                            <div class="ec-register-field">
+                                <label>Phone Number*</label>
+                                <input type="text" name="phonenumber" id="phonenumber"
+                                    placeholder="Enter your phone number" />
+                                <p id="phoneError" class="p-1 text-danger"></p>
+                            </div>
+                        </div>
+
+                        <div class="ec-register-row">
+                            <div class="ec-register-field">
+                                <label>Password*</label>
+                                <input type="password" name="password" id="password"
+                                    placeholder="Enter your password" />
+                                <p id="passwordError" class="p-1 text-danger"></p>
+                            </div>
+                            <div class="ec-register-field">
+                                <label>Re-Type Password*</label>
+                                <input type="password" name="repassword" id="password2"
+                                    placeholder="Re-Type your password" />
+                                <p id="repasswordError" class="p-1 pb-0 text-danger"></p>
+                            </div>
+                        </div>
+                        <div style="display: flex;">
+                            <input type="checkbox" style="width: 15px; margin-left: 10px; " id="showPassword"
+                                onchange="togglePasswordVisibility()" />
+                            <label for="showPassword">Show Password</label>
+                        </div>
+                        <span class="ec-register-wrap ec-register-btn">
+                            <button class="ml-auto btn hvr-hover txt" type="submit">Submit</button>
+                        </span>
+                        <br>
+                        <div class="member mb-4">
+                            Already a member? <a class="ml-auto btn hvr-hover txt" href="/login">Login here</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"
+            integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+
+            const handleSubmit = async (event) => {
+                event.preventDefault();
+
+
+                const formData = new FormData(event.target);
+                console.log("Form Data:", formData);
+
+                try {
+                    const response = await axios.post('/signup', formData, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    console.log(response.status);
+
+
+                    // if (response.status === 200) {
+                    //  alert(11);
+                    window.location.href = '/showOtp';
+
+                    // }
+
+                }
+                catch (error) {
+
+                    console.log(error);
+                    if (error.response.status == 400) {
+                        const errors = error.response.data.error;
+                        Object.keys(errors).forEach((key) => {
+                            let element = document.getElementById(key).textContent = errors[key];
+                        });
+                    }
+                    else {
+                        alert("something went wrong");
+                    }
+
+                }
+            };
+
+            document.getElementById('signupForm').addEventListener('submit', handleSubmit);
+
+
+
+
+            function togglePasswordVisibility() {
+                const passwordField = document.getElementById("password");
+                if (passwordField.type === "password") {
+                    passwordField.type = "text";
+                } else {
+                    passwordField.type = "password";
+                }
+            }
+
+        </script>
+        <%-include('footer')%>

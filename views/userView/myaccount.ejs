@@ -1,254 +1,286 @@
 <%- include('header') %>
-<%- include('headsection') %>
-<style>
-  table {
-      border-collapse: collapse;
-      width: 100%;
-  }
+  <%- include('headsection') %>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
 
-  th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-  }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
 
-  th {
-      background-color: #f2f2f2;
-  }
+      th {
+        background-color: #f2f2f2;
+      }
 
-  .bttn{
-      height:40px;
+      .bttn {
+        height: 40px;
 
-  }
-</style>
+      }
+    </style>
 
-<!-- Start All Title Box -->
-<div class="all-title-box">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <h2>My Account</h2>
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Shop</a></li>
-          <li class="breadcrumb-item active">My Account</li>
-        </ul>
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>My Account</h2>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Shop</a></li>
+              <li class="breadcrumb-item active">My Account</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<!-- End All Title Box -->
+    <!-- End All Title Box -->
 
-<div class="cart-box-main">
+    <div class="cart-box-main">
 
-  <div class="container mt-5">
-    <ul class="nav nav-tabs" id="accountTabs">
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profileTab">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#addAddressTab">Address</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#displayAddressTab">Cart details</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#wishlistTab">Wishlist</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#cartTab">My Orders</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#walletTab">Wallet</a>
-      </li>
-      
-    </ul>
+      <div class="container mt-5">
+        <ul class="nav nav-tabs" id="accountTabs">
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#profileTab">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#addAddressTab">Address</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#displayAddressTab">Cart details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#wishlistTab">Wishlist</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#cartTab">My Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#walletTab">Wallet</a>
+          </li>
 
-    <div class="tab-content mt-3">
+        </ul>
+
+        <div class="tab-content mt-3">
 
 
-       <!-- Profile Tab -->
-    <div id="profileTab" class="tab-pane">
-       
-        <h2>Hello <span><%=locals.profilename%></span></h2>
-         <p>From your account you can easily view and track orders. You can manage 
-        and change your account information like address, contact information 
-        and history of orders.</p> 
-       <br>
-        <div class="login">
-          <div class="login_form_container">
-              <div class="account_login_form">
+          <!-- Profile Tab -->
+          <div id="profileTab" class="tab-pane">
+
+            <h2>Hello <span>
+                <%=locals.profilename%>
+              </span></h2>
+            <p>From your account you can easily view and track orders. You can manage
+              and change your account information like address, contact information
+              and history of orders.</p>
+            <br>
+            <div class="login">
+              <div class="login_form_container">
+                <div class="account_login_form">
                   <form id="profileUpdate">
-      
-                      <p><strong>Name:</strong> <%=user.firstName%></p>
-      
-                      <p><strong>Email:</strong> <%=user.email%></p>
-      
-                      <p><strong>Phone:</strong> <%=user.phoneNumber%></p>
 
-                      <a href="/editaccount?userid=<%=user._id%>" style="text-decoration: none"  id="editaccountBtn" data-id="<%= user._id %>" ><span style="font-size: 17px; cursor: pointer;">Edit</span></a> 
-                      
+                    <p><strong>Name:</strong>
+                      <%=user.firstName%>
+                    </p>
+
+                    <p><strong>Email:</strong>
+                      <%=user.email%>
+                    </p>
+
+                    <p><strong>Phone:</strong>
+                      <%=user.phoneNumber%>
+                    </p>
+
+                    <a href="/editaccount?userid=<%=user._id%>" style="text-decoration: none" id="editaccountBtn"
+                      data-id="<%= user._id %>"><span style="font-size: 17px; cursor: pointer;">Edit</span></a>
+
                   </form>
+                </div>
               </div>
+            </div>
           </div>
-      </div>
-  </div>
-        <!-- Profile Tab ends here -->
+          <!-- Profile Tab ends here -->
 
 
-      <!-- Add Address Tab starts-->
-      <div id="addAddressTab" class="tab-pane active">
-        <div class="checkout-address">
-          <p><br>You can add new address here.<br></p>
-          
-          <form class="needs-validation"  id="addAddressCheckout">
-              <div class="row">
+          <!-- Add Address Tab starts-->
+          <div id="addAddressTab" class="tab-pane active">
+            <div class="checkout-address">
+              <p><br>You can add new address here.<br></p>
+
+              <form class="needs-validation" id="addAddressCheckout">
+                <div class="row">
                   <div class="col-md-6 mb-3">
-                      <label for="firstName">Full name *</label>
-                      <input type="text" class="form-control" name="name" >
-                      
+                    <label for="firstName">Full name *</label>
+                    <input type="text" class="form-control" name="name">
+
                   </div>
                   <div class="col-md-6 mb-3">
-                      <label for="Mobile number">Mobile Number *</label>
-                      <input type="mobile" class="form-control" name="mobileNumber">
-                   
+                    <label for="Mobile number">Mobile Number *</label>
+                    <input type="mobile" class="form-control" name="mobileNumber">
+
                   </div>
-              </div>
-              <div class="mb-3">
+                </div>
+                <div class="mb-3">
                   <label for="email">Email Address *</label>
-                  <input type="email" class="form-control" name="email" >
-         
-              </div>
-              <div class="mb-3">
+                  <input type="email" class="form-control" name="email">
+
+                </div>
+                <div class="mb-3">
                   <label for="address">Address Line *</label>
                   <input type="text" class="form-control" name="addressLine">
                   <div class="invalid-feedback"> Please enter your shipping address. </div>
-              </div>
-              <div class="mb-3">
-                  <label for="address2">Town/City *</label>
-                  <input type="text" class="form-control" name="city" > </div>
-              <div class="row">
-                  <div class="col-md-5 mb-3">
-                      <label for="state">State *</label>
-                      <input type="text" name="state" class="form-control">
-                    
-                  </div>
-                  <div class="col-md-5 mb-3">
-                      <label for="zip">Pincode *</label>
-                      <input type="text" class="form-control" name="pincode">
-                  </div>
-                  <div class="col-md-5 mb-3">
-                    <button type="submit" class="btn btn-outline-primary-2 mt-1 bttn"> <span> Save Address </span> </button>                    
-                  </div>        
-              </div>
-          </form>
-      </div>
-
-
-     <!-- added address display here -->
-      <div class="col-md-12 col-lg-12">
-        <div class="odr-box">
-            <br><br>
-            <h3>Billing Address</h3>
-            <p>The following addresses will be used on the checkout page by default.</p>
-            <% addressData.forEach(address => { %>
-            <div class="rounded p-2 bg-light">
-                <div class="media mb-2 ">
-                    <input type="radio" id="address<%= address.id %>" name="selectedAddress" 
-                        value="<%= address.id %>" ">
-                        <div class="small text-muted">
-                            <label for="address<%= address.id %>">
-                                <strong>Name:</strong> <%= address.name %><br>
-                                <strong>Mobile number:</strong> <%= address.mobile %><br>
-                                <strong>Email:</strong> <%= address.email %><br>
-                                <strong>Address:</strong> <%= address.addressLine %><br>
-                                <strong>City:</strong> <%= address.city %><br>
-                                <strong>State:</strong> <%= address.state %><br>
-                                <strong>Pincode:</strong> <%= address.pincode %><br>
-                                <a href="/editAddress?addressId=<%=address._id%>" style="text-decoration: none;" id="editAddressBtn" data-id="<%= address._id %>"><span style="font-size: 20px; cursor: pointer;">&#9998;</span></a>
-                                <span style="font-size: 20px; cursor: pointer;"onclick="deleteAddress('<%= address._id %>')">&#10006;</span>  
-                                 
-                            </label>
-                        </div>
                 </div>
+                <div class="mb-3">
+                  <label for="address2">Town/City *</label>
+                  <input type="text" class="form-control" name="city">
+                </div>
+                <div class="row">
+                  <div class="col-md-5 mb-3">
+                    <label for="state">State *</label>
+                    <input type="text" name="state" class="form-control">
+
+                  </div>
+                  <div class="col-md-5 mb-3">
+                    <label for="zip">Pincode *</label>
+                    <input type="text" class="form-control" name="pincode">
+                  </div>
+                  <div class="col-md-5 mb-3">
+                    <button type="submit" class="btn btn-outline-primary-2 mt-1 bttn"> <span> Save Address </span>
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <% }); %>   
+
+
+            <!-- added address display here -->
+            <div class="col-md-12 col-lg-12">
+              <div class="odr-box">
+                <br><br>
+                <h3>Billing Address</h3>
+                <p>The following addresses will be used on the checkout page by default.</p>
+                <% addressData.forEach(address=> { %>
+                  <div class="rounded p-2 bg-light">
+                    <div class="media mb-2 ">
+                      <input type="radio" id="address<%= address.id %>" name="selectedAddress" value="<%= address.id %>" ">
+                        <div class=" small text-muted">
+                      <label for="address<%= address.id %>">
+                        <strong>Name:</strong>
+                        <%= address.name %><br>
+                          <strong>Mobile number:</strong>
+                          <%= address.mobile %><br>
+                            <strong>Email:</strong>
+                            <%= address.email %><br>
+                              <strong>Address:</strong>
+                              <%= address.addressLine %><br>
+                                <strong>City:</strong>
+                                <%= address.city %><br>
+                                  <strong>State:</strong>
+                                  <%= address.state %><br>
+                                    <strong>Pincode:</strong>
+                                    <%= address.pincode %><br>
+                                      <a href="/editAddress?addressId=<%=address._id%>" style="text-decoration: none;"
+                                        id="editAddressBtn" data-id="<%= address._id %>"><span
+                                          style="font-size: 20px; cursor: pointer;">&#9998;</span></a>
+                                      <span style="font-size: 20px; cursor: pointer;"
+                                        onclick="deleteAddress('<%= address._id %>')">&#10006;</span>
+
+                      </label>
+                    </div>
+                  </div>
+              </div>
+              <% }); %>
+            </div>
+          </div>
         </div>
-    </div>
-    </div>
-    <!-- add adress tab ends here -->
+        <!-- add adress tab ends here -->
 
 
 
-      <!-- Display Account details Tab -->
-      <div id="displayAddressTab" class="tab-pane">
-        <p>All your cart items appears here.click below!!!<p>
-        <a href="/cart" class="ml-auto btn hvr-hover">View Cart</a>
-   
-      </div>
+        <!-- Display Account details Tab -->
+        <div id="displayAddressTab" class="tab-pane">
+          <p>All your cart items appears here.click below!!!
+          <p>
+            <a href="/cart" class="ml-auto btn hvr-hover">View Cart</a>
 
-      <!-- Wishlist Tab -->
-      <div id="wishlistTab" class="tab-pane">
-        <p>All your wishlist items here</p>
-        <a href="/wishlist" class="ml-auto btn hvr-hover">Wishlist</a>
-       
-      </div>
+        </div>
 
-      <!-- Cart Tab -->
-      <div id="cartTab" class="tab-pane">
-           <p>All your orders appears here.click below!!!<p>
-           <a href="/myOrders" class="ml-auto btn hvr-hover">View Order History</a>
-           
-      </div>
+        <!-- Wishlist Tab -->
+        <div id="wishlistTab" class="tab-pane">
+          <p>All your wishlist items here</p>
+          <a href="/wishlist" class="ml-auto btn hvr-hover">Wishlist</a>
+
+        </div>
+
+        <!-- Cart Tab -->
+        <div id="cartTab" class="tab-pane">
+          <p>All your orders appears here.click below!!!
+          <p>
+            <a href="/myOrders" class="ml-auto btn hvr-hover">View Order History</a>
+
+        </div>
 
 
-      <!-- wallet Tab -->
-      <div id="walletTab" class="tab-pane">
-      <p>Your wallet history here</p>
-        <body>
-          <table >
+        <!-- wallet Tab -->
+        <div id="walletTab" class="tab-pane">
+          <p>Your wallet history here</p>
+
+          <body>
+            <table>
               <thead>
-                  <tr>
-                      <th>Date</th>
-                      <th>Details</th>
-                      <th>Amount</th>
-                      <th>Status</th>
-                  </tr>
+                <tr>
+                  <th>Date</th>
+                  <th>Details</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
               </thead>
               <tbody>
                 <% if (newTransactions.length) { %>
                   <% newTransactions.forEach(function(transaction) { %>
-                      <tr>
-                          <td><%= transaction.date %></td>
-                          <td><%= transaction.details %></td>
-                          <td>₹ <%= transaction.amount %></td>
-                          <% if (transaction.status === "Debit") { %>
-                              <td style="color: red; font-weight: 600;"><%= transaction.status %></td>
-                          <% } else if (transaction.status === "Credit") { %>
-                              <td style="color: green; font-weight: 600;"><%= transaction.status %></td>
+                    <tr>
+                      <td>
+                        <%= transaction.date %>
+                      </td>
+                      <td>
+                        <%= transaction.details %>
+                      </td>
+                      <td>₹ <%= transaction.amount %>
+                      </td>
+                      <% if (transaction.status==="Debit" ) { %>
+                        <td style="color: red; font-weight: 600;">
+                          <%= transaction.status %>
+                        </td>
+                        <% } else if (transaction.status==="Credit" ) { %>
+                          <td style="color: green; font-weight: 600;">
+                            <%= transaction.status %>
+                          </td>
                           <% } %>
-                      </tr>
-                  <% }); %>
-              <% } else { %>
-                  <tr>
-                      <td colspan="4">No transactions yet</td>
-                  </tr>
-              <% } %>
+                    </tr>
+                    <% }); %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="4">No transactions yet</td>
+                        </tr>
+                        <% } %>
 
               </tbody>
-              
-        </table><!-- End .table table-wishlist -->
-        <a href="/home" class="btn btn-outline-primary-2"><span>Available Balance : ₹ <%= userData.wallet.balance %></span></a>
-        
-         
-      </body>
+
+            </table><!-- End .table table-wishlist -->
+            <a href="/home" class="btn btn-outline-primary-2"><span>Available Balance : ₹ <%= userData.wallet.balance %>
+                  </span></a>
+
+
+          </body>
+        </div>
+
+
       </div>
-
-     
     </div>
-  </div>
-</div>
-
-  
+    </div>
 
 
 
@@ -256,30 +288,31 @@
 
 
 
-<%- include('footer') %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
-  <script>
-    // Activate Bootstrap tabs
-    $(document).ready(function(){
-      $("# a").click(function(){
-        $(this).tab('show');
-      });
-    });
-  </script>
 
-  <!-- Main Js -->
-<script src="/js/vendor/index.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/users.js"></script>
-<script src="/js/userOrder.js"></script>
-<!-- Include SweetAlert CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
-<!-- Razorpay SDK -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-<!-- Include SweetAlert JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+    <%- include('footer') %>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+      <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+      <script>
+        // Activate Bootstrap tabs
+        $(document).ready(function () {
+          $("# a").click(function () {
+            $(this).tab('show');
+          });
+        });
+      </script>
 
+      <!-- Main Js -->
+      <script src="/js/vendor/index.js"></script>
+      <script src="/js/main.js"></script>
+      <script src="/js/users.js"></script>
+      <script src="/js/userOrder.js"></script>
+      <!-- Include SweetAlert CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+      <!-- Razorpay SDK -->
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+      <!-- Include SweetAlert JS -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+      <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>

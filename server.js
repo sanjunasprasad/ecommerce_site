@@ -25,12 +25,12 @@ app.set('view engine', 'ejs')
 app.set('views', [
     path.join(__dirname, 'views/userView'),
     path.join(__dirname, 'views/adminView')
-  ]);
+]);
 
 
 
 // Serve static files from the 'child folders in public folder'
-app.use('/static',express.static(path.join(__dirname,'public')))
+app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use('/assetu', express.static(path.join(__dirname, 'public/assetu')));
 app.use('/css', express.static(path.join(__dirname, 'public/css')));
 app.use('/fonts', express.static(path.join(__dirname, 'public/fonts')));
@@ -52,7 +52,7 @@ app.use(
     })
 
 );
-app.use((req,res,next) =>{
+app.use((req, res, next) => {
     res.locals.message = req.session.message
     delete req.session.message
     next()

@@ -3,7 +3,7 @@
 //product quantity in productdetails page
 const productQuantity = async (id, act) => {
     const elem = document.getElementById(id);
-    console.log("elem from prodetail page",elem)
+    console.log("elem from prodetail page", elem)
     if (act == "inc") elem.value ? (elem.value = Number(elem.value) + 1) : "";
     else if (act == "dec") elem.value > 1 ? (elem.value = Number(elem.value) - 1) : "";
 
@@ -17,7 +17,7 @@ const addToCart = async (productId) => {
     const addToCartButton = document.getElementById("addToCartBtn");
     const productName = document.getElementsByName("productName")[0].value;
     const quantity = document.getElementById(productId).value;
-    console.log("from add to cart:",quantity, productId)
+    console.log("from add to cart:", quantity, productId)
     const response = await fetch(`/addToCart?id=${productId}&quantity=${quantity}`, {
         method: "GET",
         headers: {
@@ -58,7 +58,7 @@ const totalPrice = async (id, act, stock) => {
     let subTotal = 0;
     let datas = [];
     let length = document.getElementsByName("productTotal").length;
-    console.log("product type total",length);
+    console.log("product type total", length);
 
     for (let i = 0; i < length; i++) {
 
@@ -76,10 +76,10 @@ const totalPrice = async (id, act, stock) => {
             quantity: Number(document.getElementsByName("num-product")[i].value),
         });
     }
-    console.log("subtotal:",subTotal);
+    console.log("subtotal:", subTotal);
     document.getElementById("subTotal").innerText = "₹ " + subTotal.toFixed();
     document.getElementById("subTotal2").innerText = "₹ " + subTotal.toFixed();
-  
+
     let data = await fetch("/cartUpdation", {
         method: "POST",
         headers: {
@@ -108,7 +108,7 @@ const removeCartalert = async (id) => {
         confirmButtonText: "Move to wishlist",
         cancelButtonText: "Yes, remove",
     });
-     
+
     // Handle the user's response
     if (result.value) {
         addToWishlist(productId, cartId);
@@ -129,10 +129,10 @@ const addToWishlist = async (productId, cartId) => {
 
     const data = await response.json();
 
-    console.log(data.message,"respose");
+    console.log(data.message, "respose");
 
     if (data.message === "Added to wishlist") {
-        
+
         Swal.fire({
             position: "center",
             icon: "success",
@@ -178,8 +178,8 @@ const moveToCart = async (productId) => {
             if (data) {
                 window.location.reload();
             }
-            document.getElementById("row" + productId).innerHTML = "";    
-            
+            document.getElementById("row" + productId).innerHTML = "";
+
         } else if (data.message === "Product is already in cart!!") {
             Swal.fire({
                 position: "center",
@@ -273,10 +273,10 @@ const proceedToCheckout = async () => {
             "Content-Type": "application/json",
         },
     });
-     console.log("checkout data response:",response)
+    console.log("checkout data response:", response)
     const data = await response.json();
-    console.log("data.message:",data.stock)
-     
+    console.log("data.message:", data.stock)
+
 
     if (data.message === "In stock") {
         window.location.href = "/checkout";
@@ -511,7 +511,7 @@ if (updateAddress) {
 
         const form = event.target;
         const formData = new FormData(form);
-     
+
         const addressId = document.getElementById("addressId").value;
 
         if ($(form).valid()) {
@@ -603,15 +603,14 @@ const deleteAddress = async (addressId) => {
 
 //////////////// FILTER AND SORT MANAGEMENT ////////////////
 const filteredData = (data) => {
-    console.log("fffff")
     const productList = document.getElementById('productList');
     productList.innerHTML = ''; // Clear existing products
-  
+
     if (data.length > 0) {
         let gridContainer = document.createElement('div');
         gridContainer.classList.add('row');
         productList.appendChild(gridContainer);
-  
+
         data.forEach((product, index) => {
             let productContainer = document.createElement('div');
             productContainer.classList.add('col-sm-6', 'col-md-6', 'col-lg-4', 'col-xl-4');
@@ -628,17 +627,17 @@ const filteredData = (data) => {
                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                         </ul>
-                        <!-- <a class="cart" href="#">Add to Cart</a> -->
+                   
                     </div>
                 </div>
                 <div class="why-text">
                     <a href="/prodetail?id=${product._id}"><h4>${product.name}</h4></a>
                     <h5>₹${product.price}</h5>
                     <p>${product.description}</p>
-                    <!-- <a class="btn hvr-hover" href="#">Add to Cart</a> -->
+                   
                 </div>
             </div>`;
-  
+
             gridContainer.appendChild(productContainer);
         });
     } else {
@@ -692,15 +691,15 @@ const categoryFilter = async (categories) => {
 };
 
 
-  
-  
-const sortProducts = async()=>{
+
+
+const sortProducts = async () => {
     const selectElement = document.getElementById("sortOptions");
     const selectedValue = selectElement.value;
 
-    if(selectedValue === 'relevent'){
+    if (selectedValue === 'relevent') {
         location.reload()
-    }else{
+    } else {
 
         const response = await fetch('/sortProduct', {
             method: "POST",
@@ -714,6 +713,6 @@ const sortProducts = async()=>{
 
         const data = await response.json()
         filteredData(data)
-    }   
+    }
 }
 

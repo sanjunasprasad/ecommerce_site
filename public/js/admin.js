@@ -1,6 +1,6 @@
 
 
-  /////////////// SEARCHING ////////////////////
+/////////////// SEARCHING ////////////////////
 
 // Get the search input and table rows
 const searchInput = document.querySelector('input[type="search"]');
@@ -9,46 +9,46 @@ const noResultsMessage = document.getElementById("noResultsFound");
 
 // Add an event listener to the search input
 
-if(searchInput){
-searchInput.addEventListener("input", function () {
+if (searchInput) {
+  searchInput.addEventListener("input", function () {
     const searchValue = this.value.toLowerCase();
     let found = false;
 
     // Loop through the table rows and hide/show them based on the search input
     tableRows.forEach(function (row) {
-        const name = row.querySelector("td:nth-of-type(1)").textContent.toLowerCase();
-        const email = row.querySelector("td:nth-of-type(2)").textContent.toLowerCase();
-        const category = row.querySelector("td:nth-of-type(3)").textContent.toLowerCase();
+      const name = row.querySelector("td:nth-of-type(1)").textContent.toLowerCase();
+      const email = row.querySelector("td:nth-of-type(2)").textContent.toLowerCase();
+      const category = row.querySelector("td:nth-of-type(3)").textContent.toLowerCase();
 
-        if (name.includes(searchValue) || email.includes(searchValue) || category.includes(searchValue)) {
-            row.style.display = "table-row";
-            found = true;
-        } else {
-            row.style.display = "none";
-        }
+      if (name.includes(searchValue) || email.includes(searchValue) || category.includes(searchValue)) {
+        row.style.display = "table-row";
+        found = true;
+      } else {
+        row.style.display = "none";
+      }
     });
 
     // Show the "No results found" message if no results were found
     if (!found) {
-        noResultsMessage.style.display = "block";
+      noResultsMessage.style.display = "block";
     } else {
-        noResultsMessage.style.display = "none";
+      noResultsMessage.style.display = "none";
     }
-});
+  });
 }
 
 
 
-  /////////////// TOOLTIP ////////////////////
+/////////////// TOOLTIP ////////////////////
 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
+  return new bootstrap.Tooltip(tooltipTriggerEl);
 });
 
 
 
-  /////////////// CATEGORY AND PRODUCT ////////////////////
+/////////////// CATEGORY AND PRODUCT ////////////////////
 
 
 // Get the select element and input field
@@ -80,86 +80,86 @@ $(document).ready(function () {
 
   //category unlist confirmation
 
-    $(".categoryUnlistBtn").click(async function (e) {
-        e.preventDefault();
-        var id = $(this).val();
+  $(".categoryUnlistBtn").click(async function (e) {
+    e.preventDefault();
+    var id = $(this).val();
 
-        const result = await Swal.fire({
-            title: "Are you sure?",
-            text: "Do you really want to unlist this category?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Unlist it!",
-        });
-
-        if (result.value) {
-            try {
-                const response = await fetch("/admin/unlistCategory/" + id, {
-                    method: "GET",
-                });
-
-                if (response.ok) {
-                    const result2 = await Swal.fire({
-                        icon: "success",
-                        title: "Category has been unlisted successfully",
-                        showConfirmButton: true,
-                        confirmButtonText: "OK",
-                        confirmButtonColor: "#4CAF50",
-                    });
-
-                    if (result2) {
-                        location.reload();
-                    }
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you really want to unlist this category?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Unlist it!",
     });
 
+    if (result.value) {
+      try {
+        const response = await fetch("/admin/unlistCategory/" + id, {
+          method: "GET",
+        });
 
+        if (response.ok) {
+          const result2 = await Swal.fire({
+            icon: "success",
+            title: "Category has been unlisted successfully",
+            showConfirmButton: true,
+            confirmButtonText: "OK",
+            confirmButtonColor: "#4CAF50",
+          });
 
-    //category unlist confirmation
-
-    $(".subCategoryUnlistBtn").click(async function (e) {
-      e.preventDefault();
-      var id = $(this).val();
-
-      const result = await Swal.fire({
-          title: "Are you sure?",
-          text: "Do you really want to unlist this Sub-Category?",
-          icon: "question",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, Unlist it!",
-      });
-
-      if (result.value) {
-          try {
-              const response = await fetch("/admin/unlistSubCategory/" + id, {
-                  method: "GET",
-              });
-
-              if (response.ok) {
-                  const result2 = await Swal.fire({
-                      icon: "success",
-                      title: "Sub-Category has been unlisted successfully",
-                      showConfirmButton: true,
-                      confirmButtonText: "OK",
-                      confirmButtonColor: "#4CAF50",
-                  });
-
-                  if (result2) {
-                      location.reload();
-                  }
-              }
-          } catch (error) {
-              console.error(error);
+          if (result2) {
+            location.reload();
           }
+        }
+      } catch (error) {
+        console.error(error);
       }
+    }
+  });
+
+
+
+  //category unlist confirmation
+
+  $(".subCategoryUnlistBtn").click(async function (e) {
+    e.preventDefault();
+    var id = $(this).val();
+
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you really want to unlist this Sub-Category?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Unlist it!",
+    });
+
+    if (result.value) {
+      try {
+        const response = await fetch("/admin/unlistSubCategory/" + id, {
+          method: "GET",
+        });
+
+        if (response.ok) {
+          const result2 = await Swal.fire({
+            icon: "success",
+            title: "Sub-Category has been unlisted successfully",
+            showConfirmButton: true,
+            confirmButtonText: "OK",
+            confirmButtonColor: "#4CAF50",
+          });
+
+          if (result2) {
+            location.reload();
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
   });
 
 
@@ -167,94 +167,94 @@ $(document).ready(function () {
   //product delete confirmation
 
 
-    $(".productDeleteBtn").click(async function (e) {
-        e.preventDefault();
-        var id = $(this).val();
+  $(".productDeleteBtn").click(async function (e) {
+    e.preventDefault();
+    var id = $(this).val();
 
-        const result = await Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.value) {
+      try {
+        const response = await fetch("/admin/deleteProduct/" + id, {
+          method: "GET",
         });
 
-        if (result.value) {
-            try {
-                const response = await fetch("/admin/deleteProduct/" + id, {
-                    method: "GET",
-                });
+        if (response.ok) {
+          const result2 = await Swal.fire({
+            icon: "success",
+            title: "Product has been deleted successfully",
+            showConfirmButton: true,
+            confirmButtonText: "OK",
+            confirmButtonColor: "#4CAF50",
+          });
 
-                if (response.ok) {
-                    const result2 = await Swal.fire({
-                        icon: "success",
-                        title: "Product has been deleted successfully",
-                        showConfirmButton: true,
-                        confirmButtonText: "OK",
-                        confirmButtonColor: "#4CAF50",
-                    });
-
-                    if (result2) {
-                        location.reload();
-                    }
-                }
-            } catch (error) {
-                console.error(error);
-            }
+          if (result2) {
+            location.reload();
+          }
         }
-    });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  });
 });
 
 
 
 
-  /////////////// ADD COUPON ////////////////////
+/////////////// ADD COUPON ////////////////////
 
-  const addCouponForm = document.getElementById('addCoupon');
+const addCouponForm = document.getElementById('addCoupon');
 
-  if (addCouponForm){
-  
-  addCouponForm.addEventListener('submit', async function(event) {
+if (addCouponForm) {
+
+  addCouponForm.addEventListener('submit', async function (event) {
     event.preventDefault();
-  
+
     const form = event.target;
     const formData = new FormData(form);
-  
-    try {
-        const response = await fetch('/admin/addCoupon', {
-            method: 'POST',
-            body: JSON.stringify(Object.fromEntries(formData)),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
 
-          const data = await response.json()
-  
+    try {
+      const response = await fetch('/admin/addCoupon', {
+        method: 'POST',
+        body: JSON.stringify(Object.fromEntries(formData)),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const data = await response.json()
+
       if (data.message === "coupon addedd") {
         const result = await Swal.fire({
-            icon: "success",
-            title: "New Coupon added Successfully",
-            showConfirmButton: true,
-            confirmButtonText: "OK",
-            confirmButtonColor: "#4CAF50"
-            
+          icon: "success",
+          title: "New Coupon added Successfully",
+          showConfirmButton: true,
+          confirmButtonText: "OK",
+          confirmButtonColor: "#4CAF50"
+
         });
-            if(result.value){
-                form.reset()
-                window.location.href = '/admin/coupons'
-            }
-        
+        if (result.value) {
+          form.reset()
+          window.location.href = '/admin/coupons'
+        }
+
       } else {
         Swal.fire({
-            icon: "error",
-            title: "Some error occured",
-            showConfirmButton: true,
-            confirmButtonText: "CANCEL",
-            confirmButtonColor: "#D22B2B"
-            
+          icon: "error",
+          title: "Some error occured",
+          showConfirmButton: true,
+          confirmButtonText: "CANCEL",
+          confirmButtonColor: "#D22B2B"
+
         });
       }
     } catch (error) {
@@ -265,130 +265,130 @@ $(document).ready(function () {
 
 
 
-  
-  /////////////// DELETE COUPON ////////////////////
+
+/////////////// DELETE COUPON ////////////////////
 
 
-  const deleteCoupon = async(couponId)=>{
-    try{
-  
-      const result = await Swal.fire({
-        title: 'Delete Coupon',
-        text: 'Do you want to delete this coupon? \nThis cannot be undo!',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33", 
-        confirmButtonText: 'Yes,Delete',
-        cancelButtonText: 'DISMISS'
-        
+const deleteCoupon = async (couponId) => {
+  try {
+
+    const result = await Swal.fire({
+      title: 'Delete Coupon',
+      text: 'Do you want to delete this coupon? \nThis cannot be undo!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: 'Yes,Delete',
+      cancelButtonText: 'DISMISS'
+
     });
-  
-    if(result.value){
-  
-      const response = await fetch(`/admin/deleteCoupon?couponId=${couponId}`,{
+
+    if (result.value) {
+
+      const response = await fetch(`/admin/deleteCoupon?couponId=${couponId}`, {
         method: 'POST'
       })
-  
+
       const data = await response.json()
-  
-      if(data.message = "success"){
+
+      if (data.message = "success") {
         Swal.fire({
           icon: "success",
           title: "Coupon has been deleted successfully",
           showConfirmButton: true,
           confirmButtonText: "OK",
           confirmButtonColor: "#4CAF50",
-      });
-      document.getElementById('couponRow' + couponId).innerHTML = ''
-      }else{
-  
+        });
+        document.getElementById('couponRow' + couponId).innerHTML = ''
+      } else {
+
         Swal.fire({
           icon: "error",
           title: "Somthing error!!",
           showConfirmButton: true,
           confirmButtonText: "DISMISS",
           confirmButtonColor: "#D22B2B"
-          
-      });
-  
-      }
-  
-    }
-  
-    }catch(error){
-      console.log(error.message);
-    }
-  }
-  
 
-  const blockCoupon = async(couponId)=>{
-    try{
-  
-      const result = await Swal.fire({
-        title: 'Block Coupon',
-        text: 'Do you want to block this coupon?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33", 
-        confirmButtonText: 'Yes, Block',
-        cancelButtonText: 'DISMISS'
-        
+        });
+
+      }
+
+    }
+
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+
+const blockCoupon = async (couponId) => {
+  try {
+
+    const result = await Swal.fire({
+      title: 'Block Coupon',
+      text: 'Do you want to block this coupon?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: 'Yes, Block',
+      cancelButtonText: 'DISMISS'
+
     });
-  
-    if(result.value){
-  
-      const response = await fetch(`/admin/blockCoupon?couponId=${couponId}`,{
+
+    if (result.value) {
+
+      const response = await fetch(`/admin/blockCoupon?couponId=${couponId}`, {
         method: 'POST'
       })
-  
+
       const data = await response.json()
-  
-      if(data.message = "success"){
+
+      if (data.message = "success") {
         const result = await Swal.fire({
           icon: "success",
           title: "Coupon has been blocked successfully",
           showConfirmButton: true,
           confirmButtonText: "OK",
           confirmButtonColor: "#4CAF50",
-      });
+        });
 
-      if(result.value){
-        location.reload()
-      }
-      
-      }else{
-  
+        if (result.value) {
+          location.reload()
+        }
+
+      } else {
+
         Swal.fire({
           icon: "error",
           title: "Somthing error!!",
           showConfirmButton: true,
           confirmButtonText: "DISMISS",
           confirmButtonColor: "#D22B2B"
-          
-      });
-  
+
+        });
+
       }
-  
+
     }
-  
-    }catch(error){
-      console.log(error.message);
-    }
+
+  } catch (error) {
+    console.log(error.message);
   }
-  
-
-  /////////////// ORDER UPDATE ////////////////////
+}
 
 
+/////////////// ORDER UPDATE ////////////////////
 
-  const orderUpdateSelects = document.querySelectorAll('[name="orderUpdate"]')
 
-  if(orderUpdateSelects){
-    orderUpdateSelects.forEach((orderUpdateSelect) => {
-    orderUpdateSelect.addEventListener('change', async ()=>{
-    
+
+const orderUpdateSelects = document.querySelectorAll('[name="orderUpdate"]')
+
+if (orderUpdateSelects) {
+  orderUpdateSelects.forEach((orderUpdateSelect) => {
+    orderUpdateSelect.addEventListener('change', async () => {
+
       const selectedOption = orderUpdateSelect.value
       const orderId = orderUpdateSelect.id.split('-')[1]
 
@@ -399,137 +399,137 @@ $(document).ready(function () {
           icon: 'question',
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33", 
+          cancelButtonColor: "#d33",
           confirmButtonText: 'Yes, Change',
           cancelButtonText: 'DISMISS'
-          
-      });
 
-      if(result.value){
-        const response = await fetch(`/admin/updateOrder?orderId=${orderId}`,{
-          method: 'POST',
-          headers:{
-            'Content-Type' : "application/json"
-          },
-          body: JSON.stringify({
-            status: selectedOption
-          })
-        })
-      
-        const data = await response.json()
-  
-        if(data.message = "Success"){
-          const result = await Swal.fire({
-            icon: "success",
-            title: "Order staus has been changed successfully!!",
-            showConfirmButton: true,
-            confirmButtonText: "OK",
-            confirmButtonColor: "#4CAF50",
         });
-      }
-      
-      if(result.value){
-        location.reload()
-      } 
-      
-      }
 
-        
+        if (result.value) {
+          const response = await fetch(`/admin/updateOrder?orderId=${orderId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': "application/json"
+            },
+            body: JSON.stringify({
+              status: selectedOption
+            })
+          })
+
+          const data = await response.json()
+
+          if (data.message = "Success") {
+            const result = await Swal.fire({
+              icon: "success",
+              title: "Order staus has been changed successfully!!",
+              showConfirmButton: true,
+              confirmButtonText: "OK",
+              confirmButtonColor: "#4CAF50",
+            });
+          }
+
+          if (result.value) {
+            location.reload()
+          }
+
+        }
+
+
       } catch (error) {
         console.log(error.message);
       }
     })
   })
-  }
+}
 
 
-  /////////////// DASHBOARD DATA ////////////////////
+/////////////// DASHBOARD DATA ////////////////////
 
-  let months
-  let ordersByMonth
-  let revenueByMonth
-  let orderData
-
-
-  /////////////// Graph data ////////////////////
+let months
+let ordersByMonth
+let revenueByMonth
+let orderData
 
 
-  
-  if (window.location.pathname === '/admin/admindash') {
+/////////////// Graph data ////////////////////
+
+
+
+if (window.location.pathname === '/admin/admindash') {
   // Move the Chart rendering code inside the window.onload event listener
-window.onload = function() {
-  // Place your existing JavaScript code here
-  // ...
+  window.onload = function () {
+    // Place your existing JavaScript code here
+    // ...
 
-  const getChartData = async()=>{
-    const response = await fetch('/admin/chartData',{
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    })
+    const getChartData = async () => {
+      const response = await fetch('/admin/chartData', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
 
-    const data = await response.json()
+      const data = await response.json()
 
-    console.log(data);
+      console.log(data);
 
-    months = data.months
-    ordersByMonth = data.ordersByMonth
-    revenueByMonth = data.revenueByMonth
+      months = data.months
+      ordersByMonth = data.ordersByMonth
+      revenueByMonth = data.revenueByMonth
 
-    salesGraph(months, ordersByMonth)
-    revenue(months, data.revenueByMonth)
-  }
+      salesGraph(months, ordersByMonth)
+      revenue(months, data.revenueByMonth)
+    }
 
 
-  function salesGraph(months, ordersByMonth) {
-    console.log(11);
-    const ctx = document.getElementById('myChart');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: months,
-        datasets: [{
-          label: '# of sales',
-          data: ordersByMonth,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
+    function salesGraph(months, ordersByMonth) {
+      console.log(11);
+      const ctx = document.getElementById('myChart');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: [{
+            label: '# of sales',
+            data: ordersByMonth,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
           }
         }
-      }
-    });
-  }
+      });
+    }
 
-  function revenue(months, revenueByMonth) {
-  
-    const ctx1 = document.getElementById('myChart1');
-    new Chart(ctx1, {
-      type: 'line',
-      data: {
-        labels: months,
-        datasets: [{
-          label: '# Revenue',
-          data: revenueByMonth,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
+    function revenue(months, revenueByMonth) {
+
+      const ctx1 = document.getElementById('myChart1');
+      new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: months,
+          datasets: [{
+            label: '# Revenue',
+            data: revenueByMonth,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
           }
         }
-      }
-    });
-  }
+      });
+    }
 
-  // Call the getChartData function after the DOM has fully loaded
-  getChartData();
-};
+    // Call the getChartData function after the DOM has fully loaded
+    getChartData();
+  };
 }
 
 
@@ -545,23 +545,23 @@ const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate());
 const maxDate = tomorrow.toISOString().split('T')[0];
 
-if(startDateInput && endDateInput){
-startDateInput.setAttribute("max", maxDate);
-endDateInput.setAttribute("min", startDateInput.value);
-endDateInput.setAttribute("max", maxDate);
+if (startDateInput && endDateInput) {
+  startDateInput.setAttribute("max", maxDate);
+  endDateInput.setAttribute("min", startDateInput.value);
+  endDateInput.setAttribute("max", maxDate);
 }
 
 var startDateField = document.getElementById("start-date");
 var endDateField = document.getElementById("end-date");
 
-if(startDateField && endDateField){
-startDateField.addEventListener("change", function () {
-  endDateField.setAttribute("min", startDateField.value);
-});
+if (startDateField && endDateField) {
+  startDateField.addEventListener("change", function () {
+    endDateField.setAttribute("min", startDateField.value);
+  });
 
-endDateField.addEventListener("change", function () {
-  startDateField.setAttribute("max", endDateField.value);
-});
+  endDateField.addEventListener("change", function () {
+    startDateField.setAttribute("max", endDateField.value);
+  });
 
 }
 
@@ -569,12 +569,12 @@ let startDate
 let endDate
 
 
-const getSalesData = async() => {
+const getSalesData = async () => {
 
- 
-  
-    startDate = document.getElementById("start-date").value;
-    endDate = document.getElementById("end-date").value;
+
+
+  startDate = document.getElementById("start-date").value;
+  endDate = document.getElementById("end-date").value;
 
   const salesReportTemplate = `
     <%
@@ -631,34 +631,34 @@ const getSalesData = async() => {
   
 `;
 
-function renderSalesReport(orderData) {
-  
-  const salesReportHTML = ejs.render(salesReportTemplate, { data: orderData });
-  document.getElementById("table").innerHTML = salesReportHTML;
-   
-  jQuery(document).ready(function ($) {
-    $("#my-table").DataTable({
-      dom: "Bfrtip",
-      buttons: ["excelHtml5", "pdfHtml5"],
+  function renderSalesReport(orderData) {
+
+    const salesReportHTML = ejs.render(salesReportTemplate, { data: orderData });
+    document.getElementById("table").innerHTML = salesReportHTML;
+
+    jQuery(document).ready(function ($) {
+      $("#my-table").DataTable({
+        dom: "Bfrtip",
+        buttons: ["excelHtml5", "pdfHtml5"],
+      });
     });
+  }
+
+
+
+  ///////////sales report fetch///////////
+
+  const response = await fetch(`/admin/getSales?startDate=${startDate}&endDate=${endDate}`, {
+    headers: { "Content-Type": "application/json" },
   });
+
+  console.log("response:", response)
+  orderData = await response.json();
+  if (orderData) {
+    renderSalesReport(orderData);
+  }
 }
 
-
-
-    ///////////sales report fetch///////////
-
-    const response = await fetch(`/admin/getSales?startDate=${startDate}&endDate=${endDate}`, {
-        headers: { "Content-Type": "application/json" },
-    });
-    
-    console.log("response:",response)
-    orderData = await response.json();
-    if (orderData) {
-        renderSalesReport(orderData);
-    }
-}
- 
 
 const downloadSalesReport = async () => {
   try {

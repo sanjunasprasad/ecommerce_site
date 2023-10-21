@@ -1,98 +1,102 @@
 <%- include('header') %>
-<%- include('headsection') %>
+    <%- include('headsection') %>
 
 
 
-<!-- Start All Title Box -->
-<div class="all-title-box">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <h2>My Wishlist</h2>
-          <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
-            <li class="breadcrumb-item active">Wishlist</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End All Title Box -->
-    
-
-
-
-  <div class="cart-box-main">
-    <!-- Start Wishlist  -->
-    <div class="wishlist-box-main">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="table-main table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Images</th>
-                                    <th>Product Name </th>
-                                    <th>Unit Price </th>
-                                    <th>Add Item</th>
-                                    <th>Remove</th>
-                                </tr>
-                            </thead>
-                            <input type="hidden" name="cart_id" value="<%= cart._id %>">
-                            <%  wishlistItems.forEach(function(wishlist){ %>
-
-                            <tbody>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#"><img class="img-fluid" src="<%= wishlist.imageUrl[0].url %>" alt="" /></a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="/productdetail?id=<%= wishlist._id %>"><%= wishlist.name %></a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <a href="/productdetail?id=<%= wishlist._id %>"><%= wishlist.price %></a>
-                                    </td>
-                                    <td class="add-pr">
-                                        <a class="btn hvr-hover" href="#"  onclick="moveToCart('<%= wishlist._id%>')">Add to Cart</a>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#" onclick="removeFromWishlist('<%= wishlist._id %>')"><i class="fas fa-times"></i></a>
-                                    </td>
-                                </tr>
-                                <% }) %>
-                                    
-                                  
-                            </tbody>
-                        </table>
+        <!-- Start All Title Box -->
+        <div class="all-title-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>My Wishlist</h2>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
+                            <li class="breadcrumb-item active">Wishlist</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- End Wishlist -->
-  </div>
+        <!-- End All Title Box -->
+
+
+
+
+        <div class="cart-box-main">
+            <!-- Start Wishlist  -->
+            <div class="wishlist-box-main">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-main table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Images</th>
+                                            <th>Product Name </th>
+                                            <th>Unit Price </th>
+                                            <th>Add Item</th>
+                                            <th>Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <input type="hidden" name="cart_id" value="<%= cart._id %>">
+                                    <% wishlistItems.forEach(function(wishlist){ %>
+
+                                        <tbody>
+                                            <tr>
+                                                <td class="thumbnail-img">
+                                                    <a href="#"><img class="img-fluid"
+                                                            src="<%= wishlist.imageUrl[0].url %>" alt="" /></a>
+                                                </td>
+                                                <td class="name-pr">
+                                                    <a href="/productdetail?id=<%= wishlist._id %>">
+                                                        <%= wishlist.name %>
+                                                    </a>
+                                                </td>
+                                                <td class="price-pr">
+                                                    <a href="/productdetail?id=<%= wishlist._id %>">
+                                                        <%= wishlist.price %>
+                                                    </a>
+                                                </td>
+                                                <td class="add-pr">
+                                                    <a class="btn hvr-hover" href="#"
+                                                        onclick="moveToCart('<%= wishlist._id%>')">Add to Cart</a>
+                                                </td>
+                                                <td class="remove-pr">
+                                                    <a href="#" onclick="removeFromWishlist('<%= wishlist._id %>')"><i
+                                                            class="fas fa-times"></i></a>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+
+
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Wishlist -->
+        </div>
 
 
 
 
 
-  <%- include('footer') %>
+        <%- include('footer') %>
 
 
-  <!-- Main Js -->
-<script src="/js/vendor/index.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/users.js"></script>
-<script src="/js/userOrder.js"></script>
-<!-- Include SweetAlert CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
-<!-- Razorpay SDK -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <!-- Main Js -->
+            <script src="/js/vendor/index.js"></script>
+            <script src="/js/main.js"></script>
+            <script src="/js/users.js"></script>
+            <script src="/js/userOrder.js"></script>
+            <!-- Include SweetAlert CSS -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+            <!-- Razorpay SDK -->
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-<!-- Include SweetAlert JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
-
-
-  
+            <!-- Include SweetAlert JS -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+            <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>

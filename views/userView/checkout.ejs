@@ -1,194 +1,215 @@
-<%-include('header')%> 
-<%-include('headsection')%>
-<style>
-    .text
-    {
-        color:whitesmoke
-    }
-    .custom-alert {
-        background-color: #f8d7da;
-        border-color: #f5c6cb;
-        color: #721c24;
-    }
+<%-include('header')%>
+    <%-include('headsection')%>
+        <style>
+            .text {
+                color: whitesmoke
+            }
 
-    .custom-alert svg {
-        fill: #721c24;
-    }
+            .custom-alert {
+                background-color: #f8d7da;
+                border-color: #f5c6cb;
+                color: #721c24;
+            }
 
-    .custom-alert .btn-close {
-        color: #721c24;
-    }
-</style>
+            .custom-alert svg {
+                fill: #721c24;
+            }
 
- <!-- Start All Title Box -->
- <div class="all-title-box">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>Checkout</h2>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                    <li class="breadcrumb-item active">Checkout</li>
-                </ul>
+            .custom-alert .btn-close {
+                color: #721c24;
+            }
+        </style>
+
+        <!-- Start All Title Box -->
+        <div class="all-title-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Checkout</h2>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                            <li class="breadcrumb-item active">Checkout</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- End All Title Box -->
+        <!-- End All Title Box -->
 
 
- <!-- Start Cart  -->
- <div class="cart-box-main">
-    <div class="container">
-        
-        <div class="row">
-            <div class="col-sm-6 col-lg-6 mb-3">
-                
-                <div class="checkout-address">
-                    <div class="title-left">
-                        <h3>Add new address</h3>
-                    </div>
-                    <form class="needs-validation"  id="addAddressCheckout">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName">Full name *</label>
-                                <input type="text" class="form-control" name="name" >
-                                
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="Mobile number">Mobile Number *</label>
-                                <input type="mobile" class="form-control" name="mobileNumber">
-                             
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email">Email Address *</label>
-                            <input type="email" class="form-control" name="email" >
-                   
-                        </div>
-                        <div class="mb-3">
-                            <label for="address">Address Line *</label>
-                            <input type="text" class="form-control" name="addressLine">
-                            <div class="invalid-feedback"> Please enter your shipping address. </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="address2">Town/City *</label>
-                            <input type="text" class="form-control" name="city" > </div>
-                        <div class="row">
-                            <div class="col-md-5 mb-3">
-                                <label for="state">State *</label>
-                                <input type="text" name="state" class="form-control">
-                              
-                            </div>
-                            <div class="col-md-5 mb-3">
-                                <label for="zip">Pincode *</label>
-                                <input type="text" class="form-control" name="pincode">
-                            </div>
-                            <button type="submit" class="btn btn-outline-primary-2 mt-1">
-                                <span>SAVE ADDRESS</span>
-                                <i class="icon-long-arrow-right"></i>
-                            </button>
-                        </div>
+        <!-- Start Cart  -->
+        <div class="cart-box-main">
+            <div class="container">
 
-                        <hr class="mb-1"> 
-                    </form>
-                </div>
-
-                
-            </div>
-            <div class="col-sm-6 col-lg-6 mb-3">
                 <div class="row">
-                    <div class="col-md-12 col-lg-12">
+                    <div class="col-sm-6 col-lg-6 mb-3">
 
-                        <!-- billing address choosing area starts -->
-                        <div class="col-md-12 col-lg-12">
-                            <div class="odr-box">
-                                <div class="title-left">
-                                    <h3>Choose Billing Address</h3> 
+                        <div class="checkout-address">
+                            <div class="title-left">
+                                <h3>Add new address</h3>
+                            </div>
+                            <form class="needs-validation" id="addAddressCheckout">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName">Full name *</label>
+                                        <input type="text" class="form-control" name="name">
+
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="Mobile number">Mobile Number *</label>
+                                        <input type="mobile" class="form-control" name="mobileNumber">
+
+                                    </div>
                                 </div>
-                                <% addressData.forEach(address => { %>
-                                <div class="rounded p-2 bg-light">
-                                    <div class="media mb-2 ">
-                                        <input type="radio" id="address<%= address.id %>" name="selectedAddress" 
-                                            value="<%= address.id %>" ">
-                                            <div class="small text-muted">
-                                                <label for="address<%= address.id %>">
-                                                    <strong>Name:</strong> <%= address.name %><br>
-                                                    <strong>Mobile number:</strong> <%= address.mobile %><br>
-                                                    <strong>Email:</strong> <%= address.email %><br>
-                                                    <strong>Address:</strong> <%= address.addressLine %><br>
-                                                    <strong>City:</strong> <%= address.city %><br>
-                                                    <strong>State:</strong> <%= address.state %><br>
-                                                    <strong>Pincode:</strong> <%= address.pincode %><br>
-                                                    <!-- <a href="/profile">Edit <i class="icon-edit"></i></a> -->
-                                                </label>
+                                <div class="mb-3">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" class="form-control" name="email">
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address">Address Line *</label>
+                                    <input type="text" class="form-control" name="addressLine">
+                                    <div class="invalid-feedback"> Please enter your shipping address. </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address2">Town/City *</label>
+                                    <input type="text" class="form-control" name="city">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 mb-3">
+                                        <label for="state">State *</label>
+                                        <input type="text" name="state" class="form-control">
+
+                                    </div>
+                                    <div class="col-md-5 mb-3">
+                                        <label for="zip">Pincode *</label>
+                                        <input type="text" class="form-control" name="pincode">
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary-2 mt-1">
+                                        <span>SAVE ADDRESS</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </button>
+                                </div>
+
+                                <hr class="mb-1">
+                            </form>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6 col-lg-6 mb-3">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+
+                                <!-- billing address choosing area starts -->
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="odr-box">
+                                        <div class="title-left">
+                                            <h3>Choose Billing Address</h3>
+                                        </div>
+                                        <% addressData.forEach(address=> { %>
+                                            <div class="rounded p-2 bg-light">
+                                                <div class="media mb-2 ">
+                                                    <input type="radio" id="address<%= address.id %>"
+                                                        name="selectedAddress" value="<%= address.id %>" ">
+                                            <div class=" small text-muted">
+                                                    <label for="address<%= address.id %>">
+                                                        <strong>Name:</strong>
+                                                        <%= address.name %><br>
+                                                            <strong>Mobile number:</strong>
+                                                            <%= address.mobile %><br>
+                                                                <strong>Email:</strong>
+                                                                <%= address.email %><br>
+                                                                    <strong>Address:</strong>
+                                                                    <%= address.addressLine %><br>
+                                                                        <strong>City:</strong>
+                                                                        <%= address.city %><br>
+                                                                            <strong>State:</strong>
+                                                                            <%= address.state %><br>
+                                                                                <strong>Pincode:</strong>
+                                                                                <%= address.pincode %><br>
+                                                                                    <!-- <a href="/profile">Edit <i class="icon-edit"></i></a> -->
+                                                    </label>
+                                                </div>
                                             </div>
                                     </div>
-                                </div>
-                                <% }); %>   
-                            </div>
-                        </div>
-                        <br><br>
-                        <!-- ends choose billing area -->
-
-
-
-                        <!-- order summary starts -->
-                        <div class="col-md-12 col-lg-12">
-                            <div  class="order-box">
-                                <div class="title-left">
-                                    <h3>Order Summary</h3>
-                                </div>
-                                <div class="d-flex">
-                                    <h4>Sub Total</h4>
-                                    <div class="ml-auto font-weight-bold">₹ <%=subTotal%> </div>
-                                </div>
-                                <div class="d-flex">
-                                    <h4>Shipping Cost</h4>
-                                    <div class="ml-auto font-weight-bold"> Free </div>
-                                </div>
-
-
-                               <!-- COUPON AREA -->
-                                <tr id="couponModel" class="summary-total">
-                                    <td><p id="couponMessage"></p></td>
-                                    <td ><p id="couponDiscount"></td>
-                                </tr>
-                                <input id="checkout-discount-input" class="ec-coupan" type="text" required=""placeholder="Enter Your Coupon Code" name="ec-coupan" value="">
-                               <button onclick="validateCoupon()"  class="btn btn-theme" type="submit" name="subscribe" value="">Apply</button>
-
-                                <br>
-                                <!-- grandtotal area -->
-                                <hr class="my-1">
-                                <input type="hidden" id="subTotalValue" value="<%= subTotal %>">
-                                <div class="d-flex gr-total">
-                                    <h5 id="subTotalText">Grand Total</h5>
-                                    <div class="ml-auto h5" id="subTotal"> ₹ <%= subTotal %> </div>
+                                    <% }); %>
                                 </div>
                             </div>
-                        </div>
-                        <br><br>
-                         <!-- order summary ends here -->
+                            <br><br>
+                            <!-- ends choose billing area -->
 
 
-                         <!-- wallet warning starts -->
-                         <input type="hidden" id="userWallet" value="<%= userData.wallet.balance %>" >
-                         <div class="col-lg-12 d-flex justify-content-end sticky-alert p-0">
-                            <div class="col-lg-4">
-                                <div class="row ">
-                                    <div id="insufficientBalanceAlert" class="alert custom-alert d-none align-items-center alert-dismissible" role="alert">
-                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
-                                            <use xlink:href="#exclamation-triangle-fill" />
-                                        </svg>
-                                        <div style="margin-left: 7px;">
-                                            Insufficient balance in your wallet <br> Please choose another payment method
+
+                            <!-- order summary starts -->
+                            <div class="col-md-12 col-lg-12">
+                                <div class="order-box">
+                                    <div class="title-left">
+                                        <h3>Order Summary</h3>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h4>Sub Total</h4>
+                                        <div class="ml-auto font-weight-bold">₹ <%=subTotal%>
                                         </div>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h4>Shipping Cost</h4>
+                                        <div class="ml-auto font-weight-bold"> Free </div>
+                                    </div>
+
+
+                                    <!-- COUPON AREA -->
+                                    <tr id="couponModel" class="summary-total">
+                                        <td>
+                                            <p id="couponMessage"></p>
+                                        </td>
+                                        <td>
+                                            <p id="couponDiscount">
+                                        </td>
+                                    </tr>
+                                    <input id="checkout-discount-input" class="ec-coupan" type="text" required=""
+                                        placeholder="Enter Your Coupon Code" name="ec-coupan" value="">
+                                    <button onclick="validateCoupon()" class="btn btn-theme" type="submit"
+                                        name="subscribe" value="">Apply</button>
+
+                                    <br>
+                                    <!-- grandtotal area -->
+                                    <hr class="my-1">
+                                    <input type="hidden" id="subTotalValue" value="<%= subTotal %>">
+                                    <div class="d-flex gr-total">
+                                        <h5 id="subTotalText">Grand Total</h5>
+                                        <div class="ml-auto h5" id="subTotal"> ₹ <%= subTotal %>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- <div class="col-lg-12 d-flex justify-content-end sticky-alert p-0">
+                            <br><br>
+                            <!-- order summary ends here -->
+
+
+                            <!-- wallet warning starts -->
+                            <input type="hidden" id="userWallet" value="<%= userData.wallet.balance %>">
+                            <div class="col-lg-12 d-flex justify-content-end sticky-alert p-0">
+                                <div class="col-lg-4">
+                                    <div class="row ">
+                                        <div id="insufficientBalanceAlert"
+                                            class="alert custom-alert d-none align-items-center alert-dismissible"
+                                            role="alert">
+                                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                                                aria-label="Warning:">
+                                                <use xlink:href="#exclamation-triangle-fill" />
+                                            </svg>
+                                            <div style="margin-left: 7px;">
+                                                Insufficient balance in your wallet <br> Please choose another payment
+                                                method
+                                            </div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-12 d-flex justify-content-end sticky-alert p-0">
                             <div class="col-lg-4">
                                 <div class="row ">
                                     <div id="insufficientBalanceAlert" class="alert alert-danger d-none align-items-center alert-dismissible" role="alert">
@@ -203,79 +224,89 @@
                                 </div>
                             </div>
                         </div> -->
-                        <!-- wallet warning ends -->
+                            <!-- wallet warning ends -->
 
 
-                        <!-- payment method radio choosing -->
-                        <div class="shipping-method-box">
-                            <div class="title-left">
-                                <h3>Payment Method</h3>
-                            </div>
-                            <div class="mb-4">
-                            <div class="d-block my-3">
-                                <form action="#">
-                                    <div class="custom-control custom-radio">
-                                        <input id="pay1" name="payment" type="radio" class="payment-radio custom-control-input" value="Cash On Delivery" onchange="handleAddressSelection()" >
-                                        <label class="custom-control-label" for="pay1">Cash On Delivery</label>
+                            <!-- payment method radio choosing -->
+                            <div class="shipping-method-box">
+                                <div class="title-left">
+                                    <h3>Payment Method</h3>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="d-block my-3">
+                                        <form action="#">
+                                            <div class="custom-control custom-radio">
+                                                <input id="pay1" name="payment" type="radio"
+                                                    class="payment-radio custom-control-input" value="Cash On Delivery"
+                                                    onchange="handleAddressSelection()">
+                                                <label class="custom-control-label" for="pay1">Cash On Delivery</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input id="pay2" name="payment" type="radio"
+                                                    class="payment-radio custom-control-input" value="Razorpay"
+                                                    onchange="handleAddressSelection()">
+                                                <label class="custom-control-label" for="pay2">Razorpay</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input id="pay3" name="payment" type="radio"
+                                                    class="payment-radio custom-control-input" value="Wallet"
+                                                    onchange="handleAddressSelection()">
+                                                <label class="custom-control-label" for="pay3">Wallet</label>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="pay2" name="payment" type="radio" class="payment-radio custom-control-input" value="Razorpay" onchange="handleAddressSelection()">
-                                        <label class="custom-control-label" for="pay2">Razorpay</label>
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="payment-icon">
+                                        <ul>
+                                            <li><img class="img-fluid" src="../assetu/images/payment-icon/1.png" alt="">
+                                            </li>
+                                            <li><img class="img-fluid" src="../assetu/images/payment-icon/2.png" alt="">
+                                            </li>
+                                            <li><img class="img-fluid" src="../assetu/images/payment-icon/3.png" alt="">
+                                            </li>
+                                            <li><img class="img-fluid" src="../assetu/images/payment-icon/5.png" alt="">
+                                            </li>
+                                            <li><img class="img-fluid" src="../assetu/images/payment-icon/7.png" alt="">
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="pay3" name="payment" type="radio" class="payment-radio custom-control-input" value="Wallet" onchange="handleAddressSelection()">
-                                        <label class="custom-control-label" for="pay3">Wallet</label>
-                                    </div>
-                                </form>
-                            </div>
-                               
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="payment-icon">
-                                    <ul>
-                                        <li><img class="img-fluid" src="../assetu/images/payment-icon/1.png" alt=""></li>
-                                        <li><img class="img-fluid" src="../assetu/images/payment-icon/2.png" alt=""></li>
-                                        <li><img class="img-fluid" src="../assetu/images/payment-icon/3.png" alt=""></li>
-                                        <li><img class="img-fluid" src="../assetu/images/payment-icon/5.png" alt=""></li>
-                                        <li><img class="img-fluid" src="../assetu/images/payment-icon/7.png" alt=""></li>
-                                    </ul>
                                 </div>
                             </div>
+                            <!-- payment choosing ends -->
                         </div>
-                        <!-- payment choosing ends -->
-                    </div>
-                    <button disabled onclick="placeOrder()"  id="place-order-btn" class="ml-auto text btn hvr-hover">
-                        Place Order
-                    </button>
+                        <button disabled onclick="placeOrder()" id="place-order-btn" class="ml-auto text btn hvr-hover">
+                            Place Order
+                        </button>
 
+                    </div>
                 </div>
             </div>
+
         </div>
-
-    </div>
-</div>
-<!-- End Cart -->
+        </div>
+        <!-- End Cart -->
 
 
 
-<%-include('footer')%> 
- 
+        <%-include('footer')%>
 
 
 
 
 
-<!-- Main Js -->
-<script src="/js/vendor/index.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/users.js"></script>
-<script src="/js/userOrder.js"></script>
-<!-- Include SweetAlert CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
-<!-- Razorpay SDK -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-<!-- Include SweetAlert JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-<script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>
+            <!-- Main Js -->
+            <script src="/js/vendor/index.js"></script>
+            <script src="/js/main.js"></script>
+            <script src="/js/users.js"></script>
+            <script src="/js/userOrder.js"></script>
+            <!-- Include SweetAlert CSS -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+            <!-- Razorpay SDK -->
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+            <!-- Include SweetAlert JS -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+            <script src="https://kit.fontawesome.com/7fdb179fcf.js" crossorigin="anonymous"></script>

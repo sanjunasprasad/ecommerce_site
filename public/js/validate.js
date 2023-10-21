@@ -39,9 +39,9 @@ $(document).ready(function () {
             name: {
                 required: true,
             },
-            signupEmail:{
-                required:true,
-                email:true
+            signupEmail: {
+                required: true,
+                email: true
             },
             mobile: {
                 required: true,
@@ -93,25 +93,25 @@ $(document).ready(function () {
     });
 
 
-    $('#newPass').submit(function(e){
+    $('#newPass').submit(function (e) {
         const pass = $("#password").val();
         const pass2 = $("#new_password").val();
-        if(pass2!==pass){
+        if (pass2 !== pass) {
             e.preventDefault();
             $("#notmatch").show();
-        }else{
+        } else {
             $("#notmatch").hide();
         }
 
     })
 
-    $('#signup').submit(function(e){
+    $('#signup').submit(function (e) {
         const pass = $("#password_signup").val();
         const pass2 = $("#re_password").val();
-        if(pass2!==pass){
+        if (pass2 !== pass) {
             e.preventDefault();
             $("#notmatch").show();
-        }else{
+        } else {
             $("#notmatch").hide();
         }
 
@@ -157,113 +157,113 @@ $(document).ready(function () {
 
 
     $('#newPass').validate({
-        rules:{
-            password:{
-                required:true,
-                pwcheck:true,
-                minlength:8
+        rules: {
+            password: {
+                required: true,
+                pwcheck: true,
+                minlength: 8
             },
-            new_password:{
-                required:true,
-                pwcheck:true,
-                minlength:8
+            new_password: {
+                required: true,
+                pwcheck: true,
+                minlength: 8
             }
         },
-        messages:{
-            password:{
-                required:"Please enter new password",
-                pwcheck:"One Upper-case character & one digit",
-                minlength:"Atleast 8 characters"
+        messages: {
+            password: {
+                required: "Please enter new password",
+                pwcheck: "One Upper-case character & one digit",
+                minlength: "Atleast 8 characters"
             },
-            new_password:{
-                required:"Please Re-enter new password",
-                pwcheck:"One Upper-case character & one digit",
-                minlength:"Atleast 8 characters"
+            new_password: {
+                required: "Please Re-enter new password",
+                pwcheck: "One Upper-case character & one digit",
+                minlength: "Atleast 8 characters"
             }
         }
     })
 
 
     $('#emailEnter').validate({
-        rules:{
-            email:{
-                required:true,
-                email:true
+        rules: {
+            email: {
+                required: true,
+                email: true
             }
         },
-        messages:{
-            email:{
-                required:"Please enter the email",
-                email:"Please enter valid email"
+        messages: {
+            email: {
+                required: "Please enter the email",
+                email: "Please enter valid email"
             }
         }
     })
 
 
     $('#otpEnter').validate({
-        rules:{
-            otp:{
-                required:true,
-                minlength:6,
-                maxlength:6
+        rules: {
+            otp: {
+                required: true,
+                minlength: 6,
+                maxlength: 6
             }
         },
-        messages:{
-            otp:{
-                required:"Please enter the OTP",
-                minlength:"Please enter valid OTP",
-                maxlength:"Please enter valid OTP",
+        messages: {
+            otp: {
+                required: "Please enter the OTP",
+                minlength: "Please enter valid OTP",
+                maxlength: "Please enter valid OTP",
             }
         }
     })
 
 
     $('#userProfile').validate({
-        rules:{
-            userName:{
-                required:true,               
+        rules: {
+            userName: {
+                required: true,
             },
-            userMobileNumber:{
-                required:true,
-                mbcheck:true
+            userMobileNumber: {
+                required: true,
+                mbcheck: true
             },
-            userEmail:{
-                required:true,
-                email:true
+            userEmail: {
+                required: true,
+                email: true
             },
-            userCurrentPassword:{
-                required:true,
-                pwcheck:true,
-                minlength:8
+            userCurrentPassword: {
+                required: true,
+                pwcheck: true,
+                minlength: 8
             }
             // ,
             // userNewPassword:{
-                
+
             //     pwcheck:true,
             //     minlength:8
             // },
             // userConfirmNewPassword:{
-                
+
             //     pwcheck:true,
             //     minlength:8
             // }
         },
-        messages:{
-            userName:{
-                required:"please enter your name"                
+        messages: {
+            userName: {
+                required: "please enter your name"
             },
-            userMobileNumber:{
-                required:"please enter your mobile number",
-                mbcheck:"please enter valid mobile number"
+            userMobileNumber: {
+                required: "please enter your mobile number",
+                mbcheck: "please enter valid mobile number"
             },
-            userEmail:{
-                required:"please enter your email",
-                email:"enter valid email address"
+            userEmail: {
+                required: "please enter your email",
+                email: "enter valid email address"
             },
-            userCurrentPassword:{
-                required:"Please enter your password",
-                pwcheck:"Please enter valid password",
-                minlength:""
+            userCurrentPassword: {
+                required: "Please enter your password",
+                pwcheck: "Please enter valid password",
+                minlength: ""
             }
             // ,
             // userNewPassword:{
@@ -275,8 +275,8 @@ $(document).ready(function () {
             //     minlength:"Atleast 8 characters"
             // }
         }
-        
-        
+
+
     })
 
 
@@ -289,10 +289,10 @@ $(document).ready(function () {
                 required: true,
                 nameCheck: true,
             },
-            categoryDescription:{
-                required:true,
-                CatDescCheck:true,
-                
+            categoryDescription: {
+                required: true,
+                CatDescCheck: true,
+
             }
         },
         messages: {
@@ -300,9 +300,9 @@ $(document).ready(function () {
                 required: "Name is required",
                 nameCheck: "Please enter a valid name",
             },
-            categoryDescription:{
-                required:"Description is required",
-                CatDescCheck:"Please enter a valid description"
+            categoryDescription: {
+                required: "Description is required",
+                CatDescCheck: "Please enter a valid description"
             }
         },
     });
@@ -315,10 +315,10 @@ $(document).ready(function () {
                 required: true,
                 nameCheck: true,
             },
-            categoryDescription:{
-                required:true,
-                CatDescCheck:true,
-                
+            categoryDescription: {
+                required: true,
+                CatDescCheck: true,
+
             }
         },
         messages: {
@@ -326,9 +326,9 @@ $(document).ready(function () {
                 required: "Name is required",
                 nameCheck: "Please enter a valid Name",
             },
-            categoryDescription:{
-                required:"Description is required",
-                CatDescCheck:"Please enter a valid description"
+            categoryDescription: {
+                required: "Description is required",
+                CatDescCheck: "Please enter a valid description"
             }
         },
     });
@@ -351,10 +351,10 @@ $(document).ready(function () {
                 required: true,
                 nameCheck: true,
             },
-            subCategoryDescription:{
-                required:true,
-                CatDescCheck:true,
-                
+            subCategoryDescription: {
+                required: true,
+                CatDescCheck: true,
+
             }
         },
         messages: {
@@ -362,9 +362,9 @@ $(document).ready(function () {
                 required: "Name is required",
                 nameCheck: "Please enter a valid name",
             },
-            subCategoryDescription:{
-                required:"Description is required",
-                CatDescCheck:"Please enter a valid description"
+            subCategoryDescription: {
+                required: "Description is required",
+                CatDescCheck: "Please enter a valid description"
             }
         },
     });
@@ -377,10 +377,10 @@ $(document).ready(function () {
                 required: true,
                 nameCheck: true,
             },
-            subCategoryDescription:{
-                required:true,
-                CatDescCheck:true,
-                
+            subCategoryDescription: {
+                required: true,
+                CatDescCheck: true,
+
             }
         },
         messages: {
@@ -388,9 +388,9 @@ $(document).ready(function () {
                 required: "Name is required",
                 nameCheck: "Please enter a valid Name",
             },
-            subCategoryDescription:{
-                required:"Description is required",
-                CatDescCheck:"Please enter a valid description"
+            subCategoryDescription: {
+                required: "Description is required",
+                CatDescCheck: "Please enter a valid description"
             }
         },
     });
@@ -410,9 +410,9 @@ $(document).ready(function () {
                 required: true,
                 productPriceCheck: true,
             },
-            quantity:{
-                required:true,
-                quantityCheck:true
+            quantity: {
+                required: true,
+                quantityCheck: true
             },
             description: {
                 required: true,
@@ -431,9 +431,9 @@ $(document).ready(function () {
                 required: "Please enter a price",
                 productPriceCheck: "Please enter a valid price",
             },
-            quantity:{
-                required:"Please enter the quantity",
-                quantityCheck:"Enter valid quantity"
+            quantity: {
+                required: "Please enter the quantity",
+                quantityCheck: "Enter valid quantity"
             },
             description: {
                 required: "Please enter product description",
@@ -474,9 +474,9 @@ $(document).ready(function () {
                 required: true,
                 productPriceCheck: true,
             },
-            quantity:{
-                required:true,
-                quantityCheck:true
+            quantity: {
+                required: true,
+                quantityCheck: true
             },
             description: {
                 required: true,
@@ -495,9 +495,9 @@ $(document).ready(function () {
                 required: "Please enter a price",
                 productPriceCheck: "Please enter a valid price",
             },
-            quantity:{
-                required:"Please enter the quantity",
-                quantityCheck:"Enter valid quantity"
+            quantity: {
+                required: "Please enter the quantity",
+                quantityCheck: "Enter valid quantity"
             },
             description: {
                 required: "Please enter product description",
@@ -509,64 +509,64 @@ $(document).ready(function () {
 
 
     $('#addAddress').validate({
-        rules:{
-            name:{
-                required:true,
-                addressNameCheck:true            
+        rules: {
+            name: {
+                required: true,
+                addressNameCheck: true
             },
-            mobileNumber:{
-                required:true,
-                mbcheck:true
+            mobileNumber: {
+                required: true,
+                mbcheck: true
             },
-            addressLine:{
-                required:true,
-                addressCheck:true
+            addressLine: {
+                required: true,
+                addressCheck: true
             },
-            email:{
-                required:true,
-                email:true
+            email: {
+                required: true,
+                email: true
             },
-            city:{
-                required:true,
-                cityCheck:true
+            city: {
+                required: true,
+                cityCheck: true
             },
-            state:{
-                required:true,
-                cityCheck:true
+            state: {
+                required: true,
+                cityCheck: true
             },
-            pincode:{
-                required:true,
-                pinCheck:true
+            pincode: {
+                required: true,
+                pinCheck: true
             }
         },
-        messages:{
-            name:{
-                required:"Please enter your name",
-                addressNameCheck:"Please enter valid name"
+        messages: {
+            name: {
+                required: "Please enter your name",
+                addressNameCheck: "Please enter valid name"
             },
-            mobileNumber:{
-                required:"Please enter your number",
-                mbcheck:"Please enter valid number"
+            mobileNumber: {
+                required: "Please enter your number",
+                mbcheck: "Please enter valid number"
             },
-            addressLine:{
-                required:"Please enter your address",
-                addressCheck:"Please enter valid address"
+            addressLine: {
+                required: "Please enter your address",
+                addressCheck: "Please enter valid address"
             },
-            email:{
-                required:"Please enter your email",
-                email:"Please enter valid email"
+            email: {
+                required: "Please enter your email",
+                email: "Please enter valid email"
             },
-            city:{
-                required:"Please enter your city",
-                cityCheck:"Please enter valid city"
+            city: {
+                required: "Please enter your city",
+                cityCheck: "Please enter valid city"
             },
-            state:{
-                required:"Please enter your state",
-                cityInput:"Please enter Valid state"
+            state: {
+                required: "Please enter your state",
+                cityInput: "Please enter Valid state"
             },
-            pincode:{
-                required:"Please enter your pincode",
-                pinCheck:"Please enter valid pincode"
+            pincode: {
+                required: "Please enter your pincode",
+                pinCheck: "Please enter valid pincode"
             }
         }
     })
@@ -589,155 +589,155 @@ $(document).ready(function () {
 
 
     $('#updateAddress').validate({
-        rules:{
-            name:{
-                required:true,
-                addressNameCheck:true            
+        rules: {
+            name: {
+                required: true,
+                addressNameCheck: true
             },
-            mobile:{
-                required:true,
-                mbcheck:true
+            mobile: {
+                required: true,
+                mbcheck: true
             },
-            addressLine:{
-                required:true,
-                addressCheck:true
+            addressLine: {
+                required: true,
+                addressCheck: true
             },
-            email:{
-                required:true,
-                email:true
+            email: {
+                required: true,
+                email: true
             },
-            city:{
-                required:true,
-                cityCheck:true
+            city: {
+                required: true,
+                cityCheck: true
             },
-            state:{
-                required:true,
-                cityCheck:true
+            state: {
+                required: true,
+                cityCheck: true
             },
-            pincode:{
-                required:true,
-                pinCheck:true
+            pincode: {
+                required: true,
+                pinCheck: true
             }
         },
-        messages:{
-            name:{
-                required:"Please enter your name",
-                addressNameCheck:"Please enter valid name"
+        messages: {
+            name: {
+                required: "Please enter your name",
+                addressNameCheck: "Please enter valid name"
             },
-            mobile:{
-                required:"Please enter your number",
-                mbcheck:"Please enter valid number"
+            mobile: {
+                required: "Please enter your number",
+                mbcheck: "Please enter valid number"
             },
-            addressLine:{
-                required:"Please enter your address",
-                addressCheck:"Please enter valid address"
+            addressLine: {
+                required: "Please enter your address",
+                addressCheck: "Please enter valid address"
             },
-            email:{
-                required:"Please enter your email",
-                email:"Please enter valid email"
+            email: {
+                required: "Please enter your email",
+                email: "Please enter valid email"
             },
-            city:{
-                required:"Please enter your city",
-                cityCheck:"Please enter valid city"
+            city: {
+                required: "Please enter your city",
+                cityCheck: "Please enter valid city"
             },
-            state:{
-                required:"Please enter your state",
-                cityInput:"Please enter Valid state"
+            state: {
+                required: "Please enter your state",
+                cityInput: "Please enter Valid state"
             },
-            pincode:{
-                required:"Please enter your pincode",
-                pinCheck:"Please enter valid pincode"
+            pincode: {
+                required: "Please enter your pincode",
+                pinCheck: "Please enter valid pincode"
             }
         }
     })
 
 
     $('#addAddressCheckout').validate({
-        rules:{
-            name:{
-                required:true,
-                addressNameCheck:true            
+        rules: {
+            name: {
+                required: true,
+                addressNameCheck: true
             },
-            mobileNumber:{
-                required:true,
-                mbcheck:true
+            mobileNumber: {
+                required: true,
+                mbcheck: true
             },
-            addressLine:{
-                required:true,
-                addressCheck:true
+            addressLine: {
+                required: true,
+                addressCheck: true
             },
-            email:{
-                required:true,
-                email:true
+            email: {
+                required: true,
+                email: true
             },
-            city:{
-                required:true,
-                cityCheck:true
+            city: {
+                required: true,
+                cityCheck: true
             },
-            state:{
-                required:true,
-                cityCheck:true
+            state: {
+                required: true,
+                cityCheck: true
             },
-            pincode:{
-                required:true,
-                pinCheck:true
+            pincode: {
+                required: true,
+                pinCheck: true
             }
         },
-        messages:{
-            name:{
-                required:"Please enter your name",
-                addressNameCheck:"Please enter valid name"
+        messages: {
+            name: {
+                required: "Please enter your name",
+                addressNameCheck: "Please enter valid name"
             },
-            mobileNumber:{
-                required:"Please enter your number",
-                mbcheck:"Please enter valid number"
+            mobileNumber: {
+                required: "Please enter your number",
+                mbcheck: "Please enter valid number"
             },
-            addressLine:{
-                required:"Please enter your address",
-                addressCheck:"Please enter valid address"
+            addressLine: {
+                required: "Please enter your address",
+                addressCheck: "Please enter valid address"
             },
-            email:{
-                required:"Please enter your email",
-                email:"Please enter valid email"
+            email: {
+                required: "Please enter your email",
+                email: "Please enter valid email"
             },
-            city:{
-                required:"Please enter your city",
-                cityCheck:"Please enter valid city"
+            city: {
+                required: "Please enter your city",
+                cityCheck: "Please enter valid city"
             },
-            state:{
-                required:"Please enter your state",
-                cityInput:"Please enter valid state"
+            state: {
+                required: "Please enter your state",
+                cityInput: "Please enter valid state"
             },
-            pincode:{
-                required:"Please enter your pincode",
-                pinCheck:"Please enter valid pincode"
+            pincode: {
+                required: "Please enter your pincode",
+                pinCheck: "Please enter valid pincode"
             }
         }
     })
 
 
     $('#addCoupon').validate({
-        rules:{
-            couponCode:{
-                required:true,
-                couponNameCheck:true
+        rules: {
+            couponCode: {
+                required: true,
+                couponNameCheck: true
             },
-            couponDiscount:{
-                required:true,
-                discountCheck:true
+            couponDiscount: {
+                required: true,
+                discountCheck: true
             }
         },
-        messages:{
-            couponCode:{
-                required:"Please enter a coupon code",
-                couponNameCheck:"Enter a valid cooupon code"
+        messages: {
+            couponCode: {
+                required: "Please enter a coupon code",
+                couponNameCheck: "Enter a valid cooupon code"
             },
-            couponDiscount:{
-                required:"Please enter discount percent",
-                discountCheck:"Enter valid discount percent"
+            couponDiscount: {
+                required: "Please enter discount percent",
+                discountCheck: "Enter valid discount percent"
             },
-            couponDate:{
-                required:"Please choose an expiry date"
+            couponDate: {
+                required: "Please choose an expiry date"
             }
         }
     })
@@ -752,21 +752,21 @@ $(document).ready(function () {
 
 
     $('#bannerValidate').validate({
-        rules:{
-            title:{
+        rules: {
+            title: {
                 required: true
             },
-            label:{
-                required:true
+            label: {
+                required: true
             },
-            bannerSubtitle:{
-                required:true
+            bannerSubtitle: {
+                required: true
             },
-            image:{
-                required:true
+            image: {
+                required: true
             }
 
         }
     })
-    
+
 });

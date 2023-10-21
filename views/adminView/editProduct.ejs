@@ -1,22 +1,21 @@
-
 <%-include('adminhead')%>
 
-<style>
+  <style>
     h1 {
-        margin-left: 1.2rem;
-        margin-top: 1.5rem;
+      margin-left: 1.2rem;
+      margin-top: 1.5rem;
     }
 
     #details {
-        display: flex;
-        flex-direction: row;
-        margin-top: 50px;
+      display: flex;
+      flex-direction: row;
+      margin-top: 50px;
     }
 
     #images {
-        margin-left: 1.5rem;
+      margin-left: 1.5rem;
 
-        margin-top: 50px;
+      margin-top: 50px;
     }
 
 
@@ -25,115 +24,115 @@
     #Price,
     #new-brand-input,
     #offerPrice {
-        margin-bottom: 20px;
-        margin-left: 22px;
+      margin-bottom: 20px;
+      margin-left: 22px;
 
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        width: 20rem;
-        max-width: 400px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      width: 20rem;
+      max-width: 400px;
     }
 
-     textarea{
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        margin-top: 40px;
-        margin-left: 22px;
-        width: 80%;
+    textarea {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      margin-top: 40px;
+      margin-left: 22px;
+      width: 80%;
     }
 
     input[type="file"] {
-        margin-bottom: 20px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        max-width: 400px;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
     }
 
     input[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: bold;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        max-width: 400px;
-        margin-left: 1.2rem;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+      margin-left: 1.2rem;
     }
 
     input[type="submit"]:hover {
-        background-color: #3e8e41;
+      background-color: #3e8e41;
     }
 
 
 
     .image-preview-container {
-        display: flex;
+      display: flex;
 
-        margin-bottom: 20px;
+      margin-bottom: 20px;
 
-        width: 100%;
+      width: 100%;
     }
 
     .image-preview {
-        height: 100px;
-        width: 150 px;
-        margin-bottom: 10px;
-        margin-left: 2rem;
-        border-radius: 5px;
-        object-fit: cover;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      height: 100px;
+      width: 150 px;
+      margin-bottom: 10px;
+      margin-left: 2rem;
+      border-radius: 5px;
+      object-fit: cover;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     }
 
     .container {
-        border-radius: 20px;
-        border: 1px solid black;
-        position: relative;
-        left: 2rem;
-        padding-bottom: 1.2rem;
-        margin-bottom: 5rem;
-        background-color: #2e92a9;
-        color: white;
+      border-radius: 20px;
+      border: 1px solid black;
+      position: relative;
+      left: 2rem;
+      padding-bottom: 1.2rem;
+      margin-bottom: 5rem;
+      background-color: #2e92a9;
+      color: white;
 
     }
 
 
-   
+
     .image-container {
-        display: flex;
-        margin-left: 20px;
+      display: flex;
+      margin-left: 20px;
     }
 
-    
+
     .close-button {
-        position: relative;
-        left: 5px;
-        background: transparent;
-        border: none;
-        color: #000;
-        font-size: 24px;
-        cursor: pointer;
+      position: relative;
+      left: 5px;
+      background: transparent;
+      border: none;
+      color: #000;
+      font-size: 24px;
+      cursor: pointer;
     }
 
     select {
 
-        margin-left: 22px;
-        margin-top: 8px;
-        height: 30px;
-        width: 50px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      margin-left: 22px;
+      margin-top: 8px;
+      height: 30px;
+      width: 50px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     }
 
     #name-error,
@@ -141,128 +140,128 @@
     #Category-error,
     #quantity-error,
     #subCategory-error {
-        font-size: 9pt;
-        margin: auto;
-        margin-left: 4px;
-        
+      font-size: 9pt;
+      margin: auto;
+      margin-left: 4px;
+
     }
 
-    #new-brand-input{
-        margin-top: 8px;
+    #new-brand-input {
+      margin-top: 8px;
     }
 
-    #description-error{
-        font-size: 10pt;
-        margin: auto;
-        margin-left: 1.8rem;
+    #description-error {
+      font-size: 10pt;
+      margin: auto;
+      margin-left: 1.8rem;
     }
 
-    @media (min-width: 992px){
+    @media (min-width: 992px) {
 
-    .col-lg-3.col-md-6 {
-    width: 15%;
+      .col-lg-3.col-md-6 {
+        width: 15%;
+      }
     }
-}
-</style>
+  </style>
 
 
 
 
 
 
-        </div>
-    </div>
+  </div>
+  </div>
 
 
 
 
 
-    <div class="container">
-        <h1>Update Product Details</h1>
-      
-        <form action="/admin/updateProduct/<%= productData._id %>" method="post" id="updateProductValidation"
-          enctype="multipart/form-data">
-      
-          <div class="container-fluid">
-            <div class="row mt-4">
-              <div class="col-lg-12 col-md-6 p-0">
-                <input type="text" placeholder="Product Name" value="<%= productData.name %>" id="name" name="name"
+  <div class="container">
+    <h1>Update Product Details</h1>
+
+    <form action="/admin/updateProduct/<%= productData._id %>" method="post" id="updateProductValidation"
+      enctype="multipart/form-data">
+
+      <div class="container-fluid">
+        <div class="row mt-4">
+          <div class="col-lg-12 col-md-6 p-0">
+            <input type="text" placeholder="Product Name" value="<%= productData.name %>" id="name" name="name"
+              required>
+
+            <% if (productData.oldPrice) { %>
+              <input type="number" placeholder="Price" value="<%= productData.oldPrice %>" id="Price" name="price"
+                required>
+              <% } else { %>
+                <input type="number" placeholder="Price" value="<%= productData.price %>" id="Price" name="price"
                   required>
-      
-                <% if (productData.oldPrice) { %>
-                  <input type="number" placeholder="Price" value="<%= productData.oldPrice %>" id="Price" name="price"
-                    required>
-                <% } else { %>
-                  <input type="number" placeholder="Price" value="<%= productData.price %>" id="Price" name="price"
-                    required>
                 <% } %>
-      
-                <input type="number" placeholder="Quantity" value="<%= productData.stock %>" id="quantity"
-                  name="quantity">
-      
-              </div>
-      
-              <div class="col-lg-12 col-md-6 p-0">
-      
-                <select style="width:180px;" name="category" required>
-               
-                  <% categories.forEach(function(category) { %>
-                    <option value="<%= category._id %>"><%= category.category %></option>
-                  <% }); %>
-                </select>
-      
-                
-      
-                
-      
-                <input type="text" id="new-brand-input" class="d-none" name="newBrand" placeholder="Enter brand"
-                  required>
-      
-              </div>
-            </div>
-      
-            
+
+                  <input type="number" placeholder="Quantity" value="<%= productData.stock %>" id="quantity"
+                    name="quantity">
+
           </div>
-      
-          <textarea type="text" rows="3" placeholder="description" id="description" name="description"
-            required><%= productData.description %></textarea>
-      
-          <div id="images">
-            <input class="image" type="file" id="image1" name="image">
-            <input class="image" type="file" id="image2" name="image">
-            <br>
-            <input class="image" type="file" id="image3" name="image">
-            <input class="image" type="file" id="image4" name="image">
+
+          <div class="col-lg-12 col-md-6 p-0">
+
+            <select style="width:180px;" name="category" required>
+
+              <% categories.forEach(function(category) { %>
+                <option value="<%= category._id %>">
+                  <%= category.category %>
+                </option>
+                <% }); %>
+            </select>
+
+
+
+
+
+            <input type="text" id="new-brand-input" class="d-none" name="newBrand" placeholder="Enter brand" required>
+
           </div>
-      
-          <input name="product-id" type="hidden" value="<%= productData._id %>">
-      
-          <div class="container-fluid">
-            <div class="row">
-              <% productData.imageUrl.forEach(function(image, index) { %>
-                <div class="col-lg-3 col-md-6">
-                  <div class="image-container">
-                    <p onclick="deleteProImg()" class="close-button" data-image-index="<%= index %>"
-                      style="text-decoration: none;">×</p>
-                    <img src="<%= image.url %>" alt="images" style="width: 100px; height: 100px;"
-                      class="m-2 pro-image" data-image-index="<%= index %>">
-                  </div>
-                </div>
-              <% }); %>
-            </div>
-          </div>
-      
-          <div class="image-preview-container">
-            <img id="preview1" class="image-preview" src="#" alt="Image Preview" style="display: none;">
-            <img id="preview2" class="image-preview" src="#" alt="Image Preview" style="display: none;">
-            <img id="preview3" class="image-preview" src="#" alt="Image Preview" style="display: none;">
-            <img id="preview4" class="image-preview" src="#" alt="Image Preview" style="display: none;">
-          </div>
-      
-          <input type="submit" value="Update the Product">
-        </form>
+        </div>
+
+
       </div>
-      
+
+      <textarea type="text" rows="3" placeholder="description" id="description" name="description"
+        required><%= productData.description %></textarea>
+
+      <div id="images">
+        <input class="image" type="file" id="image1" name="image">
+        <input class="image" type="file" id="image2" name="image">
+        <br>
+        <input class="image" type="file" id="image3" name="image">
+        <input class="image" type="file" id="image4" name="image">
+      </div>
+
+      <input name="product-id" type="hidden" value="<%= productData._id %>">
+
+      <div class="container-fluid">
+        <div class="row">
+          <% productData.imageUrl.forEach(function(image, index) { %>
+            <div class="col-lg-3 col-md-6">
+              <div class="image-container">
+                <p onclick="deleteProImg()" class="close-button" data-image-index="<%= index %>"
+                  style="text-decoration: none;">×</p>
+                <img src="<%= image.url %>" alt="images" style="width: 100px; height: 100px;" class="m-2 pro-image"
+                  data-image-index="<%= index %>">
+              </div>
+            </div>
+            <% }); %>
+        </div>
+      </div>
+
+      <div class="image-preview-container">
+        <img id="preview1" class="image-preview" src="#" alt="Image Preview" style="display: none;">
+        <img id="preview2" class="image-preview" src="#" alt="Image Preview" style="display: none;">
+        <img id="preview3" class="image-preview" src="#" alt="Image Preview" style="display: none;">
+        <img id="preview4" class="image-preview" src="#" alt="Image Preview" style="display: none;">
+      </div>
+
+      <input type="submit" value="Update the Product">
+    </form>
+  </div>
 
 
 
@@ -271,90 +270,91 @@
 
 
 
-    <script>
+
+  <script>
 
 
-        //For deleting Image
+    //For deleting Image
 
-        const deleteImage = async (productId, imageIndex) => {
-            console.log(imageIndex)
-            try {
-                const response = await fetch(`/admin/product_img_delete?id=${productId}&image=${imageIndex}`, {
-                    method: 'DELETE'
-                });
+    const deleteImage = async (productId, imageIndex) => {
+      console.log(imageIndex)
+      try {
+        const response = await fetch(`/admin/product_img_delete?id=${productId}&image=${imageIndex}`, {
+          method: 'DELETE'
+        });
 
-                const data = await response.json();
-                console.log(data.message);
+        const data = await response.json();
+        console.log(data.message);
 
-                if (data) {
-                    const imageElem = document.querySelector(`.pro-image[data-image-index="${imageIndex}"]`);
-                    if (imageElem) {
+        if (data) {
+          const imageElem = document.querySelector(`.pro-image[data-image-index="${imageIndex}"]`);
+          if (imageElem) {
 
-                        imageElem.remove(); // remove the image element completely
-                    }
-                }
-
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-
-        const deleteProImg = () => {
-
-            const deleteButtons = document.querySelectorAll('.close-button')
-            const productId = document.getElementsByName('product-id')[0].value
-
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', async (event) => {
-                    const imageIndex = event.target.dataset.imageIndex;
-                    deleteImage(productId, imageIndex);
-                });
-            });
-
+            imageElem.remove(); // remove the image element completely
+          }
         }
 
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
 
-        // Image preview code
-        function previewImage(event, imageNumber) {
-            var preview = document.getElementById(`preview${imageNumber}`);
-            var file = event.target.files[0];
-            var reader = new FileReader();
+    const deleteProImg = () => {
 
-            reader.onload = function () {
-                preview.src = reader.result;
-                preview.style.display = "block";
-            }
+      const deleteButtons = document.querySelectorAll('.close-button')
+      const productId = document.getElementsByName('product-id')[0].value
 
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                preview.src = "#";
-                preview.style.display = "none";
-            }
-        }
-
-        // Add event listeners for image previews
-        document.getElementById("image1").addEventListener("change", function (event) {
-            previewImage(event, 1);
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', async (event) => {
+          const imageIndex = event.target.dataset.imageIndex;
+          deleteImage(productId, imageIndex);
         });
+      });
 
-        document.getElementById("image2").addEventListener("change", function (event) {
-            previewImage(event, 2);
-        });
-
-        document.getElementById("image3").addEventListener("change", function (event) {
-            previewImage(event, 3);
-        });
-
-        document.getElementById("image4").addEventListener("change", function (event) {
-            previewImage(event, 4);
-        });
+    }
 
 
 
-    </script>
+    // Image preview code
+    function previewImage(event, imageNumber) {
+      var preview = document.getElementById(`preview${imageNumber}`);
+      var file = event.target.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function () {
+        preview.src = reader.result;
+        preview.style.display = "block";
+      }
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = "#";
+        preview.style.display = "none";
+      }
+    }
+
+    // Add event listeners for image previews
+    document.getElementById("image1").addEventListener("change", function (event) {
+      previewImage(event, 1);
+    });
+
+    document.getElementById("image2").addEventListener("change", function (event) {
+      previewImage(event, 2);
+    });
+
+    document.getElementById("image3").addEventListener("change", function (event) {
+      previewImage(event, 3);
+    });
+
+    document.getElementById("image4").addEventListener("change", function (event) {
+      previewImage(event, 4);
+    });
+
+
+
+  </script>
 
 
 
@@ -363,9 +363,9 @@
 
 
 
-</div>
+  </div>
 
 
 
 
-<%-include('adminfoot')%>
+  <%-include('adminfoot')%>

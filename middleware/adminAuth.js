@@ -1,7 +1,7 @@
-exports.isLogin = async(req,res,next)=>{
+exports.isLogin = async (req, res, next) => {
     try {
 
-        if(!req.session.admin){
+        if (!req.session.admin) {
             res.redirect('/admin')
         }
         next()
@@ -11,9 +11,9 @@ exports.isLogin = async(req,res,next)=>{
 
 }
 
-exports. isLogout = async(req,res,next)=>{
+exports.isLogout = async (req, res, next) => {
     try {
-        if(req.session.admin){
+        if (req.session.admin) {
             res.redirect('/admin/admindash')
         }
         next()
