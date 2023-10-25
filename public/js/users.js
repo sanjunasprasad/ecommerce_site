@@ -614,7 +614,8 @@ const filteredData = (data) => {
         data.forEach((product, index) => {
             let productContainer = document.createElement('div');
             productContainer.classList.add('col-sm-6', 'col-md-6', 'col-lg-4', 'col-xl-4');
-            productContainer.innerHTML = `
+            productContainer.innerHTML = 
+            `
             <div class="products-single fix">
                 <div class="box-img-hover">
                     <div class="type-lb">
