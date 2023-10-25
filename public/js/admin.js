@@ -166,7 +166,6 @@ $(document).ready(function () {
 
   //product delete confirmation
 
-
   $(".productDeleteBtn").click(async function (e) {
     e.preventDefault();
     var id = $(this).val();
@@ -194,8 +193,7 @@ $(document).ready(function () {
             showConfirmButton: true,
             confirmButtonText: "OK",
             confirmButtonColor: "#4CAF50",
-          });
-
+          })
           if (result2) {
             location.reload();
           }

@@ -3,6 +3,7 @@ const app = express()
 require('dotenv').config();
 const mongoose = require('mongoose')
 const session = require('express-session')
+// const flash = require('express-flash');
 const nocache = require("nocache")
 const flash = require('express-flash');
 const path = require('path')
@@ -11,6 +12,7 @@ const axios = require('axios');
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(nocache())
+
 
 //mongo
 const mongoDB = require("./database/connection")

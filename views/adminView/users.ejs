@@ -33,60 +33,109 @@
     <div class="row">
         <div class="col-lg-10 m-auto">
             <div class="table-container">
-                <% if (messages.success) { %>
-                    <div class="custom-alert">
-                        <%= messages.success %>
-                    </div>
+             
+
+<% if (messages.success) { %>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '<%= messages.success %>',
+                showConfirmButton: true, // Show "OK" button
+                allowOutsideClick: false // Prevent dismissing the modal by clicking outside
+            }).then((result) => {
+                // Handle "OK" button click event
+                if (result.isConfirmed) {
+                    // Close the modal (no need to do anything else since it automatically disappears)
+                }
+            });
+        });
+    </script>
+<% } %>
+
+
+
+
+<table class="table table-hover mt-4">
+    <thead>
+        <tr>
+            <th scope="col">NO</th>
+            <th scope="col">FIRST NAME</th>
+            <th scope="col">LAST NAME</th>
+            <th scope="col">EMAIL</th>
+            <th scope="col">MOBILE NUMBER</th>
+            <th scope="col">ACTION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% users.forEach((user, adjindex) => { %>
+            <% var index = adjindex + 1; %>
+            <tr>
+                <td scope="row">
+                    <%= index %>
+                </td>
+                <td>
+                    <%= user.firstName %>
+                </td>
+                <td>
+                    <%= user.lastName %>
+                </td>
+                <td>
+                    <%= user.email %>
+                </td>
+                <td>
+                    <%= user.phoneNumber %>
+                </td>
+                <td>
+                    <% if (user.is_blocked) { %>
+                        <button class="btn btn-sm btn-success" onclick="unblockUser('<%= user.id %>')">Unblock</button>
+                    <% } else { %>
+                        <button class="btn btn-sm btn-danger" onclick="blockUser('<%= user.id %>')">Block</button>
                     <% } %>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
 
-                        <table class="table table-hover mt-4">
-                            <thead>
-                                <tr>
-                                    <th scope="col">NO</th>
-                                    <th scope="col">FIRST NAME</th>
-                                    <th scope="col">LAST NAME</th>
-                                    <th scope="col">EMAIL</th>
-                                    <th scope="col">MOBILE NUMBER</th>
-                                    <th scope="col">ACTION</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% users.forEach((user, adjindex)=> { %>
-                                    <% var index=adjindex + 1; %>
-                                        <tr>
-                                            <td scope="row">
-                                                <%= index %>
-                                            </td>
-                                            <td>
-                                                <%= user.firstName %>
-                                            </td>
-                                            <td>
-                                                <%=user.lastName%>
-                                            </td>
-                                            <td>
-                                                <%= user.email %>
-                                            </td>
-                                            <td>
-                                                <%= user.phoneNumber %>
-                                            </td>
-                                            <td>
-                                                <% if (user.is_blocked) { %>
-                                                    <a href="/admin/blockUser/<%= user.id %>"
-                                                        onclick="return confirm('Are you sure you want to unblock this person?')">
-                                                        <button class="btn btn-sm btn-success">Unblock</button>
-                                                    </a>
-                                                    <% } else { %>
-                                                        <a href="/admin/blockUser/<%= user.id %>"
-                                                            onclick="return confirm('Are you sure you want to block this person?')">
-                                                            <button class="btn btn-sm btn-danger">Block</button>
-                                                        </a>
-                                                        <% } %>
+<!-- JavaScript code for SweetAlert modals -->
+<script>
+    function blockUser(userId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Are you sure you want to block this person?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, block it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Perform the blockUser action here
+                window.location.href = `/admin/blockUser/${userId}`;
+            }
+        });
+    }
 
-                                            </td>
-                                        </tr>
-                                        <% }); %>
-                            </tbody>
-                        </table>
+    function unblockUser(userId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Are you sure you want to unblock this person?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, unblock it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Perform the unblockUser action here
+                window.location.href = `/admin/blockUser/${userId}`;
+            }
+        });
+    }
+</script>
+
             </div>
         </div>
     </div>
@@ -95,3 +144,6 @@
     </div>
 
     <%- include('adminfoot') %>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

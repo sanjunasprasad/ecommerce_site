@@ -7,6 +7,7 @@ const Order = require("../models/orderModel")
 const Addres = require("../models/addressmodel")
 const Coupon = require("../models/couponmodel");
 const Banner = require('../models/bannerModel')
+const flash = require('express-flash');
 
 //admin login
 const credentials = {
@@ -130,40 +131,34 @@ exports.addNewCategory = async (req, res) => {
 };
 
 exports.loadCategories = async (req, res) => {
-
     try {
         const categoryData = await Category.find();
+        let catUpdated = "";
+        let catNoUpdation = "";
+
         if (req.session.categoryUpdate) {
-            res.render("categories", {
-                categoryData,
-                catNoUpdation: "",
-                catUpdated: "Category updated successfully",
-                user: req.session.admin,
-            });
+            catUpdated = "Category updated successfully";
             req.session.categoryUpdate = false;
         } else if (req.session.categorySave) {
-            res.render("categories", {
-                categoryData,
-                catNoUpdation: "",
-                catUpdated: "Category Added successfully",
-                user: req.session.admin,
-            });
+            catUpdated = "Category Added successfully";
             req.session.categorySave = false;
         } else if (req.session.categoryExist) {
-            res.render("categories", {
-                categoryData,
-                catUpdated: "",
-                catNoUpdation: "Category Already Exists!!",
-                user: req.session.admin,
-            });
+            catNoUpdation = "Category Already Exists!!";
             req.session.categoryExist = false;
-        } else {
-            res.render("categories", { categoryData, user: req.session.admin, catUpdated: "", catNoUpdation: "" });
         }
+
+        res.render("categories", {
+            categoryData,
+            catUpdated,
+            catNoUpdation,
+            user: req.session.admin,
+        });
     } catch (error) {
         console.log(error.message);
     }
 };
+
+
 exports.editCategory = async (req, res) => {
     const categoryId = req.params.id;
 
@@ -289,24 +284,28 @@ exports.loadProducts = async (req, res) => {
             .limit(productsPerPage);
 
         if (req.session.productSave) {
+            req.flash('success', 'Product added successfully!!');
+            req.session.productSave = false;
             res.render("products", {
                 productData,
                 totalPages,
                 currentPage: page,
-                productUpdated: "Product added successfully!!",
+                messages: req.flash('success'),
                 user: req.session.admin,
             });
-            req.session.productSave = false;
+           
         }
         if (req.session.productUpdate) {
+            req.flash('success', 'Product updated successfully!!');
+            req.session.productUpdate = false;
             res.render("products", {
                 productData,
                 totalPages,
                 currentPage: page,
-                productUpdated: "Product Updated successfully!!",
+                messages: req.flash('success'),
                 user: req.session.admin,
             });
-            req.session.productUpdate = false;
+          
         } else {
             res.render("products", {
                 productData,
