@@ -55,18 +55,6 @@ exports.homeload = async (req, res) => {
 }
 
 
-// exports.homeload = (req, res) => {
-//     const logged = req.session.user
-//     if (req.session.user) 
-//     {
-//         res.render("bkpmainhome",{logged})
-//     }
-//     else
-//     {
-//         res.render("bkpmainhome",{logged:null})
-//     }
-// }
-
 exports.userhomeload = (req, res) => {
     res.render("userhome")
 }
