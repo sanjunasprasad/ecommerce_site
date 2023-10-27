@@ -1,6 +1,6 @@
 const moment = require('moment');
-const Sale = require('../models/orderModel')
-const Order = require('../models/orderModel')
+const Sale = require('../models/ordermodel')
+const Order = require('../models/ordermodel')
 const PDFDocument = require('pdfkit');
 
 

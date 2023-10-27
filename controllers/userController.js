@@ -1,10 +1,10 @@
 const cloudinary = require('../database/cloudinary')
 const User = require("../models/usermodel");
-const Category = require("../models/categoryModel");
-const Product = require("../models/productModel");
+const Category = require("../models/categorymodel");
+const Product = require("../models/productmodel");
 const Address = require("../models/addressmodel");
-const Order = require("../models/orderModel");
-const Banner = require('../models/bannerModel')
+const Order = require("../models/ordermodel");
+const Banner = require('../models/bannermodel')
 
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");

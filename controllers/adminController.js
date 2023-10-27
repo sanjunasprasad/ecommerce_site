@@ -1,12 +1,12 @@
 const cloudinary = require('../database/cloudinary')
 const moment = require("moment");
 const User = require("../models/usermodel");
-const Category = require("../models/categoryModel");
-const Product = require("../models/productModel");
-const Order = require("../models/orderModel")
+const Category = require("../models/categorymodel");
+const Product = require("../models/productmodel");
+const Order = require("../models/ordermodel")
 const Addres = require("../models/addressmodel")
 const Coupon = require("../models/couponmodel");
-const Banner = require('../models/bannerModel')
+const Banner = require('../models/bannermodel')
 const flash = require('express-flash');
 
 //admin login
