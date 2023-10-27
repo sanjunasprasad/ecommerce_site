@@ -676,50 +676,77 @@ exports.deleteCoupon = async (req, res) => {
 };
 
 //***************BANNER MANAGEMENT************//
+// exports.loadBanners = async (req, res) => {
+//     try {
+//         const bannerData = await Banner.find();
+
+//         if (req.session.bannerSave) {
+//             res.render("banners", {
+//                 bannerData,
+//                 bannerSave: "Banner created successfully!",
+//                 user: req.session.admin,
+//             });
+//             req.session.bannerSave = false;
+//         } else if (req.session.bannerExist) {
+//             res.render("banners", {
+//                 bannerData,
+//                 bannerSave: "",
+//                 bannerExist: "Banner already exitsts!",
+//                 bannerDelete: "",
+//                 user: req.session.admin,
+//             });
+//             req.session.bannerExist = false;
+//         } else if (req.session.bannerUpdate) {
+//             res.render("banners", {
+//                 bannerData,
+//                 bannerUpdate: "Banner updated successfully!",
+//                 bannerDelete: "",
+//                 bannerSave: "",
+//                 bannerExist: "",
+//                 user: req.session.admin,
+//             });
+//             req.session.bannerUpdate = false;
+//         } else if (req.session.bannerDelete) {
+//             res.render("banners", {
+//                 bannerData,
+//                 bannerDelete: "Banner deleted successfully!",
+//                 bannerUpdate: "",
+//                 bannerSave: "",
+//                 bannerExist: "",
+//                 user: req.session.admin,
+//             });
+//             req.session.bannerDelete = false;
+//         }
+//         else {
+//             res.render("banners", { bannerData, user: req.session.admin, bannerSave: "", bannerExist: "", bannerUpdate: "", bannerDelete: "" });
+//         }
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// };
+
+
+
+
 exports.loadBanners = async (req, res) => {
     try {
+       
         const bannerData = await Banner.find();
+        // Render the banners page with appropriate messages
+        res.render("banners", {
+            bannerData,
+            bannerSave: req.session.bannerSave ? "Banner created successfully!" : "",
+            bannerExist: req.session.bannerExist ? "Banner already exists!" : "",
+            bannerUpdate: req.session.bannerUpdate ? "Banner updated successfully!" : "",
+            bannerDelete: req.session.bannerDelete ? "Banner deleted successfully!" : "",
+            user: req.session.admin,
+        });
 
-        if (req.session.bannerSave) {
-            res.render("banners", {
-                bannerData,
-                bannerSave: "Banner created successfully!",
-                user: req.session.admin,
-            });
-            req.session.bannerSave = false;
-        } else if (req.session.bannerExist) {
-            res.render("banners", {
-                bannerData,
-                bannerSave: "",
-                bannerExist: "Banner alreddy exitsts!",
-                bannerDelete: "",
-                user: req.session.admin,
-            });
-            req.session.bannerExist = false;
-        } else if (req.session.bannerUpdate) {
-            res.render("banners", {
-                bannerData,
-                bannerUpdate: "Banner updated successfully!",
-                bannerDelete: "",
-                bannerSave: "",
-                bannerExist: "",
-                user: req.session.admin,
-            });
-            req.session.bannerUpdate = false;
-        } else if (req.session.bannerDelete) {
-            res.render("banners", {
-                bannerData,
-                bannerDelete: "Banner deleted successfully!",
-                bannerUpdate: "",
-                bannerSave: "",
-                bannerExist: "",
-                user: req.session.admin,
-            });
-            req.session.bannerDelete = false;
-        }
-        else {
-            res.render("banners", { bannerData, user: req.session.admin, bannerSave: "", bannerExist: "", bannerUpdate: "", bannerDelete: "" });
-        }
+        // Reset session variables
+        req.session.bannerSave = false;
+        req.session.bannerExist = false;
+        req.session.bannerUpdate = false;
+        req.session.bannerDelete = false;
     } catch (error) {
         console.log(error.message);
     }

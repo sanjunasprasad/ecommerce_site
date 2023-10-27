@@ -13,6 +13,9 @@
                     <div id="catMsg">
                         <h5 id="noResultsFound">no results found!!</h5>
                     </div>
+                 
+                    <!-- <% if (bannerSave || bannerExist || bannerUpdate || bannerDelete) { %>
+                        <div class="alert alert-dismissible alert-success banner-message" role="alert"> -->
                     <% if (bannerSave) { %>
                         <div id="catMsg">
                             <h5 style="color: #4CAF50;">
@@ -38,17 +41,21 @@
                                         </h5>
                                     </div>
                                     <% } %>
-                </div>
+                <!-- </div>
+                <% } %> -->
+
                 <div class="col-lg-6">
                     <div id="search">
                         <input type="search" placeholder="Search Banners" aria-label="Search" />
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
     </div>
-    </div>
+  
 
     <div class="row">
         <div class="col-lg-10 m-auto">
@@ -113,3 +120,20 @@
     </div>
 
     <%-include('adminfoot')%>
+
+
+
+    <script>
+        // Function to hide banner messages after a specified duration
+        function hideBannerMessages() {
+            const bannerMessages = document.querySelectorAll('.banner-message');
+            bannerMessages.forEach(message => {
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 1000); // Messages will disappear after 5 seconds (5000 milliseconds)
+            });
+        }
+    
+        // Call the function to hide messages after the page is loaded
+        window.addEventListener('load', hideBannerMessages);
+    </script>
