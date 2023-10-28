@@ -19,7 +19,7 @@ exports.placeOrder = async (req, res) => {
         const amount = req.body.amount;
         const paymentMethod = req.body.selectedPayment;
         const couponData = req.body.couponData;
-
+    //    const test
         const user = await User.findOne({ _id: userId }).populate("cart.product");
         const userCart = user.cart;
 
