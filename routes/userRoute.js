@@ -28,7 +28,7 @@ user_route.post('/signup', userController.sendOtp)
 user_route.get('/showOtp', isLogout, userController.showOtp) //send otp for verfication
 user_route.post('/otpEnter', isLogout, userController.verifyOtp); //otp postverfication
 
-//forgot 
+//forgot password 
 user_route.get('/forgotPassword', isLogout, userController.loadForgotPassword)//forgot pw --> verify mail page to send otp
 user_route.post('/verifyEmail', isLogout, userController.verifyForgotpasswordEmail)//send otp and redirect to otp page
 user_route.get('/forgotOtpEnter', isLogout, userController.showForgotpasswordOtp)//otp page for setting forgot pw

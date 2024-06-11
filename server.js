@@ -18,7 +18,7 @@ app.use(nocache())
 const mongoDB = require("./database/connection")
 
 //port
-const PORT = process.env.PORT || 6100
+const PORT = process.env.PORT || 3000
 mongoDB()
 
 
