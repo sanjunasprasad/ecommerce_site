@@ -327,7 +327,7 @@ function generateOTP() {
 }
 
 async function sendOtpMail(email, otp) {
-    console.log("sendmail otp:",otp,email);
+    // console.log("sendmail otp:",otp,email);
     try {
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -345,7 +345,7 @@ async function sendOtpMail(email, otp) {
         };
 
         const result = await transporter.sendMail(mailOptions);
-        console.log("mail sent:",result);
+        // console.log("mail sent:",result);
     } catch (error) {
         console.log("error from mail send fn:",error.message);
     }
