@@ -327,13 +327,13 @@ function generateOTP() {
 }
 
 async function sendOtpMail(email, otp) {
-    console.log(otp);
+    // console.log("sendmail otp:",otp,email);
     try {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
                 user: "sanjunasprasad@gmail.com",
-                pass: "hgbexrtifxmyakpd",
+                pass: "gbwezrgnzvscgcki",
             },
         });
 
@@ -345,11 +345,12 @@ async function sendOtpMail(email, otp) {
         };
 
         const result = await transporter.sendMail(mailOptions);
-        console.log(result);
+        // console.log("mail sent:",result);
     } catch (error) {
-        console.log(error.message);
+        console.log("error from mail send fn:",error.message);
     }
 }
+
 
 exports.verifyOtp = async (req, res) => {
 
@@ -460,7 +461,7 @@ async function sendForgotPasswordOtp(email, otp) {
             service: "gmail",
             auth: {
                 user: "sanjunasprasad@gmail.com",
-                pass: "hgbexrtifxmyakpd",
+                pass: "gbwezrgnzvscgcki",
             },
         });
 
